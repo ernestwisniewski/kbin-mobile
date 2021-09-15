@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kbin_mobile/helpers/colors.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -26,25 +27,27 @@ class MenuScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: mainMenuEntries[index].iconContainerColor,
                         shape: BoxShape.circle),
-                    child: (mainMenuEntries[index].title == 'Karab.in')
-                        ? Image.asset('assets/karabin_icon.png')
-                        : mainMenuEntries[index].icon
-                    // @todo
-                    ),
+                    child: mainMenuEntries[index].icon
+                  // @todo
+                ),
                 title: Text(mainMenuEntries[index].title),
                 subtitle: Text(mainMenuEntries[index].subtitle ?? ''),
-                enabled: (mainMenuEntries[index].title == 'Subskrybowane'
+                enabled: (mainMenuEntries[index].title == 'Subskrybowane' ||
+                    mainMenuEntries[index].title == 'Moderowane'
                     ? false
                     : true),
                 // @todo
                 onTap: () {
-                  Navigator.popAndPushNamed(
+                  // Navigator.popAndPushNamed(
+                  //         context, mainMenuEntries[index].route);
+                  //   },
+                  Navigator.pushNamed(
                       context, mainMenuEntries[index].route);
                 },
               );
             },
             separatorBuilder: (BuildContext context, int index) =>
-                const Divider(height: 0),
+            const Divider(height: 0),
           ),
           Container(
               color: Colors.black12,
@@ -65,7 +68,7 @@ class MenuScreen extends StatelessWidget {
               );
             },
             separatorBuilder: (BuildContext context, int index) =>
-                const Divider(height: 0),
+            const Divider(height: 0),
           ),
         ],
       ),
@@ -80,7 +83,11 @@ class MenuItem {
   final Icon? icon;
   final Color? iconContainerColor;
 
-  MenuItem({required this.title, this.subtitle, required this.route, this.icon, this.iconContainerColor});
+  MenuItem({required this.title,
+    this.subtitle,
+    required this.route,
+    this.icon,
+    this.iconContainerColor});
 }
 
 class Menu {
@@ -95,15 +102,45 @@ class Menu {
     MenuItem(
         title: 'Strona główna',
         subtitle: 'Wszystkie treści',
-        route: '/',
+        route: '/front',
         icon: const Icon(Icons.home),
-        iconContainerColor: Colors.blue),
+        iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Subskrybowane',
         subtitle: 'Dopasowane do ciebie treści',
         route: '/',
-        icon: Icon(Icons.star),
-        iconContainerColor: Colors.blue)
+        icon: Icon(Icons.amp_stories),
+        iconContainerColor: KbinColors().fromHex('556880')),
+    MenuItem(
+        title: 'Moderowane',
+        subtitle: 'Treści z moderowanych magazynów',
+        route: '/',
+        icon: Icon(Icons.add_moderator),
+        iconContainerColor: KbinColors().fromHex('556880')),
+    MenuItem(
+        title: 'Wpisy',
+        subtitle: 'Krótka forma',
+        route: '/',
+        icon: Icon(Icons.article),
+        iconContainerColor: KbinColors().fromHex('556880')),
+    MenuItem(
+        title: 'Karab.in',
+        subtitle: 'Informacje o tej instancji',
+        route: '/instance',
+        icon: Icon(Icons.widgets),
+        iconContainerColor: KbinColors().fromHex('556880')),
+    MenuItem(
+        title: 'Ustawienia',
+        subtitle: 'Ustawienia aplikacji',
+        route: '/home',
+        icon: Icon(Icons.settings),
+        iconContainerColor: Colors.grey),
+    MenuItem(
+        title: 'Wyszukaj',
+        subtitle: 'Znajdź w serwisie',
+        route: '/home',
+        icon: Icon(Icons.search),
+        iconContainerColor: Colors.red),
   ];
 
   static List<MenuItem> profileMenuEntries = <MenuItem>[

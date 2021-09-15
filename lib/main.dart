@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
+import 'package:kbin_mobile/screens/front_screen.dart';
 import 'package:kbin_mobile/screens/menu_screen.dart';
 
 void main() {
@@ -13,12 +14,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'karab.in',
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
-          primarySwatch: KbinColors().fromHex('556880'),
+          brightness: Brightness.light,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
         ),
         initialRoute: '/',
         routes: {
           '/': (context) => MenuScreen(),
+          '/front': (context) => FrontScreen(),
         });
   }
 }
