@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/screens/front_screen.dart';
 import 'package:kbin_mobile/screens/menu_screen.dart';
+import 'package:kbin_mobile/screens/microblog_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => MenuScreen(),
-          '/front': (context) => FrontScreen(),
+          '/': (context) => const MenuScreen(),
+          '/front': (context) => const FrontScreen(),
+          '/microblog': (context) => const MicroblogScreen(),
         });
   }
 }

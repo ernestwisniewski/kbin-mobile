@@ -25,21 +25,15 @@ class Menu {
         icon: const Icon(Icons.home),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
-        title: 'Subskrybowane',
-        subtitle: 'Dopasowane do ciebie treści',
+        title: 'Komentarze',
+        subtitle: 'O tym sie dyskutuje',
         route: '/',
-        icon: Icon(Icons.amp_stories),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Moderowane',
-        subtitle: 'Treści z moderowanych magazynów',
-        route: '/',
-        icon: Icon(Icons.add_moderator),
+        icon: Icon(Icons.comment),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Wpisy',
-        subtitle: 'Krótka forma',
-        route: '/',
+        subtitle: 'Krótka forma mikroblogowa',
+        route: '/microblog',
         icon: Icon(Icons.article),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(

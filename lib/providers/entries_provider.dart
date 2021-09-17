@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 
 class EntriesProvider {
-  Uri url = Uri.https('dev.karab.in', 'api/entries.jsonld');
+  Uri url = Uri.https('karab.in', 'api/entries.jsonld');
 
   Future<List<Entry>> fetchEntries() async {
     var response = await http.get(url);
