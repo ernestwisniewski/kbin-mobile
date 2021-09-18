@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/providers/menu_provider.dart';
+import 'package:kbin_mobile/widgets/app_bar_title.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -11,12 +13,12 @@ class MenuScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('karab.in'),
+        title: const AppBarTitle(),
       ),
       body: ListView(
         children: <Widget>[
           ListView.separated(
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             shrinkWrap: true,
             itemCount: main.length,
             itemBuilder: (BuildContext context, int index) {
@@ -27,19 +29,11 @@ class MenuScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: main[index].iconContainerColor,
                         shape: BoxShape.circle),
-                    child: main[index].icon
-                    // @todo
-                    ),
+                    child: main[index].icon),
                 title: Text(main[index].title),
                 subtitle: Text(main[index].subtitle ?? ''),
-                enabled: (main[index].title == 'Subskrybowane' ||
-                    main[index].title == 'Moderowane'
-                    ? false
-                    : true),
-                // @todo
                 onTap: () {
-                  Navigator.popAndPushNamed(
-                      context, main[index].route);
+                  context.router.replace(main[index].route);
                 },
               );
             },
@@ -53,14 +47,14 @@ class MenuScreen extends StatelessWidget {
                 child: Text('Profil'),
               )),
           ListView.separated(
-            physics: ScrollPhysics(),
+            physics: const ScrollPhysics(),
             shrinkWrap: true,
             itemCount: profile.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                 title: Text(profile[index].title),
                 onTap: () {
-                  Navigator.pushNamed(context, profile[index].route);
+                  context.router.replace(profile[index].route);
                 },
               );
             },

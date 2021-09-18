@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
-import 'package:kbin_mobile/screens/front_screen.dart';
-import 'package:kbin_mobile/screens/menu_screen.dart';
-import 'package:kbin_mobile/screens/microblog_screen.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+        routerDelegate:_appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
         title: 'karab.in',
         themeMode: ThemeMode.dark,
         theme: ThemeData(
@@ -22,12 +22,6 @@ class MyApp extends StatelessWidget {
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const MenuScreen(),
-          '/front': (context) => const FrontScreen(),
-          '/microblog': (context) => const MicroblogScreen(),
-        });
+        ));
   }
 }

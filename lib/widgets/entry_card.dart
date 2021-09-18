@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_model.dart';
 
@@ -31,17 +32,28 @@ class EntryCard extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 15, right: 15, top: 20, bottom: 20),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('/m/' + entry.magazine.name, style: TextStyle(color: Colors.grey),),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      child: Text(entry.title,
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 8.0),
+                                        child: Text(
+                                            '/m/' + entry.magazine.name,
+                                            style: const TextStyle(
+                                                color: Colors.grey)),
+                                      ),
+                                      Text(entry.title,
                                           style: const TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.bold))),
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  )),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
                                     child: entry.image != null
@@ -53,7 +65,9 @@ class EntryCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              EntryMeta(entry: entry)
+                              Row(children: [
+                                Expanded(child: EntryMeta(entry: entry))
+                              ])
                             ],
                           ),
                         )),
@@ -78,42 +92,37 @@ class EntryMeta extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       child: Row(
         children: [
-          Row(children: [
-            const Icon(Icons.arrow_upward, size: 15, color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.only(left: 5, right: 15),
-              child: Text(
-                entry.uv.toString(),
-                style: const TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-            ),
-            const Icon(Icons.arrow_downward, size: 15, color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.only(left: 5, right: 15),
-              child: Text(
-                entry.dv.toString(),
-                style: const TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-            ),
-            const Icon(Icons.comment_outlined, size: 15, color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.only(left: 5, right: 15),
-              child: Text(
-                entry.comments.toString(),
-                style: const TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-            ),
-            const Icon(Icons.person, size: 15, color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.only(left: 5, right: 15),
-              child: Text(
-                entry.user.username,
-                style: const TextStyle(fontSize: 15, color: Colors.grey),
-              ),
-            )
-          ])
+          MetaItem(label: entry.uv.toString(), icon: Icons.arrow_upward),
+          MetaItem(label: entry.dv.toString(), icon: Icons.arrow_downward),
+          MetaItem(label: entry.comments.toString(), icon: Icons.comment_outlined),
+          MetaItem(label: entry.user.username, icon: Icons.person)
         ],
       ),
     );
+  }
+}
+
+class MetaItem extends StatelessWidget {
+  const MetaItem({
+    Key? key,
+    required this.label,
+    required this.icon,
+  }) : super(key: key);
+
+  final String label;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      Icon(icon, size: 15, color: Colors.grey),
+      Padding(
+        padding: const EdgeInsets.only(left: 5, right: 15),
+        child: Text(
+          label,
+          style: const TextStyle(fontSize: 15, color: Colors.grey),
+        ),
+      )
+    ]);
   }
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/models/entry_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/entry_card.dart';
 
-class FrontScreen extends StatelessWidget {
-  const FrontScreen({Key? key}) : super(key: key);
+class EntriesScreen extends StatelessWidget {
+  const EntriesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,24 @@ class FrontScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('karab.in'),
+          leading: IconButton(
+            alignment: Alignment.centerLeft,
+            icon: const Icon(Icons.menu),
+            tooltip: 'Przejdź do menu',
+            onPressed: () {
+              context.router.replace(const MenuRoute());
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.expand_more),
+              tooltip: 'Sortuj',
+              onPressed: () {
+                // handle the press
+              },
+            )
+          ],
+          title: const AppBarTitle(),
         ),
         body: Container(
           color: Colors.transparent,
