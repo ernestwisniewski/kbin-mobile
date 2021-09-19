@@ -7,9 +7,8 @@ import 'package:kbin_mobile/routes/router.gr.dart';
 
 class EntryCard extends StatelessWidget {
   final Entry entry;
-  final int index;
 
-  const EntryCard({Key? key, required this.entry, required this.index})
+  const EntryCard({Key? key, required this.entry})
       : super(key: key);
 
   @override
@@ -17,49 +16,27 @@ class EntryCard extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: InkWell(
-            onTap: () {
-              context.router.push(EntryRoute(id: entry.id, magazine: entry.magazine.name));
-            },
-            child: Container(
-                color: index.isEven
-                    ? Colors.black.withOpacity(0.3)
-                    : Colors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 15, right: 15, top: 20, bottom: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: Text('/m/' + entry.magazine.name,
-                                    style: const TextStyle(color: Colors.grey)),
-                              ),
-                              Text(entry.title,
-                                  style: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
-                            ],
-                          )),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: entry.image != null
-                                ? Image.network(
-                                    Media().getThumbUrl(entry.image!.filePath),
-                                    width: 90)
-                                : null,
-                          ),
-                        ],
-                      ),
-                      Row(children: [Expanded(child: EntryMeta(entry: entry))])
-                    ],
-                  ),
-                )),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 15, right: 15, top: 20, bottom: 20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(entry.title,
+                            style: const TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold)),
+                      ],
+                    )),
+                  ],
+                ),
+                Row(children: [Expanded(child: EntryMeta(entry: entry))])
+              ],
+            ),
           ),
         ),
       ],
@@ -81,11 +58,8 @@ class EntryMeta extends StatelessWidget {
       padding: const EdgeInsets.only(top: 30),
       child: Row(
         children: [
-          MetaItem(label: entry.uv.toString(), icon: Icons.arrow_upward),
-          MetaItem(label: entry.dv.toString(), icon: Icons.arrow_downward),
           MetaItem(
               label: entry.comments.toString(), icon: Icons.comment_outlined),
-          MetaItem(label: entry.user.username, icon: Icons.person)
         ],
       ),
     );

@@ -5,7 +5,7 @@ import 'package:kbin_mobile/models/entry_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
-import 'package:kbin_mobile/widgets/entry_card.dart';
+import 'package:kbin_mobile/widgets/entry_card_list_item.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class EntriesScreen extends StatelessWidget {
                   itemCount: snapshot.data?.length,
                   itemBuilder: (BuildContext context, int index) {
                     Entry entry = snapshot.data![index];
-                    return EntryCard(entry: entry, index: index);
+                    return EntryCardListItem(entry: entry, index: index);
                   }));
                 }
 
