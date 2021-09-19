@@ -43,7 +43,14 @@ class EntriesScreen extends StatelessWidget {
               builder:
                   (BuildContext context, AsyncSnapshot<List<Entry>> snapshot) {
                 if (snapshot.hasData) {
-                  return EntryCard(snapshot: snapshot);
+                  return Container(
+                  margin: const EdgeInsets.only(left: 0, right: 0),
+                  child: ListView.builder(
+                  itemCount: snapshot.data?.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Entry entry = snapshot.data![index];
+                    return EntryCard(entry: entry, index: index);
+                  }));
                 }
 
                 return Center(
