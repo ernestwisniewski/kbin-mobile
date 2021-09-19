@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
+import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
@@ -10,9 +11,10 @@ class EntryScreen extends StatelessWidget {
   final String magazine;
   final int id;
 
-  const EntryScreen({Key? key,
-    @PathParam('magazine') required this.magazine,
-    @PathParam('id') required this.id})
+  const EntryScreen(
+      {Key? key,
+      @PathParam('magazine') required this.magazine,
+      @PathParam('id') required this.id})
       : super(key: key);
 
   @override
@@ -31,22 +33,10 @@ class EntryScreen extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot<Entry> snapshot) {
                 if (snapshot.hasData) {
                   Entry entry = snapshot.data!;
-                  return Container(
-                      margin: const EdgeInsets.only(left: 0, right: 0),
-                      child: Column(
-                        children: [
-                          EntryCard(entry: entry),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                  left: 15, right: 15, top: 20, bottom: 20),
-                            child: Align(alignment: Alignment.topLeft,
-                                child: Text('Komentrze:',
-                                    style: TextStyle(fontSize: 22))),
-                          ),
-                        ],
-                      ));
+                  return CustomScrollView(
+                    slivers: _getSliversList(entry),
+                  );
                 }
-
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,5 +54,48 @@ class EntryScreen extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  List<Widget> _getSliversList(Entry entry) {
+    List<Widget> list = [];
+
+    if (entry.image != null) {
+      Widget sliverAppBar = SliverAppBar(
+        leading: const Divider(),
+        backgroundColor: Colors.transparent,
+        expandedHeight: 200,
+        flexibleSpace: FlexibleSpaceBar(
+          background: Image.network(
+            Media().getThumbUrl(entry.image!.filePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+
+      list.add(sliverAppBar);
+    }
+
+    Widget silverList = SliverList(
+      delegate: SliverChildListDelegate([
+        Container(
+            margin: const EdgeInsets.only(left: 0, right: 0),
+            child: Column(
+              children: [
+                EntryCard(entry: entry),
+                const Padding(
+                  padding:
+                      EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child:
+                          Text('Komentrze:', style: TextStyle(fontSize: 22))),
+                ),
+              ],
+            )),
+      ]),
+    );
+
+    list.add(silverList);
+    return list;
   }
 }

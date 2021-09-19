@@ -1,9 +1,6 @@
-import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_model.dart';
-import 'package:kbin_mobile/routes/router.gr.dart';
 
 class EntryCard extends StatelessWidget {
   final Entry entry;
