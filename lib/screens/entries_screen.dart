@@ -26,7 +26,7 @@ class EntriesScreen extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.expand_more),
+              icon: const Icon(Icons.more_vert),
               tooltip: 'Sortuj',
               onPressed: () {
                 // handle the press

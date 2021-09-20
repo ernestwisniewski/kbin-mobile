@@ -23,15 +23,28 @@ class MenuScreen extends StatelessWidget {
             itemCount: main.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                leading: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        color: main[index].iconContainerColor,
-                        shape: BoxShape.circle),
-                    child: main[index].icon),
-                title: Text(main[index].title),
-                subtitle: Text(main[index].subtitle ?? ''),
+                minVerticalPadding: 25,
+                title: Row(
+                  children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: 40.0,
+                              width: 40.0,
+                              decoration: BoxDecoration(
+                                  color: main[index].iconContainerColor,
+                                  shape: BoxShape.circle),
+                              child: main[index].icon),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(main[index].title),
+                    ),
+                  ],
+                ),
+                // subtitle: Text(main[index].subtitle ?? ''),
                 onTap: () {
                   context.router.replace(main[index].route);
                 },

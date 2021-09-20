@@ -19,11 +19,13 @@ class EntryCardListItem extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              context.router.push(EntryRoute(id: entry.id, magazine: entry.magazine.name));
+              context.router.push(
+                  EntryRoute(id: entry.id, magazine: entry.magazine.name));
             },
             child: Container(
                 color: index.isEven
-                    ? Colors.black.withOpacity(0.3)
+                    // ? Colors.black.withOpacity(0.03)
+                    ? Colors.black.withOpacity(0.15)
                     : Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -43,7 +45,8 @@ class EntryCardListItem extends StatelessWidget {
                               ),
                               Text(entry.title,
                                   style: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold)),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
                             ],
                           )),
                           Padding(
@@ -56,7 +59,7 @@ class EntryCardListItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(children: [Expanded(child: EntryMeta(entry: entry))])
+                      Row(children: [EntryMeta(entry: entry)])
                     ],
                   ),
                 )),
@@ -85,7 +88,7 @@ class EntryMeta extends StatelessWidget {
           MetaItem(label: entry.dv.toString(), icon: Icons.arrow_downward),
           MetaItem(
               label: entry.comments.toString(), icon: Icons.comment_outlined),
-          MetaItem(label: entry.user.username, icon: Icons.person)
+          MetaItem(label: entry.user.username, icon: Icons.person, highlighted: true)
         ],
       ),
     );
@@ -97,10 +100,12 @@ class MetaItem extends StatelessWidget {
     Key? key,
     required this.label,
     required this.icon,
+    this.highlighted = false
   }) : super(key: key);
 
   final String label;
   final IconData icon;
+  final bool? highlighted;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +115,7 @@ class MetaItem extends StatelessWidget {
         padding: const EdgeInsets.only(left: 5, right: 15),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 15, color: Colors.grey),
+          style: TextStyle(fontSize: 15, color: Colors.grey, fontWeight: highlighted! == true ? FontWeight.bold : FontWeight.normal),
         ),
       )
     ]);

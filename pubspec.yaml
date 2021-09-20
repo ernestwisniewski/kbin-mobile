@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.3
   flutter_slidable: ^0.6.0
   auto_route: ^2.3.2
+  google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:

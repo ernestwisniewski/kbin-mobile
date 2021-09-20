@@ -15,7 +15,7 @@ class EntryCard extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 15, right: 15, top: 20, bottom: 20),
+                left: 15, right: 15, top: 30, bottom: 30),
             child: Column(
               children: [
                 Row(
@@ -24,66 +24,21 @@ class EntryCard extends StatelessWidget {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(entry.title,
-                            style: const TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold)),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(entry.title,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w400)),
+                        ),
                       ],
                     )),
                   ],
                 ),
-                Row(children: [Expanded(child: EntryMeta(entry: entry))])
               ],
             ),
           ),
         ),
       ],
     );
-  }
-}
-
-class EntryMeta extends StatelessWidget {
-  const EntryMeta({
-    Key? key,
-    required this.entry,
-  }) : super(key: key);
-
-  final Entry entry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: Row(
-        children: [
-          MetaItem(
-              label: entry.comments.toString(), icon: Icons.comment_outlined),
-        ],
-      ),
-    );
-  }
-}
-
-class MetaItem extends StatelessWidget {
-  const MetaItem({
-    Key? key,
-    required this.label,
-    required this.icon,
-  }) : super(key: key);
-
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: [
-      Icon(icon, size: 15, color: Colors.grey),
-      Padding(
-        padding: const EdgeInsets.only(left: 5, right: 15),
-        child: Text(
-          label,
-          style: const TextStyle(fontSize: 15, color: Colors.grey),
-        ),
-      )
-    ]);
   }
 }

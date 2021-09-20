@@ -11,10 +11,9 @@ class EntryScreen extends StatelessWidget {
   final String magazine;
   final int id;
 
-  const EntryScreen(
-      {Key? key,
-      @PathParam('magazine') required this.magazine,
-      @PathParam('id') required this.id})
+  const EntryScreen({Key? key,
+    @PathParam('magazine') required this.magazine,
+    @PathParam('id') required this.id})
       : super(key: key);
 
   @override
@@ -24,6 +23,15 @@ class EntryScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: AppBarTitle(title: magazine, fontSize: 16),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.share),
+              tooltip: 'Udostępnij',
+              onPressed: () {
+                // handle the press
+              },
+            )
+          ],
         ),
         body: Container(
           color: Colors.transparent,
@@ -82,20 +90,92 @@ class EntryScreen extends StatelessWidget {
             child: Column(
               children: [
                 EntryCard(entry: entry),
-                const Padding(
-                  padding:
-                      EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child:
-                          Text('Komentrze:', style: TextStyle(fontSize: 22))),
+                Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: TextButton(
+                                onPressed: null,
+                                child: Column(children: [
+                                  const Icon(Icons.comment_sharp),
+                                  Text(entry.comments.toString())
+                                ]),
+                              ))),
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: TextButton(
+                                onPressed: null,
+                                child: Column(children: [
+                                  const Icon(Icons.arrow_upward),
+                                  Text(entry.uv.toString())
+                                ]),
+                              ))),
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: TextButton(
+                                onPressed: null,
+                                child: Column(children: [
+                                  const Icon(Icons.arrow_downward),
+                                  Text(entry.dv.toString())
+                                ]),
+                              ))),
+                    ],
+                  ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: const TextButton(
+                                onPressed: null,
+                                child: Icon(Icons.share),
+                              ))),
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: const TextButton(
+                                onPressed: null,
+                                child: Icon(Icons.explore),
+                              ))),
+                      Expanded(
+                          child: Container(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: const TextButton(
+                                onPressed: null,
+                                child: Icon(Icons.report),
+                              ))),
+                    ],
+                  ),
+                ),
+                //  const Padding(
+                //   padding:
+                //       EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
+                //   child: Align(
+                //       alignment: Alignment.topLeft,
+                //       child:
+                //           Text('Komentrze:', style: TextStyle(fontSize: 22))),
+                // ),
               ],
             )),
       ]),
     );
 
     list.add(silverList);
+
     return list;
   }
 }
