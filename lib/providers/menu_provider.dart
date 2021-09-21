@@ -39,11 +39,17 @@ class Menu {
         icon: const Icon(Icons.article, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
+        title: 'Magazyny',
+        subtitle: 'Magazyny tematyczne',
+        route: const MenuRoute(),
+        icon: const Icon(Icons.bookmarks , color: Colors.white),
+        iconContainerColor: KbinColors().fromHex('556880')),
+    MenuItem(
         title: 'Karab.in',
         subtitle: 'Informacje o tej instancji',
         route: const MenuRoute(),
         icon: const Icon(Icons.widgets, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
+        iconContainerColor: Colors.grey),
     MenuItem(
         title: 'Ustawienia',
         subtitle: 'Ustawienia aplikacji',
@@ -59,8 +65,8 @@ class Menu {
   ];
 
   static List<MenuItem> profile = <MenuItem>[
-    MenuItem(title: 'Zarejestruj się', route:  const MenuRoute()),
-    MenuItem(title: 'Zaloguj się', route:  const MenuRoute())
+    MenuItem(title: 'Zaloguj się', route:  const MenuRoute()),
+    MenuItem(title: 'Zarejestruj się', route:  const MenuRoute())
   ];
 
   List<MenuItem> getMainEntries() {

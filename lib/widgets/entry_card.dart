@@ -25,7 +25,7 @@ class EntryCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Text(entry.title,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.w400)),

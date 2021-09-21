@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/models/entry_model.dart';
-import 'package:kbin_mobile/providers/entries_provider.dart';
+import 'package:kbin_mobile/repositories/entries_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/entry_card_list_item.dart';
@@ -12,7 +12,7 @@ class EntriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EntriesProvider provider = EntriesProvider();
+    EntriesRepository repo = EntriesRepository();
 
     return Scaffold(
         appBar: AppBar(
@@ -39,7 +39,7 @@ class EntriesScreen extends StatelessWidget {
           color: Colors.transparent,
           child: SafeArea(
             child: FutureBuilder(
-              future: provider.fetchEntries(),
+              future: repo.fetchEntries(),
               builder:
                   (BuildContext context, AsyncSnapshot<List<Entry>> snapshot) {
                 if (snapshot.hasData) {

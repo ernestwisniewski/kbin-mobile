@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
         title: 'karab.in',
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: ThemeData(
           primaryColor: KbinColors().fromHex('556880'),
           brightness: Brightness.light,
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           appBarTheme:
               AppBarTheme(backgroundColor: KbinColors().fromHex('556880')),
           // Shared
-          // fontFamily: GoogleFonts.poppins().fontFamily,
+          fontFamily: GoogleFonts.openSans().fontFamily,
           textTheme: const TextTheme(subtitle1: TextStyle(fontWeight: FontWeight.w400)),
         ),
         darkTheme: ThemeData(

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:kbin_mobile/providers/api_provider.dart';
 
 
-class EntriesProvider {
+class EntriesRepository {
   Future<List<Entry>> fetchEntries() async {
     Uri url = Uri.https(ApiProvider().getDomain(), 'api/entries.jsonld');
 

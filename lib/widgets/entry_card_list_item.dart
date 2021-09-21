@@ -24,8 +24,8 @@ class EntryCardListItem extends StatelessWidget {
             },
             child: Container(
                 color: index.isEven
-                    // ? Colors.black.withOpacity(0.03)
-                    ? Colors.black.withOpacity(0.15)
+                    ? Colors.black.withOpacity(0.03)
+                    // ? Colors.black.withOpacity(0.15)
                     : Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -59,7 +59,7 @@ class EntryCardListItem extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(children: [EntryMeta(entry: entry)])
+                      Row(children: [Expanded(child: EntryMeta(entry: entry))])
                     ],
                   ),
                 )),
@@ -82,7 +82,7 @@ class EntryMeta extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 30),
-      child: Row(
+      child: Wrap(
         children: [
           MetaItem(label: entry.uv.toString(), icon: Icons.arrow_upward),
           MetaItem(label: entry.dv.toString(), icon: Icons.arrow_downward),
@@ -109,13 +109,13 @@ class MetaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
+    return Wrap(children: [
       Icon(icon, size: 15, color: Colors.grey),
       Padding(
         padding: const EdgeInsets.only(left: 5, right: 15),
         child: Text(
           label,
-          style: TextStyle(fontSize: 15, color: Colors.grey, fontWeight: highlighted! == true ? FontWeight.bold : FontWeight.normal),
+          style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: highlighted! == true ? FontWeight.w600 : FontWeight.normal),
         ),
       )
     ]);

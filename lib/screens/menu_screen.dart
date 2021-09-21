@@ -23,7 +23,7 @@ class MenuScreen extends StatelessWidget {
             itemCount: main.length,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                minVerticalPadding: 25,
+                minVerticalPadding: 15,
                 title: Row(
                   children: [
                     Column(
