@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
         title: 'karab.in',
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
           primaryColor: KbinColors().fromHex('556880'),
           brightness: Brightness.light,
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
         ),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
+          fontFamily: GoogleFonts.openSans().fontFamily,
+          textTheme: const TextTheme(subtitle1: TextStyle(fontWeight: FontWeight.w400)),
         ));
   }
 }

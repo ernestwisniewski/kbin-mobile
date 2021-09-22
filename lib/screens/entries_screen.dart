@@ -1,74 +1,159 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
-import 'package:kbin_mobile/models/entry_model.dart';
-import 'package:kbin_mobile/repositories/entries_provider.dart';
+import 'package:kbin_mobile/helpers/media.dart';
+import 'package:kbin_mobile/models/entry_collection_model.dart';
+import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
-import 'package:kbin_mobile/widgets/entry_card_list_item.dart';
+import 'package:kbin_mobile/widgets/loading_full.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    EntriesRepository repo = EntriesRepository();
-
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            alignment: Alignment.centerLeft,
-            icon: const Icon(Icons.menu),
-            tooltip: 'Przejdź do menu',
-            onPressed: () {
-              context.router.replace(const MenuRoute());
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.more_vert),
-              tooltip: 'Sortuj',
-              onPressed: () {
-                // handle the press
-              },
-            )
-          ],
-          title: const AppBarTitle(),
-        ),
-        body: Container(
-          color: Colors.transparent,
-          child: SafeArea(
-            child: FutureBuilder(
-              future: repo.fetchEntries(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Entry>> snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                  margin: const EdgeInsets.only(left: 0, right: 0),
-                  child: ListView.builder(
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Entry entry = snapshot.data![index];
-                    return EntryCardListItem(entry: entry, index: index);
-                  }));
-                }
-
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                          color: KbinColors().fromHex('556880')),
-                      const SizedBox(
-                        height: 20,
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ));
+    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
   }
+}
+
+PreferredSizeWidget buildAppBar(BuildContext context) {
+  return AppBar(
+    leading: IconButton(
+      alignment: Alignment.centerLeft,
+      icon: const Icon(Icons.menu),
+      tooltip: 'Przejdź do menu',
+      onPressed: () {
+        context.router.replace(const MenuRoute());
+      },
+    ),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.more_vert),
+        tooltip: 'Sortuj',
+        onPressed: () {
+          // handle the press
+        },
+      )
+    ],
+    title: const AppBarTitle(),
+  );
+}
+
+Widget buildBody(BuildContext context) {
+  return SafeArea(
+    child: buildEntryList(context),
+  );
+}
+
+Widget buildEntryList(BuildContext context) {
+  return FutureBuilder(
+    future: (EntriesRepository()).fetchEntries(),
+    builder: (BuildContext context,
+        AsyncSnapshot<List<EntryCollectionItem>> snapshot) {
+      if (snapshot.hasData) {
+        return Container(
+            margin: const EdgeInsets.only(left: 0, right: 0),
+            child: ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  EntryCollectionItem entry = snapshot.data![index];
+                  return buildItem(context, entry, index);
+                }));
+      }
+
+      return buildLoadingFull();
+    },
+  );
+}
+
+Widget buildItem(BuildContext context, EntryCollectionItem entry,
+    [int index = 1]) {
+  return Row(
+    children: <Widget>[
+      Expanded(
+        child: InkWell(
+          onTap: () {
+            context.router
+                .push(EntryRoute(id: entry.id, magazine: entry.magazine.name));
+          },
+          child: Container(
+              padding: const EdgeInsets.only(
+                  left: 15, right: 15, top: 20, bottom: 20),
+              color: index.isEven
+                  // ? Colors.black.withOpacity(0.03)
+                  ? Colors.black.withOpacity(0.15)
+                  : Colors.transparent,
+              child: Column(
+                children: [
+                  buildMain(context, entry),
+                  buildMeta(context, entry),
+                ],
+              )),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildMain(BuildContext context, EntryCollectionItem entry) {
+  return Row(
+    children: [
+      Expanded(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text('/m/' + entry.magazine.name,
+                style: const TextStyle(color: Colors.grey)),
+          ),
+          Text(entry.title,
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        ],
+      )),
+      Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: entry.image != null
+            ? Image.network(Media().getThumbUrl(entry.image!.filePath),
+                width: 90)
+            : null,
+      ),
+    ],
+  );
+}
+
+Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
+  return Row(children: [
+    Expanded(
+        child: Padding(
+      padding: const EdgeInsets.only(top: 30),
+      child: Wrap(
+        children: [
+          buildMetaItem(context, entry.uv.toString(), Icons.arrow_upward),
+          buildMetaItem(context, entry.dv.toString(), Icons.arrow_downward),
+          buildMetaItem(context, entry.comments.toString(),Icons.comment_outlined),
+          buildMetaItem(context, entry.user.username, Icons.person, true)
+        ],
+      ),
+    ))
+  ]);
+}
+
+Widget buildMetaItem(
+    BuildContext context, String label, IconData? icon,
+    [bool highlighted = false]) {
+  return Wrap(children: [
+    Icon(icon, size: 15, color: Colors.grey),
+    Padding(
+      padding: const EdgeInsets.only(left: 5, right: 15),
+      child: Text(
+        label,
+        style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey,
+            fontWeight: highlighted ? FontWeight.w600 : FontWeight.normal),
+      ),
+    )
+  ]);
 }
