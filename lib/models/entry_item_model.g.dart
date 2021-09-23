@@ -15,6 +15,9 @@ EntryItem _$EntryItemFromJson(Map<String, dynamic> json) => EntryItem(
       image: json['image'] == null
           ? null
           : EntryItemImage.fromJson(json['image'] as Map<String, dynamic>),
+      domain: json['domain'] == null
+          ? null
+          : EntryItemDomain.fromJson(json['domain'] as Map<String, dynamic>),
       title: json['title'] as String,
       url: json['url'] as String?,
       body: json['body'] as String?,
@@ -25,6 +28,7 @@ EntryItem _$EntryItemFromJson(Map<String, dynamic> json) => EntryItem(
       type: json['type'] as String,
       views: json['views'] as int,
       score: json['score'] as int,
+      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$EntryItemToJson(EntryItem instance) => <String, dynamic>{
@@ -33,6 +37,7 @@ Map<String, dynamic> _$EntryItemToJson(EntryItem instance) => <String, dynamic>{
       'magazine': instance.magazine,
       'user': instance.user,
       'image': instance.image,
+      'domain': instance.domain,
       'title': instance.title,
       'url': instance.url,
       'body': instance.body,
@@ -43,6 +48,7 @@ Map<String, dynamic> _$EntryItemToJson(EntryItem instance) => <String, dynamic>{
       'type': instance.type,
       'views': instance.views,
       'score': instance.score,
+      'createdAt': instance.createdAt.toIso8601String(),
     };
 
 EntryItemMagazine _$EntryItemMagazineFromJson(Map<String, dynamic> json) =>
@@ -83,4 +89,18 @@ Map<String, dynamic> _$EntryItemImageToJson(EntryItemImage instance) =>
       'filePath': instance.filePath,
       'width': instance.width,
       'height': instance.height,
+    };
+
+EntryItemDomain _$EntryItemDomainFromJson(Map<String, dynamic> json) =>
+    EntryItemDomain(
+      apiUrl: json['@id'] as String,
+      name: json['name'] as String,
+      entryCount: json['entryCount'] as int,
+    );
+
+Map<String, dynamic> _$EntryItemDomainToJson(EntryItemDomain instance) =>
+    <String, dynamic>{
+      '@id': instance.apiUrl,
+      'name': instance.name,
+      'entryCount': instance.entryCount,
     };

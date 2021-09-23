@@ -10,6 +10,7 @@ class EntryCollectionItem {
   final EntryCollectionItemMagazine magazine;
   final EntryCollectionItemUser user;
   final EntryCollectionItemImage? image;
+  final EntryCollectionItemDomain? domain;
   final String title;
   final String? url;
   final String? body;
@@ -25,6 +26,7 @@ class EntryCollectionItem {
       required this.magazine,
       required this.user,
       this.image,
+      this.domain,
       required this.title,
       this.url,
       this.body,
@@ -34,7 +36,8 @@ class EntryCollectionItem {
       required this.isAdult,
       required this.type});
 
-  factory EntryCollectionItem.fromJson(Map<String, dynamic> json) => _$EntryCollectionItemFromJson(json);
+  factory EntryCollectionItem.fromJson(Map<String, dynamic> json) =>
+      _$EntryCollectionItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$EntryCollectionItemToJson(this);
 }
@@ -85,4 +88,18 @@ class EntryCollectionItemImage {
       _$EntryCollectionItemImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$EntryCollectionItemImageToJson(this);
+}
+
+@JsonSerializable()
+class EntryCollectionItemDomain {
+  @JsonKey(name: '@id')
+  final String apiUrl;
+  final String name;
+
+  EntryCollectionItemDomain({required this.apiUrl, required this.name});
+
+  factory EntryCollectionItemDomain.fromJson(Map<String, dynamic> json) =>
+      _$EntryCollectionItemDomainFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntryCollectionItemDomainToJson(this);
 }

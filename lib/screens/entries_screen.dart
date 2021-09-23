@@ -130,18 +130,17 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
       padding: const EdgeInsets.only(top: 30),
       child: Wrap(
         children: [
-          buildMetaItem(context, entry.uv.toString(), Icons.arrow_upward),
-          buildMetaItem(context, entry.dv.toString(), Icons.arrow_downward),
-          buildMetaItem(context, entry.comments.toString(),Icons.comment_outlined),
-          buildMetaItem(context, entry.user.username, Icons.person, true)
+          buildMetaItem(entry.uv.toString(), Icons.arrow_upward),
+          buildMetaItem(entry.dv.toString(), Icons.arrow_downward),
+          buildMetaItem(entry.comments.toString(),Icons.comment_outlined),
+          buildMetaItem(entry.user.username, Icons.person, true)
         ],
       ),
     ))
   ]);
 }
 
-Widget buildMetaItem(
-    BuildContext context, String label, IconData? icon,
+Widget buildMetaItem(String label, IconData? icon,
     [bool highlighted = false]) {
   return Wrap(children: [
     Icon(icon, size: 15, color: Colors.grey),

@@ -18,6 +18,10 @@ EntryCollectionItem _$EntryCollectionItemFromJson(Map<String, dynamic> json) =>
           ? null
           : EntryCollectionItemImage.fromJson(
               json['image'] as Map<String, dynamic>),
+      domain: json['domain'] == null
+          ? null
+          : EntryCollectionItemDomain.fromJson(
+              json['domain'] as Map<String, dynamic>),
       title: json['title'] as String,
       url: json['url'] as String?,
       body: json['body'] as String?,
@@ -36,6 +40,7 @@ Map<String, dynamic> _$EntryCollectionItemToJson(
       'magazine': instance.magazine,
       'user': instance.user,
       'image': instance.image,
+      'domain': instance.domain,
       'title': instance.title,
       'url': instance.url,
       'body': instance.body,
@@ -90,4 +95,18 @@ Map<String, dynamic> _$EntryCollectionItemImageToJson(
       'filePath': instance.filePath,
       'width': instance.width,
       'height': instance.height,
+    };
+
+EntryCollectionItemDomain _$EntryCollectionItemDomainFromJson(
+        Map<String, dynamic> json) =>
+    EntryCollectionItemDomain(
+      apiUrl: json['@id'] as String,
+      name: json['name'] as String,
+    );
+
+Map<String, dynamic> _$EntryCollectionItemDomainToJson(
+        EntryCollectionItemDomain instance) =>
+    <String, dynamic>{
+      '@id': instance.apiUrl,
+      'name': instance.name,
     };

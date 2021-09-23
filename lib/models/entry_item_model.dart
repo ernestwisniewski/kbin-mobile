@@ -10,6 +10,7 @@ class EntryItem {
   final EntryItemMagazine magazine;
   final EntryItemUser user;
   final EntryItemImage? image;
+  final EntryItemDomain? domain;
   final String title;
   final String? url;
   final String? body;
@@ -20,6 +21,7 @@ class EntryItem {
   final String type;
   final int views;
   final int score;
+  final DateTime createdAt;
 
   EntryItem(
       {required this.id,
@@ -27,6 +29,7 @@ class EntryItem {
       required this.magazine,
       required this.user,
       this.image,
+      this.domain,
       required this.title,
       this.url,
       this.body,
@@ -37,6 +40,7 @@ class EntryItem {
       required this.type,
       required this.views,
       required this.score,
+      required this.createdAt,
       });
 
   factory EntryItem.fromJson(Map<String, dynamic> json) => _$EntryItemFromJson(json);
@@ -90,4 +94,19 @@ class EntryItemImage {
       _$EntryItemImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$EntryItemImageToJson(this);
+}
+
+@JsonSerializable()
+class EntryItemDomain {
+  @JsonKey(name: '@id')
+  final String apiUrl;
+  final String name;
+  final int entryCount;
+
+  EntryItemDomain({required this.apiUrl, required this.name, required this.entryCount});
+
+  factory EntryItemDomain.fromJson(Map<String, dynamic> json) =>
+      _$EntryItemDomainFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EntryItemDomainToJson(this);
 }

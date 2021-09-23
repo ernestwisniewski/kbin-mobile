@@ -5,6 +5,7 @@ import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class EntryScreen extends StatelessWidget {
   final String magazine;
@@ -18,77 +19,79 @@ class EntryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
-  }
-
-  PreferredSizeWidget buildAppBar(BuildContext context) {
-    return AppBar(
-      title: AppBarTitle(title: magazine, fontSize: 16),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.share),
-          tooltip: 'Udostępnij',
-          onPressed: () {
-            // handle the press
-          },
-        )
-      ],
-    );
-  }
-
-  Widget buildBody(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      child: SafeArea(
-        child: buildEntry(),
-      ),
-    );
-  }
-
-  Widget buildEntry() {
-    return FutureBuilder(
-      future: (EntriesRepository()).fetchEntry(id),
-      builder: (BuildContext context, AsyncSnapshot<EntryItem> snapshot) {
-        if (snapshot.hasData) {
-          EntryItem entry = snapshot.data!;
-
-          return CustomScrollView(
-            slivers: buildSliversList(entry),
-          );
-        }
-        return buildLoadingFull();
-      },
-    );
-  }
-
-  List<Widget> buildSliversList(EntryItem entry) {
-    List<Widget> list = [];
-
-    if (entry.image != null) {
-      list.add(buildSliverAppBar(entry));
-    }
-
-    list.add(buildSliverList(entry));
-
-    return list;
-  }
-
-  Widget buildSliverAppBar(EntryItem entry) {
-    return SliverAppBar(
-      leading: const Divider(),
-      backgroundColor: Colors.transparent,
-      expandedHeight: 200,
-      flexibleSpace: FlexibleSpaceBar(
-        background: Image.network(
-          Media().getThumbUrl(entry.image!.filePath),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
+    return Scaffold(
+        appBar: buildAppBar(context, id, magazine),
+        body: buildBody(context, id));
   }
 }
 
-Widget buildSliverList(EntryItem entry) {
+PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
+  return AppBar(
+    title: AppBarTitle(title: magazine, fontSize: 16),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.share),
+        tooltip: 'Udostępnij',
+        onPressed: () {
+          // handle the press
+        },
+      )
+    ],
+  );
+}
+
+Widget buildBody(BuildContext context, int id) {
+  return Container(
+    color: Colors.transparent,
+    child: SafeArea(
+      child: buildEntry(context, id),
+    ),
+  );
+}
+
+Widget buildEntry(BuildContext context, int id) {
+  return FutureBuilder(
+    future: (EntriesRepository()).fetchEntry(id),
+    builder: (BuildContext context, AsyncSnapshot<EntryItem> snapshot) {
+      if (snapshot.hasData) {
+        EntryItem entry = snapshot.data!;
+
+        return CustomScrollView(
+          slivers: buildSliversList(context, entry),
+        );
+      }
+      return buildLoadingFull();
+    },
+  );
+}
+
+List<Widget> buildSliversList(BuildContext context, EntryItem entry) {
+  List<Widget> list = [];
+
+  if (entry.image != null) {
+    list.add(buildSliverAppBar(context, entry));
+  }
+
+  list.add(buildSliverList(context, entry));
+
+  return list;
+}
+
+Widget buildSliverAppBar(BuildContext context, EntryItem entry) {
+  return SliverAppBar(
+    leading: const Divider(),
+    backgroundColor: Colors.transparent,
+    expandedHeight: 200,
+    flexibleSpace: FlexibleSpaceBar(
+      background: Image.network(
+        Media().getThumbUrl(entry.image!.filePath),
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
+}
+
+Widget buildSliverList(BuildContext context, EntryItem entry) {
   return SliverList(
     delegate: SliverChildListDelegate([
       Container(
@@ -110,24 +113,21 @@ Widget buildEntryCard(EntryItem entry) {
     children: <Widget>[
       Expanded(
         child: Padding(
-          padding: const EdgeInsets.only(
-              left: 15, right: 15, top: 30, bottom: 30),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
           child: Column(
             children: [
               Row(
                 children: [
                   Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top:20, bottom:20),
-                            child: Text(entry.title,
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w400)),
-                          ),
-                        ],
-                      )),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(entry.title,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400)),
+                    ],
+                  )),
                 ],
               ),
             ],
@@ -142,54 +142,18 @@ Widget buildActionButtons(EntryItem entry) {
   return Wrap(
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(
+          left: 15,
+          right: 15,
+        ),
         child: Row(
           children: [
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Column(children: [
-                          const Icon(Icons.comment_sharp),
-                          Text(entry.comments.toString())
-                        ]),
-                      )),
-                )),
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Column(children: [
-                          const Icon(Icons.arrow_upward),
-                          Text(entry.uv.toString())
-                        ]),
-                      )),
-                )),
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Column(children: [
-                          const Icon(Icons.arrow_downward),
-                          Text(entry.dv.toString())
-                        ]),
-                      )),
-                )),
+            buildActionButton(const Icon(Icons.comment_sharp),
+                entry.comments.toString(), () {}),
+            buildActionButton(
+                const Icon(Icons.arrow_upward), entry.uv.toString(), () {}),
+            buildActionButton(
+                const Icon(Icons.arrow_downward), entry.dv.toString(), () {}),
           ],
         ),
       ),
@@ -197,42 +161,9 @@ Widget buildActionButtons(EntryItem entry) {
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
           children: [
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: const TextButton(
-                        onPressed: null,
-                        child: Icon(Icons.share),
-                      )),
-                )),
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: const TextButton(
-                        onPressed: null,
-                        child: Icon(Icons.explore),
-                      )),
-                )),
-            Expanded(
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: const TextButton(
-                        onPressed: null,
-                        child: Icon(Icons.report),
-                      )),
-                )),
+            buildActionButton(const Icon(Icons.share), null, () {}),
+            buildActionButton(const Icon(Icons.explore), null, () {}),
+            buildActionButton(const Icon(Icons.report), null, () {}),
           ],
         ),
       )
@@ -240,26 +171,25 @@ Widget buildActionButtons(EntryItem entry) {
   );
 }
 
-buildUserInfo(EntryItem entry) {
-  return Container(
-    padding: const EdgeInsets.only(top: 20, bottom: 20),
-    color: Colors.black.withOpacity(0.15),
-    // color: Colors.black.withOpacity(0.03),
-    child: Padding(
-      padding: const EdgeInsets.only(
-          left: 15, right: 15, top: 30, bottom: 30),
+Widget buildUserInfo(EntryItem entry) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 15, bottom: 15),
+    child: Container(
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+      color: Colors.black.withOpacity(0.15),
+      // color: Colors.black.withOpacity(0.03),
       child: Row(
         children: [
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: entry.image != null
-                    ? Image.network(
-                  Media().getThumbUrl(entry.image!.filePath),
-                  fit: BoxFit.cover,
-                )
-                    : const Icon(Icons.person),
-              )),
+            padding: const EdgeInsets.only(right: 15),
+            child: entry.image != null
+                ? Image.network(
+                    Media().getThumbUrl(entry.image!.filePath),
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(Icons.person),
+          )),
           Expanded(
               flex: 3,
               child: Column(
@@ -267,8 +197,7 @@ buildUserInfo(EntryItem entry) {
                 children: [
                   Text(entry.user.username,
                       style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18)),
+                          fontWeight: FontWeight.w600, fontSize: 18)),
                   Wrap(children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 5),
@@ -290,37 +219,40 @@ Widget buildEntryInfo(EntryItem entry) {
       Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-                child: InkWell(
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Column(children: [
-                          const Icon(Icons.remove_red_eye),
-                          Text(entry.comments.toString())
-                        ]),
-                      )),
-                )),
-            Expanded(
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                      padding:
-                      const EdgeInsets.only(top: 10, bottom: 10),
-                      child: TextButton(
-                        onPressed: null,
-                        child: Column(children: [
-                          const Icon(Icons.calendar_today),
-                          Text(entry.comments.toString())
-                        ]),
-                      )),
-                )),
+            Container(),
+            entry.domain != null
+                ? buildActionButton(const Icon(Icons.public), entry.domain!.name)
+                : Container(),
+            buildActionButton(
+                const Icon(Icons.remove_red_eye), entry.views.toString()),
+            buildActionButton(const Icon(Icons.calendar_today),
+                timeago.format(entry.createdAt, locale: 'pl')),
           ],
         ),
       )
     ],
   );
+}
+
+Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
+  return Expanded(
+      child: InkWell(
+    onTap: fn,
+    child: Container(
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
+        child: TextButton(
+          onPressed: null,
+          child: Column(children: [
+            icon ?? Container(),
+            label != null
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text(label),
+                  )
+                : Container()
+          ]),
+        )),
+  ));
 }

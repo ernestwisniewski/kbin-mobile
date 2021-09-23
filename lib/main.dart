@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
+  timeago.setLocaleMessages('pl', timeago.PlMessages());
+
   runApp(MyApp());
 }
 
@@ -34,5 +38,14 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.openSans().fontFamily,
           textTheme: const TextTheme(subtitle1: TextStyle(fontWeight: FontWeight.w400)),
         ));
+  }
+}
+
+// Local certs
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
