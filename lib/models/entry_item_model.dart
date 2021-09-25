@@ -67,8 +67,9 @@ class EntryItemUser {
   @JsonKey(name: '@id')
   final String apiUrl;
   final String username;
+  final EntryItemImage? avatar;
 
-  EntryItemUser({required this.apiUrl, required this.username});
+  EntryItemUser({required this.apiUrl, required this.username, this.avatar});
 
   factory EntryItemUser.fromJson(Map<String, dynamic> json) =>
       _$EntryItemUserFromJson(json);

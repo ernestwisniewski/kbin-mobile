@@ -67,12 +67,16 @@ EntryItemUser _$EntryItemUserFromJson(Map<String, dynamic> json) =>
     EntryItemUser(
       apiUrl: json['@id'] as String,
       username: json['username'] as String,
+      avatar: json['avatar'] == null
+          ? null
+          : EntryItemImage.fromJson(json['avatar'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$EntryItemUserToJson(EntryItemUser instance) =>
     <String, dynamic>{
       '@id': instance.apiUrl,
       'username': instance.username,
+      'avatar': instance.avatar,
     };
 
 EntryItemImage _$EntryItemImageFromJson(Map<String, dynamic> json) =>

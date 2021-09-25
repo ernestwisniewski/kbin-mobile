@@ -4,6 +4,7 @@ import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/widgets/comments.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -41,11 +42,8 @@ PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
 }
 
 Widget buildBody(BuildContext context, int id) {
-  return Container(
-    color: Colors.transparent,
-    child: SafeArea(
-      child: buildEntry(context, id),
-    ),
+  return SafeArea(
+    child: buildEntry(context, id),
   );
 }
 
@@ -101,7 +99,8 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
               buildEntryCard(entry),
               buildActionButtons(entry),
               buildUserInfo(entry),
-              buildEntryInfo(entry)
+              buildEntryInfo(entry),
+              buildComments(context, entry)
             ],
           )),
     ]),
@@ -127,9 +126,13 @@ Widget buildEntryCard(EntryItem entry) {
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w400)),
                     ],
-                  )),
+                  ))
                 ],
               ),
+              entry.body != null ? Padding(
+                padding: const EdgeInsets.only(top:40),
+                child: Text(entry.body.toString()),
+              ) : Container()
             ],
           ),
         ),
@@ -173,19 +176,19 @@ Widget buildActionButtons(EntryItem entry) {
 
 Widget buildUserInfo(EntryItem entry) {
   return Padding(
-    padding: const EdgeInsets.only(top: 15, bottom: 15),
+    padding: const EdgeInsets.only(top: 15),
     child: Container(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      color: Colors.black.withOpacity(0.15),
-      // color: Colors.black.withOpacity(0.03),
+      // color: Colors.black.withOpacity(0.15),
+      color: Colors.black.withOpacity(0.03),
       child: Row(
         children: [
           Expanded(
               child: Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: entry.image != null
+            child: entry.user.avatar != null
                 ? Image.network(
-                    Media().getThumbUrl(entry.image!.filePath),
+                    Media().getThumbUrl(entry.user.avatar!.filePath),
                     fit: BoxFit.cover,
                   )
                 : const Icon(Icons.person),
@@ -217,13 +220,12 @@ Widget buildEntryInfo(EntryItem entry) {
   return Wrap(
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom:15, top:15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(),
             entry.domain != null
-                ? buildActionButton(const Icon(Icons.public), entry.domain!.name)
+                ? buildActionButton(const Icon(Icons.public), entry.domain!.name, (){})
                 : Container(),
             buildActionButton(
                 const Icon(Icons.remove_red_eye), entry.views.toString()),
@@ -255,4 +257,8 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
           ]),
         )),
   ));
+}
+
+Widget buildComments(BuildContext context, EntryItem entry) {
+  return buildCommentList(context, entry.id);
 }

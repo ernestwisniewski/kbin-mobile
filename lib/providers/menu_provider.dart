@@ -49,7 +49,7 @@ class Menu {
         subtitle: 'Informacje o tej instancji',
         route: const MenuRoute(),
         icon: const Icon(Icons.widgets, color: Colors.white),
-        iconContainerColor: Colors.grey),
+        iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Ustawienia',
         subtitle: 'Ustawienia aplikacji',

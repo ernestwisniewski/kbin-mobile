@@ -6,7 +6,7 @@ import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() {
-  HttpOverrides.global = MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides(); // @todo enviroments
   timeago.setLocaleMessages('pl', timeago.PlMessages());
 
   runApp(MyApp());
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         routerDelegate: _appRouter.delegate(),
         routeInformationParser: _appRouter.defaultRouteParser(),
         title: 'karab.in',
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         theme: ThemeData(
           primaryColor: KbinColors().fromHex('556880'),
           brightness: Brightness.light,
