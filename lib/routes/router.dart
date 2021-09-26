@@ -3,7 +3,7 @@ import 'package:kbin_mobile/screens/comments_screen.dart';
 import 'package:kbin_mobile/screens/entries_screen.dart';
 import 'package:kbin_mobile/screens/entry_screen.dart';
 import 'package:kbin_mobile/screens/menu_screen.dart';
-import 'package:kbin_mobile/screens/microblog_screen.dart';
+import 'package:kbin_mobile/screens/posts_screen.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
 
 @MaterialAutoRouter(
@@ -19,7 +19,7 @@ import 'package:kbin_mobile/screens/post_screen.dart';
     AutoRoute(path: '/c', page: CommentsScreen),
 
     // Microblog
-    AutoRoute(path: '/m', page: MicroblogScreen),
+    AutoRoute(path: '/m', page: PostsScreen),
     AutoRoute(path: 'm/:id', page: PostScreen)
   ],
 )

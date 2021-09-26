@@ -35,7 +35,7 @@ class Menu {
     MenuItem(
         title: 'Wpisy',
         subtitle: 'Krótka forma mikroblogowa',
-        route: const MenuRoute(),
+        route: const PostsRoute(),
         icon: const Icon(Icons.article, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(

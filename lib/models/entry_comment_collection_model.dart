@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'entry_comments_model.g.dart';
+part 'entry_comment_collection_model.g.dart';
 
 @JsonSerializable()
 class EntryCommentsItem {

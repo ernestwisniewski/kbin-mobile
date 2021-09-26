@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/media.dart';
-import 'package:kbin_mobile/models/entry_comments_model.dart';
+import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
@@ -222,7 +222,7 @@ Widget buildEntryInfo(EntryItem entry) {
   return Wrap(
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, bottom:15, top:15),
+        padding: const EdgeInsets.only(left: 15, right: 15, bottom:30, top:15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -263,7 +263,7 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
 
 Widget buildEntryCommentList(BuildContext context, int entryId) {
   return FutureBuilder(
-    future: (EntryCommentsRepository()).fetchEntryComments(entryId),
+    future: (CommentsRepository()).fetchEntryComments(entryId),
     builder: (BuildContext context,
         AsyncSnapshot<List<EntryCommentsItem>> snapshot) {
       if (snapshot.hasData) {

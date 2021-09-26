@@ -11,8 +11,8 @@ import '../screens/comments_screen.dart' as _i6;
 import '../screens/entries_screen.dart' as _i4;
 import '../screens/entry_screen.dart' as _i5;
 import '../screens/menu_screen.dart' as _i3;
-import '../screens/microblog_screen.dart' as _i7;
 import '../screens/post_screen.dart' as _i8;
+import '../screens/posts_screen.dart' as _i7;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -46,10 +46,10 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i6.CommentsScreen();
         }),
-    MicroblogRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    PostsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i7.MicroblogScreen();
+          return const _i7.PostsScreen();
         }),
     PostRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -67,7 +67,7 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(EntriesRoute.name, path: '/t'),
         _i1.RouteConfig(EntryRoute.name, path: '/:magazine/t/:id'),
         _i1.RouteConfig(CommentsRoute.name, path: '/c'),
-        _i1.RouteConfig(MicroblogRoute.name, path: '/m'),
+        _i1.RouteConfig(PostsRoute.name, path: '/m'),
         _i1.RouteConfig(PostRoute.name, path: 'm/:id')
       ];
 }
@@ -110,10 +110,10 @@ class CommentsRoute extends _i1.PageRouteInfo<void> {
   static const String name = 'CommentsRoute';
 }
 
-class MicroblogRoute extends _i1.PageRouteInfo<void> {
-  const MicroblogRoute() : super(name, path: '/m');
+class PostsRoute extends _i1.PageRouteInfo<void> {
+  const PostsRoute() : super(name, path: '/m');
 
-  static const String name = 'MicroblogRoute';
+  static const String name = 'PostsRoute';
 }
 
 class PostRoute extends _i1.PageRouteInfo<PostRouteArgs> {

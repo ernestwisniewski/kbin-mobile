@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:kbin_mobile/models/comment_collection_model.dart';
-import 'package:kbin_mobile/models/entry_comments_model.dart';
+import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/providers/api_provider.dart';
 
 class CommentsRepository {
@@ -21,9 +21,7 @@ class CommentsRepository {
 
     throw Exception("Something went wrong, ${response.statusCode}");
   }
-}
 
-class EntryCommentsRepository {
   Future<List<EntryCommentsItem>> fetchEntryComments(int entryId) async {
     Uri url = Uri.http(
         ApiProvider().getDomain(), 'api/entries/$entryId/comments.jsonld');
