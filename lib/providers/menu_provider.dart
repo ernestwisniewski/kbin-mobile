@@ -29,7 +29,7 @@ class Menu {
     MenuItem(
         title: 'Komentarze',
         subtitle: 'O tym sie dyskutuje',
-        route: const MenuRoute(),
+        route: const CommentsRoute(),
         icon: const Icon(Icons.comment, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(

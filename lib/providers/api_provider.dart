@@ -1,5 +1,5 @@
 class ApiProvider {
   String getDomain() {
-    return 'kbin.test';
+    return 'dev.karab.in';
   }
 }

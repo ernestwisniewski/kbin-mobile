@@ -6,6 +6,7 @@ import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/meta_item.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -51,14 +52,12 @@ Widget buildEntryList(BuildContext context) {
     builder: (BuildContext context,
         AsyncSnapshot<List<EntryCollectionItem>> snapshot) {
       if (snapshot.hasData) {
-        return Container(
-            margin: const EdgeInsets.only(left: 0, right: 0),
-            child: ListView.builder(
-                itemCount: snapshot.data?.length,
-                itemBuilder: (BuildContext context, int index) {
-                  EntryCollectionItem entry = snapshot.data![index];
-                  return buildItem(context, entry, index);
-                }));
+        return ListView.builder(
+            itemCount: snapshot.data?.length,
+            itemBuilder: (BuildContext context, int index) {
+              EntryCollectionItem entry = snapshot.data![index];
+              return buildItem(context, entry, index);
+            });
       }
 
       return buildLoadingFull();
@@ -140,19 +139,3 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
   ]);
 }
 
-Widget buildMetaItem(String label, IconData? icon,
-    [bool highlighted = false]) {
-  return Wrap(children: [
-    Icon(icon, size: 15, color: Colors.grey),
-    Padding(
-      padding: const EdgeInsets.only(left: 5, right: 15),
-      child: Text(
-        label,
-        style: TextStyle(
-            fontSize: 13,
-            color: Colors.grey,
-            fontWeight: highlighted ? FontWeight.w600 : FontWeight.normal),
-      ),
-    )
-  ]);
-}

@@ -7,11 +7,12 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
+import '../screens/comments_screen.dart' as _i6;
 import '../screens/entries_screen.dart' as _i4;
 import '../screens/entry_screen.dart' as _i5;
 import '../screens/menu_screen.dart' as _i3;
-import '../screens/microblog_screen.dart' as _i6;
-import '../screens/post_screen.dart' as _i7;
+import '../screens/microblog_screen.dart' as _i7;
+import '../screens/post_screen.dart' as _i8;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -40,10 +41,15 @@ class AppRouter extends _i1.RootStackRouter {
           return _i5.EntryScreen(
               key: args.key, magazine: args.magazine, id: args.id);
         }),
+    CommentsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i6.CommentsScreen();
+        }),
     MicroblogRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i6.MicroblogScreen();
+          return const _i7.MicroblogScreen();
         }),
     PostRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -51,7 +57,7 @@ class AppRouter extends _i1.RootStackRouter {
           final pathParams = data.pathParams;
           final args = data.argsAs<PostRouteArgs>(
               orElse: () => PostRouteArgs(id: pathParams.getInt('id')));
-          return _i7.PostScreen(key: args.key, id: args.id);
+          return _i8.PostScreen(key: args.key, id: args.id);
         })
   };
 
@@ -60,6 +66,7 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(MenuRoute.name, path: '/'),
         _i1.RouteConfig(EntriesRoute.name, path: '/t'),
         _i1.RouteConfig(EntryRoute.name, path: '/:magazine/t/:id'),
+        _i1.RouteConfig(CommentsRoute.name, path: '/c'),
         _i1.RouteConfig(MicroblogRoute.name, path: '/m'),
         _i1.RouteConfig(PostRoute.name, path: 'm/:id')
       ];
@@ -95,6 +102,12 @@ class EntryRouteArgs {
   final String magazine;
 
   final int id;
+}
+
+class CommentsRoute extends _i1.PageRouteInfo<void> {
+  const CommentsRoute() : super(name, path: '/c');
+
+  static const String name = 'CommentsRoute';
 }
 
 class MicroblogRoute extends _i1.PageRouteInfo<void> {
