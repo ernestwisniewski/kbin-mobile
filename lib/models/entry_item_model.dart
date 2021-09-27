@@ -22,6 +22,7 @@ class EntryItem {
   final int views;
   final int score;
   final DateTime createdAt;
+  final DateTime lastActive;
 
   EntryItem(
       {required this.id,
@@ -41,9 +42,10 @@ class EntryItem {
       required this.views,
       required this.score,
       required this.createdAt,
-      });
+      required this.lastActive});
 
-  factory EntryItem.fromJson(Map<String, dynamic> json) => _$EntryItemFromJson(json);
+  factory EntryItem.fromJson(Map<String, dynamic> json) =>
+      _$EntryItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$EntryItemToJson(this);
 }
@@ -104,7 +106,8 @@ class EntryItemDomain {
   final String name;
   final int entryCount;
 
-  EntryItemDomain({required this.apiUrl, required this.name, required this.entryCount});
+  EntryItemDomain(
+      {required this.apiUrl, required this.name, required this.entryCount});
 
   factory EntryItemDomain.fromJson(Map<String, dynamic> json) =>
       _$EntryItemDomainFromJson(json);

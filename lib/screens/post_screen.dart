@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class PostScreen extends StatelessWidget {
   final int id;
+  final String magazine;
 
-  const PostScreen({Key? key, @PathParam('id') required this.id})
+  const PostScreen(
+      {Key? key,
+      @PathParam('magazine') required this.magazine,
+      @PathParam('id') required this.id})
       : super(key: key);
 
   @override

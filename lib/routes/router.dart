@@ -13,14 +13,14 @@ import 'package:kbin_mobile/screens/post_screen.dart';
 
     // Entries
     AutoRoute(path: '/t', page: EntriesScreen),
-    AutoRoute(path: '/:magazine/t/:id', page: EntryScreen),
+    AutoRoute(path: '/m/:magazine/t/:id', page: EntryScreen),
 
     // Comments
     AutoRoute(path: '/c', page: CommentsScreen),
 
     // Microblog
     AutoRoute(path: '/m', page: PostsScreen),
-    AutoRoute(path: 'm/:id', page: PostScreen)
+    AutoRoute(path: '/m/:magazine/t/:id', page: PostScreen)
   ],
 )
 class $AppRouter {}

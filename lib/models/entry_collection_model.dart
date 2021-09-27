@@ -19,6 +19,8 @@ class EntryCollectionItem {
   final int dv;
   final bool isAdult;
   final String type;
+  final DateTime createdAt;
+  final DateTime lastActive;
 
   EntryCollectionItem(
       {required this.id,
@@ -34,7 +36,9 @@ class EntryCollectionItem {
       required this.uv,
       required this.dv,
       required this.isAdult,
-      required this.type});
+      required this.type,
+      required this.createdAt,
+      required this.lastActive});
 
   factory EntryCollectionItem.fromJson(Map<String, dynamic> json) =>
       _$EntryCollectionItemFromJson(json);

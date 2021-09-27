@@ -29,6 +29,7 @@ EntryItem _$EntryItemFromJson(Map<String, dynamic> json) => EntryItem(
       views: json['views'] as int,
       score: json['score'] as int,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      lastActive: DateTime.parse(json['lastActive'] as String),
     );
 
 Map<String, dynamic> _$EntryItemToJson(EntryItem instance) => <String, dynamic>{
@@ -49,6 +50,7 @@ Map<String, dynamic> _$EntryItemToJson(EntryItem instance) => <String, dynamic>{
       'views': instance.views,
       'score': instance.score,
       'createdAt': instance.createdAt.toIso8601String(),
+      'lastActive': instance.lastActive.toIso8601String(),
     };
 
 EntryItemMagazine _$EntryItemMagazineFromJson(Map<String, dynamic> json) =>

@@ -14,15 +14,17 @@ PostCollectionItem _$PostCollectionItemFromJson(Map<String, dynamic> json) =>
           json['magazine'] as Map<String, dynamic>),
       user:
           PostCollectionItemUser.fromJson(json['user'] as Map<String, dynamic>),
+      body: json['body'] as String,
       image: json['image'] == null
           ? null
           : PostCollectionItemImage.fromJson(
               json['image'] as Map<String, dynamic>),
-      body: json['body'] as String?,
       replies: json['comments'] as int,
       uv: json['uv'] as int,
       dv: json['dv'] as int,
       isAdult: json['isAdult'] as bool,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      lastActive: DateTime.parse(json['lastActive'] as String),
     );
 
 Map<String, dynamic> _$PostCollectionItemToJson(PostCollectionItem instance) =>
@@ -37,6 +39,8 @@ Map<String, dynamic> _$PostCollectionItemToJson(PostCollectionItem instance) =>
       'uv': instance.uv,
       'dv': instance.dv,
       'isAdult': instance.isAdult,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'lastActive': instance.lastActive.toIso8601String(),
     };
 
 PostCollectionItemMagazine _$PostCollectionItemMagazineFromJson(
@@ -58,6 +62,10 @@ PostCollectionItemUser _$PostCollectionItemUserFromJson(
     PostCollectionItemUser(
       apiUrl: json['@id'] as String,
       username: json['username'] as String,
+      avatar: json['avatar'] == null
+          ? null
+          : PostCollectionItemImage.fromJson(
+              json['avatar'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PostCollectionItemUserToJson(
@@ -65,6 +73,7 @@ Map<String, dynamic> _$PostCollectionItemUserToJson(
     <String, dynamic>{
       '@id': instance.apiUrl,
       'username': instance.username,
+      'avatar': instance.avatar,
     };
 
 PostCollectionItemImage _$PostCollectionItemImageFromJson(

@@ -10,24 +10,28 @@ class PostCollectionItem {
   final PostCollectionItemMagazine magazine;
   final PostCollectionItemUser user;
   final PostCollectionItemImage? image;
-  final String? body;
+  final String body;
   @JsonKey(name: 'comments')
   final int replies;
   final int uv;
   final int dv;
   final bool isAdult;
+  final DateTime createdAt;
+  final DateTime lastActive;
 
   PostCollectionItem(
       {required this.id,
-        required this.apiUrl,
-        required this.magazine,
-        required this.user,
-        this.image,
-        this.body,
-        required this.replies,
-        required this.uv,
-        required this.dv,
-        required this.isAdult});
+      required this.apiUrl,
+      required this.magazine,
+      required this.user,
+      required this.body,
+      this.image,
+      required this.replies,
+      required this.uv,
+      required this.dv,
+      required this.isAdult,
+      required this.createdAt,
+      required this.lastActive});
 
   factory PostCollectionItem.fromJson(Map<String, dynamic> json) =>
       _$PostCollectionItemFromJson(json);
@@ -54,8 +58,10 @@ class PostCollectionItemUser {
   @JsonKey(name: '@id')
   final String apiUrl;
   final String username;
+  final PostCollectionItemImage? avatar;
 
-  PostCollectionItemUser({required this.apiUrl, required this.username});
+  PostCollectionItemUser(
+      {required this.apiUrl, required this.username, this.avatar});
 
   factory PostCollectionItemUser.fromJson(Map<String, dynamic> json) =>
       _$PostCollectionItemUserFromJson(json);
@@ -73,9 +79,9 @@ class PostCollectionItemImage {
 
   PostCollectionItemImage(
       {required this.apiUrl,
-        required this.filePath,
-        required this.width,
-        required this.height});
+      required this.filePath,
+      required this.width,
+      required this.height});
 
   factory PostCollectionItemImage.fromJson(Map<String, dynamic> json) =>
       _$PostCollectionItemImageFromJson(json);

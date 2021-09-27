@@ -56,8 +56,11 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (data) {
           final pathParams = data.pathParams;
           final args = data.argsAs<PostRouteArgs>(
-              orElse: () => PostRouteArgs(id: pathParams.getInt('id')));
-          return _i8.PostScreen(key: args.key, id: args.id);
+              orElse: () => PostRouteArgs(
+                  magazine: pathParams.getString('magazine'),
+                  id: pathParams.getInt('id')));
+          return _i8.PostScreen(
+              key: args.key, magazine: args.magazine, id: args.id);
         })
   };
 
@@ -65,10 +68,10 @@ class AppRouter extends _i1.RootStackRouter {
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(MenuRoute.name, path: '/'),
         _i1.RouteConfig(EntriesRoute.name, path: '/t'),
-        _i1.RouteConfig(EntryRoute.name, path: '/:magazine/t/:id'),
+        _i1.RouteConfig(EntryRoute.name, path: '/m/:magazine/t/:id'),
         _i1.RouteConfig(CommentsRoute.name, path: '/c'),
         _i1.RouteConfig(PostsRoute.name, path: '/m'),
-        _i1.RouteConfig(PostRoute.name, path: 'm/:id')
+        _i1.RouteConfig(PostRoute.name, path: '/m/:magazine/t/:id')
       ];
 }
 
@@ -87,7 +90,7 @@ class EntriesRoute extends _i1.PageRouteInfo<void> {
 class EntryRoute extends _i1.PageRouteInfo<EntryRouteArgs> {
   EntryRoute({_i2.Key? key, required String magazine, required int id})
       : super(name,
-            path: '/:magazine/t/:id',
+            path: '/m/:magazine/t/:id',
             args: EntryRouteArgs(key: key, magazine: magazine, id: id),
             rawPathParams: {'magazine': magazine, 'id': id});
 
@@ -117,19 +120,21 @@ class PostsRoute extends _i1.PageRouteInfo<void> {
 }
 
 class PostRoute extends _i1.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i2.Key? key, required int id})
+  PostRoute({_i2.Key? key, required String magazine, required int id})
       : super(name,
-            path: 'm/:id',
-            args: PostRouteArgs(key: key, id: id),
-            rawPathParams: {'id': id});
+            path: '/m/:magazine/t/:id',
+            args: PostRouteArgs(key: key, magazine: magazine, id: id),
+            rawPathParams: {'magazine': magazine, 'id': id});
 
   static const String name = 'PostRoute';
 }
 
 class PostRouteArgs {
-  const PostRouteArgs({this.key, required this.id});
+  const PostRouteArgs({this.key, required this.magazine, required this.id});
 
   final _i2.Key? key;
+
+  final String magazine;
 
   final int id;
 }

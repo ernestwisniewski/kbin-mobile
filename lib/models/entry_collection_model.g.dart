@@ -30,6 +30,8 @@ EntryCollectionItem _$EntryCollectionItemFromJson(Map<String, dynamic> json) =>
       dv: json['dv'] as int,
       isAdult: json['isAdult'] as bool,
       type: json['type'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      lastActive: DateTime.parse(json['lastActive'] as String),
     );
 
 Map<String, dynamic> _$EntryCollectionItemToJson(
@@ -49,6 +51,8 @@ Map<String, dynamic> _$EntryCollectionItemToJson(
       'dv': instance.dv,
       'isAdult': instance.isAdult,
       'type': instance.type,
+      'createdAt': instance.createdAt.toIso8601String(),
+      'lastActive': instance.lastActive.toIso8601String(),
     };
 
 EntryCollectionItemMagazine _$EntryCollectionItemMagazineFromJson(
