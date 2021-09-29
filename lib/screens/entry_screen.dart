@@ -57,7 +57,7 @@ Widget buildEntry(BuildContext context, int id) {
         EntryItem entry = snapshot.data!;
 
         return CustomScrollView(
-          slivers: buildSliversList(context, entry),
+          slivers: buildSliverLists(context, entry),
         );
       }
       return buildLoadingFull();
@@ -65,7 +65,7 @@ Widget buildEntry(BuildContext context, int id) {
   );
 }
 
-List<Widget> buildSliversList(BuildContext context, EntryItem entry) {
+List<Widget> buildSliverLists(BuildContext context, EntryItem entry) {
   List<Widget> list = [];
 
   if (entry.image != null) {
@@ -273,7 +273,7 @@ Widget buildEntryCommentList(BuildContext context, int entryId) {
             child: Column(
               children: [
                 for (EntryCommentsItem item in snapshot.data!)
-                  buildItem(context, item, index++),
+                  buildComment(context, item, index++),
               ],
             ));
       }
@@ -283,46 +283,51 @@ Widget buildEntryCommentList(BuildContext context, int entryId) {
   );
 }
 
-Widget buildItem(BuildContext context, EntryCommentsItem comment, int index) {
+Widget buildComment(BuildContext context, EntryCommentsItem comment, int index) {
   return Container(
     color: index.isEven
         ? Colors.black.withOpacity(0.03)
     // ? Colors.black.withOpacity(0.15)
         : Colors.transparent,
     padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: comment.user.avatar != null
-                ? Image.network(
-              Media().getThumbUrl(comment.user.avatar!.filePath),
-              fit: BoxFit.cover,
-            )
-                : const Icon(Icons.person),
-          )),
-      Expanded(
-          flex: 6,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(comment.user.username,
-                  style: const TextStyle(fontWeight: FontWeight.w600)),
-              Text(timeago.format(comment.createdAt, locale: 'pl'),
-                  style: const TextStyle(color: Colors.grey)),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
-                child: Text(comment.body),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Wrap(children: [
-                  buildMetaItem(comment.uv.toString(), Icons.arrow_upward),
-                  buildMetaItem(comment.dv.toString(), Icons.arrow_downward)
-                ]),
-              ),
-            ],
-          ))
-    ]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: comment.user.avatar != null
+                    ? Image.network(
+                  Media().getThumbUrl(comment.user.avatar!.filePath),
+                  fit: BoxFit.cover,
+                )
+                    : const Icon(Icons.person),
+              )),
+          Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(comment.user.username,
+                      style: const TextStyle(fontWeight: FontWeight.w600)),
+                  Text(timeago.format(comment.createdAt, locale: 'pl'),
+                      style: const TextStyle(color: Colors.grey))
+                ],
+              ))
+        ]),
+        Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          child: Text(comment.body),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: Wrap(children: [
+            buildMetaItem(comment.uv.toString(), Icons.arrow_upward),
+            buildMetaItem(comment.dv.toString(), Icons.arrow_downward)
+          ]),
+        ),
+      ],
+    ),
   );
 }
