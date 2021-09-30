@@ -79,8 +79,8 @@ Widget buildItem(BuildContext context, EntryCollectionItem entry,
               padding: const EdgeInsets.only(
                   left: 15, right: 15, top: 20, bottom: 20),
               color: index.isEven
-                  ? Colors.black.withOpacity(0.03)
-                  // ? Colors.black.withOpacity(0.15)
+                  // ? Colors.black.withOpacity(0.03)
+                  ? Colors.black.withOpacity(0.15)
                   : Colors.transparent,
               child: Column(
                 children: [

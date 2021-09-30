@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 
 part 'post_collection_model.g.dart';
 
@@ -10,6 +11,8 @@ class PostCollectionItem {
   final PostCollectionItemMagazine magazine;
   final PostCollectionItemUser user;
   final PostCollectionItemImage? image;
+  @JsonKey(name: 'bestComments')
+  final List<PostReplyItem>? bestReplies;
   final String body;
   @JsonKey(name: 'comments')
   final int replies;
@@ -26,6 +29,7 @@ class PostCollectionItem {
       required this.user,
       required this.body,
       this.image,
+      this.bestReplies,
       required this.replies,
       required this.uv,
       required this.dv,

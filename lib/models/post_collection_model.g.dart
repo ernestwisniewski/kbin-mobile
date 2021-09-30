@@ -19,6 +19,9 @@ PostCollectionItem _$PostCollectionItemFromJson(Map<String, dynamic> json) =>
           ? null
           : PostCollectionItemImage.fromJson(
               json['image'] as Map<String, dynamic>),
+      bestReplies: (json['bestComments'] as List<dynamic>?)
+          ?.map((e) => PostReplyItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
       replies: json['comments'] as int,
       uv: json['uv'] as int,
       dv: json['dv'] as int,
@@ -34,6 +37,7 @@ Map<String, dynamic> _$PostCollectionItemToJson(PostCollectionItem instance) =>
       'magazine': instance.magazine,
       'user': instance.user,
       'image': instance.image,
+      'bestComments': instance.bestReplies,
       'body': instance.body,
       'comments': instance.replies,
       'uv': instance.uv,

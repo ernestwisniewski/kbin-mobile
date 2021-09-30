@@ -181,8 +181,8 @@ Widget buildUserInfo(EntryItem entry) {
     padding: const EdgeInsets.only(top: 15),
     child: Container(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      // color: Colors.black.withOpacity(0.15),
-      color: Colors.black.withOpacity(0.03),
+      color: Colors.black.withOpacity(0.15),
+      // color: Colors.black.withOpacity(0.03),
       child: Row(
         children: [
           Expanded(
@@ -286,8 +286,8 @@ Widget buildEntryCommentList(BuildContext context, int entryId) {
 Widget buildComment(BuildContext context, EntryCommentsItem comment, int index) {
   return Container(
     color: index.isEven
-        ? Colors.black.withOpacity(0.03)
-    // ? Colors.black.withOpacity(0.15)
+        // ? Colors.black.withOpacity(0.03)
+    ? Colors.black.withOpacity(0.15)
         : Colors.transparent,
     padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
     child: Column(
