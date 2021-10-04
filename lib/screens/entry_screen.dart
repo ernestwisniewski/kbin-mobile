@@ -98,7 +98,7 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
           margin: const EdgeInsets.only(left: 0, right: 0),
           child: Column(
             children: [
-              buildEntryCard(entry),
+              buildEntryCard(context, entry),
               buildActionButtons(entry),
               buildUserInfo(entry),
               buildEntryInfo(entry),
@@ -109,7 +109,7 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
   );
 }
 
-Widget buildEntryCard(EntryItem entry) {
+Widget buildEntryCard(BuildContext context, EntryItem entry) {
   return Row(
     children: <Widget>[
       Expanded(
@@ -125,16 +125,18 @@ Widget buildEntryCard(EntryItem entry) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(entry.title,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w400)),
+                          style: Theme.of(context).textTheme.headline6),
                     ],
                   ))
                 ],
               ),
-              entry.body != null ? Padding(
-                padding: const EdgeInsets.only(top:40),
-                child: Text(entry.body.toString()),
-              ) : Container()
+              entry.body != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: Text(entry.body.toString(),
+                          style: Theme.of(context).textTheme.bodyText1),
+                    )
+                  : Container()
             ],
           ),
         ),
@@ -206,9 +208,11 @@ Widget buildUserInfo(EntryItem entry) {
                   Wrap(children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 5),
-                      child: Text(entry.comments.toString()),
+                      child: Text(entry.comments.toString(),
+                          style: const TextStyle(color: Colors.grey)),
                     ),
-                    const Text('obserwujących'),
+                    const Text('obserwujących',
+                        style: TextStyle(color: Colors.grey)),
                   ])
                 ],
               ))
@@ -222,12 +226,14 @@ Widget buildEntryInfo(EntryItem entry) {
   return Wrap(
     children: [
       Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, bottom:30, top:15),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, bottom: 30, top: 15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             entry.domain != null
-                ? buildActionButton(const Icon(Icons.public), entry.domain!.name, (){})
+                ? buildActionButton(
+                    const Icon(Icons.public), entry.domain!.name, () {})
                 : Container(),
             buildActionButton(
                 const Icon(Icons.remove_red_eye), entry.views.toString()),
@@ -253,7 +259,7 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
             label != null
                 ? Padding(
                     padding: const EdgeInsets.only(top: 5),
-                    child: Text(label),
+                    child: Text(label, textAlign: TextAlign.center),
                   )
                 : Container()
           ]),
@@ -283,11 +289,12 @@ Widget buildEntryCommentList(BuildContext context, int entryId) {
   );
 }
 
-Widget buildComment(BuildContext context, EntryCommentsItem comment, int index) {
+Widget buildComment(
+    BuildContext context, EntryCommentsItem comment, int index) {
   return Container(
     color: index.isEven
         // ? Colors.black.withOpacity(0.03)
-    ? Colors.black.withOpacity(0.15)
+        ? Colors.black.withOpacity(0.15)
         : Colors.transparent,
     padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
     child: Column(
@@ -296,14 +303,14 @@ Widget buildComment(BuildContext context, EntryCommentsItem comment, int index) 
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(right: 15),
-                child: comment.user.avatar != null
-                    ? Image.network(
-                  Media().getThumbUrl(comment.user.avatar!.filePath),
-                  fit: BoxFit.cover,
-                )
-                    : const Icon(Icons.person),
-              )),
+            padding: const EdgeInsets.only(right: 15),
+            child: comment.user.avatar != null
+                ? Image.network(
+                    Media().getThumbUrl(comment.user.avatar!.filePath),
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(Icons.person),
+          )),
           Expanded(
               flex: 6,
               child: Column(

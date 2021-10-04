@@ -7,12 +7,13 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../screens/comments_screen.dart' as _i6;
-import '../screens/entries_screen.dart' as _i4;
-import '../screens/entry_screen.dart' as _i5;
+import '../screens/comments_screen.dart' as _i7;
+import '../screens/entries_screen.dart' as _i5;
+import '../screens/entry_screen.dart' as _i6;
+import '../screens/magazines_screen.dart' as _i4;
 import '../screens/menu_screen.dart' as _i3;
-import '../screens/post_screen.dart' as _i8;
-import '../screens/posts_screen.dart' as _i7;
+import '../screens/post_screen.dart' as _i9;
+import '../screens/posts_screen.dart' as _i8;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -25,10 +26,15 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return const _i3.MenuScreen();
         }),
+    MagazinesRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i4.MagazinesScreen();
+        }),
     EntriesRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i4.EntriesScreen();
+          return const _i5.EntriesScreen();
         }),
     EntryRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -38,18 +44,18 @@ class AppRouter extends _i1.RootStackRouter {
               orElse: () => EntryRouteArgs(
                   magazine: pathParams.getString('magazine'),
                   id: pathParams.getInt('id')));
-          return _i5.EntryScreen(
+          return _i6.EntryScreen(
               key: args.key, magazine: args.magazine, id: args.id);
         }),
     CommentsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i6.CommentsScreen();
+          return const _i7.CommentsScreen();
         }),
     PostsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i7.PostsScreen();
+          return const _i8.PostsScreen();
         }),
     PostRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -59,7 +65,7 @@ class AppRouter extends _i1.RootStackRouter {
               orElse: () => PostRouteArgs(
                   magazine: pathParams.getString('magazine'),
                   id: pathParams.getInt('id')));
-          return _i8.PostScreen(
+          return _i9.PostScreen(
               key: args.key, magazine: args.magazine, id: args.id);
         })
   };
@@ -67,11 +73,12 @@ class AppRouter extends _i1.RootStackRouter {
   @override
   List<_i1.RouteConfig> get routes => [
         _i1.RouteConfig(MenuRoute.name, path: '/'),
+        _i1.RouteConfig(MagazinesRoute.name, path: '/magazines'),
         _i1.RouteConfig(EntriesRoute.name, path: '/t'),
         _i1.RouteConfig(EntryRoute.name, path: '/m/:magazine/t/:id'),
         _i1.RouteConfig(CommentsRoute.name, path: '/c'),
-        _i1.RouteConfig(PostsRoute.name, path: '/m'),
-        _i1.RouteConfig(PostRoute.name, path: '/m/:magazine/t/:id')
+        _i1.RouteConfig(PostsRoute.name, path: '/p'),
+        _i1.RouteConfig(PostRoute.name, path: '/p/:magazine/t/:id')
       ];
 }
 
@@ -79,6 +86,12 @@ class MenuRoute extends _i1.PageRouteInfo<void> {
   const MenuRoute() : super(name, path: '/');
 
   static const String name = 'MenuRoute';
+}
+
+class MagazinesRoute extends _i1.PageRouteInfo<void> {
+  const MagazinesRoute() : super(name, path: '/magazines');
+
+  static const String name = 'MagazinesRoute';
 }
 
 class EntriesRoute extends _i1.PageRouteInfo<void> {
@@ -114,7 +127,7 @@ class CommentsRoute extends _i1.PageRouteInfo<void> {
 }
 
 class PostsRoute extends _i1.PageRouteInfo<void> {
-  const PostsRoute() : super(name, path: '/m');
+  const PostsRoute() : super(name, path: '/p');
 
   static const String name = 'PostsRoute';
 }
@@ -122,7 +135,7 @@ class PostsRoute extends _i1.PageRouteInfo<void> {
 class PostRoute extends _i1.PageRouteInfo<PostRouteArgs> {
   PostRoute({_i2.Key? key, required String magazine, required int id})
       : super(name,
-            path: '/m/:magazine/t/:id',
+            path: '/p/:magazine/t/:id',
             args: PostRouteArgs(key: key, magazine: magazine, id: id),
             rawPathParams: {'magazine': magazine, 'id': id});
 

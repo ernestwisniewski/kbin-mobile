@@ -74,6 +74,7 @@ List<Widget> buildSliverLists(BuildContext context, PostItem post) {
             child: Column(
               children: [
                 buildPostItem(context, post, 1),
+                const Divider(height:0),
                 buildPostRepliesList(context, post.id)
               ],
             )),
@@ -130,7 +131,7 @@ Widget buildPostItem(BuildContext context, PostItem post, int index) {
           child: Wrap(children: [
             buildMetaItem(post.replies.toString(), Icons.comment),
           ]),
-        )
+        ),
       ],
     ),
   );
@@ -143,14 +144,12 @@ Widget buildPostRepliesList(BuildContext context, int postId) {
         (BuildContext context, AsyncSnapshot<List<PostReplyItem>> snapshot) {
       if (snapshot.hasData) {
         int index = 0;
-        return Container(
-            margin: const EdgeInsets.only(left: 0, right: 0),
-            child: Column(
-              children: [
-                for (PostReplyItem item in snapshot.data!)
-                  buildReply(context, item, index++),
-              ],
-            ));
+        return Column(
+          children: [
+            for (PostReplyItem item in snapshot.data!)
+              buildReply(context, item, index++),
+          ],
+        );
       }
 
       return buildLoadingFull();

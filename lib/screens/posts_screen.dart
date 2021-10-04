@@ -71,7 +71,7 @@ Widget buildPostList(BuildContext context) {
 Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
   int i = 0;
   return Column(
-    children: [
+    children: [      const Divider(height: 0),
       InkWell(
         onTap: () {
           context.router.push(PostRoute(id: post.id, magazine: post.magazine.name));
@@ -124,11 +124,12 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
                   buildMetaItem(post.replies.toString(), Icons.comment),
                   buildMetaItem(post.magazine.name, Icons.bookmark),
                 ]),
-              )
+              ),
             ],
           ),
         ),
       ),
+      const Divider(height: 0),
       for (PostReplyItem item in post.bestReplies!)
         buildReply(context, item, i++),
     ],

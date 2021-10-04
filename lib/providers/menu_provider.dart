@@ -41,7 +41,7 @@ class Menu {
     MenuItem(
         title: 'Magazyny',
         subtitle: 'Magazyny tematyczne',
-        route: const MenuRoute(),
+        route: const MagazinesRoute(),
         icon: const Icon(Icons.bookmarks , color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
