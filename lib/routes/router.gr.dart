@@ -14,6 +14,7 @@ import '../screens/magazines_screen.dart' as _i4;
 import '../screens/menu_screen.dart' as _i3;
 import '../screens/post_screen.dart' as _i9;
 import '../screens/posts_screen.dart' as _i8;
+import '../screens/search_screen.dart' as _i10;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -67,6 +68,11 @@ class AppRouter extends _i1.RootStackRouter {
                   id: pathParams.getInt('id')));
           return _i9.PostScreen(
               key: args.key, magazine: args.magazine, id: args.id);
+        }),
+    SearchRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i10.SearchScreen();
         })
   };
 
@@ -78,7 +84,8 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(EntryRoute.name, path: '/m/:magazine/t/:id'),
         _i1.RouteConfig(CommentsRoute.name, path: '/c'),
         _i1.RouteConfig(PostsRoute.name, path: '/p'),
-        _i1.RouteConfig(PostRoute.name, path: '/p/:magazine/t/:id')
+        _i1.RouteConfig(PostRoute.name, path: '/p/:magazine/t/:id'),
+        _i1.RouteConfig(SearchRoute.name, path: '/search')
       ];
 }
 
@@ -150,4 +157,10 @@ class PostRouteArgs {
   final String magazine;
 
   final int id;
+}
+
+class SearchRoute extends _i1.PageRouteInfo<void> {
+  const SearchRoute() : super(name, path: '/search');
+
+  static const String name = 'SearchRoute';
 }

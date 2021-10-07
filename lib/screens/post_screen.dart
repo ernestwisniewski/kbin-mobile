@@ -73,7 +73,7 @@ List<Widget> buildSliverLists(BuildContext context, PostItem post) {
             margin: const EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
-                buildPostItem(context, post, 1),
+                buildItem(context, post, 1),
                 const Divider(height:0),
                 buildPostRepliesList(context, post.id)
               ],
@@ -83,7 +83,7 @@ List<Widget> buildSliverLists(BuildContext context, PostItem post) {
   ];
 }
 
-Widget buildPostItem(BuildContext context, PostItem post, int index) {
+Widget buildItem(BuildContext context, PostItem post, int index) {
   return Container(
     padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
     child: Column(
@@ -141,12 +141,12 @@ Widget buildPostRepliesList(BuildContext context, int postId) {
   return FutureBuilder(
     future: (RepliesRepository()).fetchPostReplies(postId),
     builder:
-        (BuildContext context, AsyncSnapshot<List<PostReplyItem>> snapshot) {
+        (BuildContext context, AsyncSnapshot<List<ReplyCollectionItem>> snapshot) {
       if (snapshot.hasData) {
         int index = 0;
         return Column(
           children: [
-            for (PostReplyItem item in snapshot.data!)
+            for (ReplyCollectionItem item in snapshot.data!)
               buildReply(context, item, index++),
           ],
         );
@@ -157,7 +157,7 @@ Widget buildPostRepliesList(BuildContext context, int postId) {
   );
 }
 
-Widget buildReply(BuildContext context, PostReplyItem reply, int index) {
+Widget buildReply(BuildContext context, ReplyCollectionItem reply, int index) {
   return Padding(
     padding: const EdgeInsets.only(left:15),
     child: Container(

@@ -59,7 +59,7 @@ class Menu {
     MenuItem(
         title: 'Wyszukaj',
         subtitle: 'Znajdź w serwisie',
-        route: const MenuRoute(),
+        route: const SearchRoute(),
         icon: const Icon(Icons.search, color: Colors.white),
         iconContainerColor: Colors.red),
   ];

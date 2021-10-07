@@ -6,6 +6,7 @@ import 'package:kbin_mobile/screens/magazines_screen.dart';
 import 'package:kbin_mobile/screens/menu_screen.dart';
 import 'package:kbin_mobile/screens/posts_screen.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
+import 'package:kbin_mobile/screens/search_screen.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Screen,Route',
@@ -24,7 +25,9 @@ import 'package:kbin_mobile/screens/post_screen.dart';
 
     // Microblog
     AutoRoute(path: '/p', page: PostsScreen),
-    AutoRoute(path: '/p/:magazine/t/:id', page: PostScreen)
+    AutoRoute(path: '/p/:magazine/t/:id', page: PostScreen),
+
+    AutoRoute(path: '/search', page: SearchScreen),
   ],
 )
 class $AppRouter {}

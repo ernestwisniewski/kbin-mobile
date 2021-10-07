@@ -4,7 +4,7 @@ import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/providers/api_provider.dart';
 
 class RepliesRepository {
-  Future<List<PostReplyItem>> fetchPostReplies(int postId) async {
+  Future<List<ReplyCollectionItem>> fetchPostReplies(int postId) async {
     Uri url = Uri.http(
         ApiProvider().getDomain(), 'api/posts/$postId/comments.jsonld');
 
@@ -15,7 +15,7 @@ class RepliesRepository {
 
       List<dynamic> entries = data["hydra:member"];
 
-      return entries.map((json) => PostReplyItem.fromJson(json)).toList();
+      return entries.map((json) => ReplyCollectionItem.fromJson(json)).toList();
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");

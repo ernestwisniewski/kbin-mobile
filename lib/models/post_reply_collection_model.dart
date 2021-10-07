@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'post_reply_collection_model.g.dart';
 
 @JsonSerializable()
-class PostReplyItem {
+class ReplyCollectionItem {
   final int id;
   @JsonKey(name: '@id')
   final String apiUrl;
@@ -14,7 +14,7 @@ class PostReplyItem {
   final DateTime createdAt;
   final DateTime lastActive;
 
-  PostReplyItem(
+  ReplyCollectionItem(
       {required this.id,
       required this.apiUrl,
       required this.user,
@@ -24,10 +24,10 @@ class PostReplyItem {
       required this.createdAt,
       required this.lastActive});
 
-  factory PostReplyItem.fromJson(Map<String, dynamic> json) =>
-      _$PostReplyItemFromJson(json);
+  factory ReplyCollectionItem.fromJson(Map<String, dynamic> json) =>
+      _$ReplyCollectionItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PostReplyItemToJson(this);
+  Map<String, dynamic> toJson() => _$ReplyCollectionItemToJson(this);
 }
 
 @JsonSerializable()

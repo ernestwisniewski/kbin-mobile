@@ -6,8 +6,8 @@ part of 'post_reply_collection_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostReplyItem _$PostReplyItemFromJson(Map<String, dynamic> json) =>
-    PostReplyItem(
+ReplyCollectionItem _$ReplyCollectionItemFromJson(Map<String, dynamic> json) =>
+    ReplyCollectionItem(
       id: json['id'] as int,
       apiUrl: json['@id'] as String,
       user: PostPostReplyUser.fromJson(json['user'] as Map<String, dynamic>),
@@ -20,7 +20,7 @@ PostReplyItem _$PostReplyItemFromJson(Map<String, dynamic> json) =>
       lastActive: DateTime.parse(json['lastActive'] as String),
     );
 
-Map<String, dynamic> _$PostReplyItemToJson(PostReplyItem instance) =>
+Map<String, dynamic> _$ReplyCollectionItemToJson(ReplyCollectionItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       '@id': instance.apiUrl,

@@ -20,7 +20,7 @@ PostCollectionItem _$PostCollectionItemFromJson(Map<String, dynamic> json) =>
           : PostCollectionItemImage.fromJson(
               json['image'] as Map<String, dynamic>),
       bestReplies: (json['bestComments'] as List<dynamic>?)
-          ?.map((e) => PostReplyItem.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ReplyCollectionItem.fromJson(e as Map<String, dynamic>))
           .toList(),
       replies: json['comments'] as int,
       uv: json['uv'] as int,
