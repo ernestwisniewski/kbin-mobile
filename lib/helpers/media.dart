@@ -1,4 +1,4 @@
-import 'package:kbin_mobile/providers/api_provider.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class Media {
   String getThumbUrl(String path) {

@@ -5,7 +5,7 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
-import 'package:kbin_mobile/providers/api_provider.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class SearchRepository {
   Future<List<dynamic>> search(String val) async {

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:kbin_mobile/models/entry_item_model.dart';
-import 'package:kbin_mobile/providers/api_provider.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 
 
 class EntriesRepository {
