@@ -56,7 +56,7 @@ Widget buildBody(BuildContext context) {
 
 Widget buildPostList(BuildContext context) {
   return FutureBuilder(
-    future: (SearchRepository()).search('flutter'),
+    future: (SearchRepository()).search('rust eventsourcing eventstorming'),
     builder: (BuildContext context,
         AsyncSnapshot<List<dynamic>> snapshot) {
       if (snapshot.hasData) {
