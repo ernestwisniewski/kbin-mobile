@@ -48,7 +48,9 @@ class MenuScreen extends StatelessWidget {
                 ),
                 // subtitle: Text(main[index].subtitle ?? ''),
                 onTap: () {
-                  context.router.replace(main[index].route);
+                  main[index].routeType == 'replace'
+                      ? context.router.replace(main[index].route)
+                      : context.router.push(main[index].route);
                 },
               );
             },
@@ -67,9 +69,9 @@ class MenuScreen extends StatelessWidget {
                           height: 40.0,
                           width: 40.0,
                           decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              shape: BoxShape.circle),
-                          child: const Icon(Icons.lightbulb, color: Colors.white)),
+                              color: Colors.grey, shape: BoxShape.circle),
+                          child:
+                              const Icon(Icons.lightbulb, color: Colors.white)),
                     ]),
                 const Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -113,6 +115,7 @@ class MenuItem {
   final String title;
   final String? subtitle;
   final PageRouteInfo route;
+  final String? routeType;
   final Icon? icon;
   final Color? iconContainerColor;
 
@@ -120,6 +123,7 @@ class MenuItem {
       {required this.title,
       this.subtitle,
       required this.route,
+      this.routeType,
       this.icon,
       this.iconContainerColor});
 }
@@ -130,18 +134,21 @@ class Menu {
         title: 'Treści',
         subtitle: 'Strona główna',
         route: const EntriesRoute(),
+        routeType: 'replace',
         icon: const Icon(Icons.format_list_bulleted, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Komentarze',
         subtitle: 'O tym sie dyskutuje',
         route: const CommentsRoute(),
+        routeType: 'replace',
         icon: const Icon(Icons.comment, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Wpisy',
         subtitle: 'Krótka forma mikroblogowa',
         route: const PostsRoute(),
+        routeType: 'replace',
         icon: const Icon(Icons.article, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
@@ -168,7 +175,6 @@ class Menu {
         route: const MenuRoute(),
         icon: const Icon(Icons.settings, color: Colors.white),
         iconContainerColor: Colors.grey),
-
   ];
 
   static List<MenuItem> profile = <MenuItem>[

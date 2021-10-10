@@ -10,7 +10,9 @@ import 'package:kbin_mobile/repositories/search_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/screens/post_screen.dart' as post_screen;
 import 'package:kbin_mobile/screens/posts_screen.dart' as posts_screen;
+import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/screens/comments_screen.dart' as commentsScreen;
 import 'package:kbin_mobile/screens/entries_screen.dart' as entries_screen;
@@ -21,12 +23,16 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
+    return Scaffold(
+        appBar: buildAppBar(context),
+        body: buildBody(context),
+        bottomNavigationBar: buildBottomNavbar(context, 3));
   }
 }
 
 PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
+    leading: buildAppBarLeading(context),
     actions: [
       IconButton(
         icon: const Icon(Icons.more_vert),
@@ -49,8 +55,7 @@ Widget buildBody(BuildContext context) {
 Widget buildPostList(BuildContext context) {
   return FutureBuilder(
     future: (SearchRepository()).search('rust eventsourcing eventstorming'),
-    builder: (BuildContext context,
-        AsyncSnapshot<List<dynamic>> snapshot) {
+    builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
       if (snapshot.hasData) {
         return ListView.builder(
             itemCount: snapshot.data?.length,
@@ -65,17 +70,16 @@ Widget buildPostList(BuildContext context) {
   );
 }
 
-Widget buildSubject(
-    BuildContext context, dynamic subject, int index) {
-  if(subject is EntryCollectionItem) {
+Widget buildSubject(BuildContext context, dynamic subject, int index) {
+  if (subject is EntryCollectionItem) {
     return entries_screen.buildItem(context, subject, index);
-  } else if(subject is CommentCollectionItem) {
+  } else if (subject is CommentCollectionItem) {
     return commentsScreen.buildItem(context, subject, index);
-  } else if(subject is PostCollectionItem) {
+  } else if (subject is PostCollectionItem) {
     return posts_screen.buildItem(context, subject, index);
-  } else if(subject is ReplyCollectionItem) {
+  } else if (subject is ReplyCollectionItem) {
     return post_screen.buildReply(context, subject, index);
-  } else if(subject is MagazineCollectionItem) {
+  } else if (subject is MagazineCollectionItem) {
     return magazines_screen.buildItem(context, subject, index);
   }
 

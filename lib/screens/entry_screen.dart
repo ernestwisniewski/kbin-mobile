@@ -293,8 +293,7 @@ Widget buildComment(
     BuildContext context, EntryCommentsItem comment, int index) {
   return Container(
     color: index.isEven
-        // ? Colors.black.withOpacity(0.03)
-        ? Colors.black.withOpacity(0.15)
+        ? (KbinColors()).getEvenBackground(context)
         : Colors.transparent,
     padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
     child: Column(

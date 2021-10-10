@@ -5,6 +5,7 @@ import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
@@ -19,20 +20,13 @@ class EntriesScreen extends StatelessWidget {
     return Scaffold(
         appBar: buildAppBar(context),
         body: buildBody(context),
-        bottomNavigationBar: buildBottomNavbar(context, 1));
+        bottomNavigationBar: buildBottomNavbar(context, 0));
   }
 }
 
 PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
-    leading: IconButton(
-      alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.search),
-      tooltip: 'Wyszukaj',
-      onPressed: () {
-        context.router.push(const SearchRoute());
-      },
-    ),
+    leading: buildAppBarLeading(context),
     actions: [
       IconButton(
         icon: const Icon(Icons.more_vert),
