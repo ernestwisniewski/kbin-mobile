@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/repositories/magazines_repository.dart';
@@ -150,8 +151,7 @@ Widget _listTile(BuildContext context, String title, String value,
     PageRouteInfo route, int index) {
   return Container(
     color: index.isEven
-        // ? Colors.black.withOpacity(0.03)
-        ? Colors.black.withOpacity(0.15)
+        ? (KbinColors()).getEventBackground(context)
         : Colors.transparent,
     child: ListTile(
       onTap: () {

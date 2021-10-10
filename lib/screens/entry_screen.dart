@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
@@ -100,7 +101,7 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
             children: [
               buildEntryCard(context, entry),
               buildActionButtons(entry),
-              buildUserInfo(entry),
+              buildUserInfo(context, entry),
               buildEntryInfo(entry),
               buildEntryCommentList(context, entry.id)
             ],
@@ -178,13 +179,12 @@ Widget buildActionButtons(EntryItem entry) {
   );
 }
 
-Widget buildUserInfo(EntryItem entry) {
+Widget buildUserInfo(BuildContext context, EntryItem entry) {
   return Padding(
     padding: const EdgeInsets.only(top: 15),
     child: Container(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      color: Colors.black.withOpacity(0.15),
-      // color: Colors.black.withOpacity(0.03),
+      color: (KbinColors()).getEventBackground(context),
       child: Row(
         children: [
           Expanded(

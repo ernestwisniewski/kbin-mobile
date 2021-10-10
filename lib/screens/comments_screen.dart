@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
@@ -66,17 +67,16 @@ Widget buildCommentList(BuildContext context) {
   );
 }
 
-
-Widget buildItem(BuildContext context, CommentCollectionItem comment, int index) {
+Widget buildItem(
+    BuildContext context, CommentCollectionItem comment, int index) {
   return InkWell(
-    onTap: (){
-      context.router
-          .push(EntryRoute(id: comment.entry.id, magazine: comment.magazine.name));
+    onTap: () {
+      context.router.push(
+          EntryRoute(id: comment.entry.id, magazine: comment.magazine.name));
     },
     child: Container(
       color: index.isEven
-          // ? Colors.black.withOpacity(0.03)
-      ? Colors.black.withOpacity(0.15)
+          ? (KbinColors()).getEventBackground(context)
           : Colors.transparent,
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
       child: Column(
@@ -85,14 +85,14 @@ Widget buildItem(BuildContext context, CommentCollectionItem comment, int index)
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: comment.user.avatar != null
-                      ? Image.network(
-                    Media().getThumbUrl(comment.user.avatar!.filePath),
-                    fit: BoxFit.cover,
-                  )
-                      : const Icon(Icons.person),
-                )),
+              padding: const EdgeInsets.only(right: 15),
+              child: comment.user.avatar != null
+                  ? Image.network(
+                      Media().getThumbUrl(comment.user.avatar!.filePath),
+                      fit: BoxFit.cover,
+                    )
+                  : const Icon(Icons.person),
+            )),
             Expanded(
                 flex: 6,
                 child: Column(

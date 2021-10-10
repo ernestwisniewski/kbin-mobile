@@ -163,8 +163,7 @@ Widget buildReply(BuildContext context, ReplyCollectionItem reply, int index) {
     child: Container(
       decoration: BoxDecoration(
           color: index.isEven
-              ? Colors.black.withOpacity(0.03)
-          // ? Colors.black.withOpacity(0.15)
+              ? (KbinColors()).getEventBackground(context)
               : Colors.transparent,
           border: Border(
             left: BorderSide(width: 2, color: KbinColors().fromHex('#71ac53')),

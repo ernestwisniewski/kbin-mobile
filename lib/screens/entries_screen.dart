@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
@@ -7,6 +8,7 @@ import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -79,8 +81,7 @@ Widget buildItem(BuildContext context, EntryCollectionItem entry,
               padding: const EdgeInsets.only(
                   left: 15, right: 15, top: 20, bottom: 20),
               color: index.isEven
-                  // ? Colors.black.withOpacity(0.03)
-                  ? Colors.black.withOpacity(0.15)
+                  ? (KbinColors()).getEventBackground(context)
                   : Colors.transparent,
               child: Column(
                 children: [

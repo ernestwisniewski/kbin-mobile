@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -54,6 +55,33 @@ class MenuScreen extends StatelessWidget {
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(height: 0),
           ),
+          ListTile(
+            minVerticalPadding: 15,
+            title: Row(
+              children: [
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          height: 40.0,
+                          width: 40.0,
+                          decoration: const BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle),
+                          child: const Icon(Icons.lightbulb, color: Colors.white)),
+                    ]),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text('Zmień motyw'),
+                ),
+              ],
+            ),
+            // subtitle: Text(main[index].subtitle ?? ''),
+            onTap: () {
+              ThemeProvider.controllerOf(context).nextTheme();
+            },
+          ),
           Container(
               color: Colors.black12,
               child: const Padding(
@@ -74,7 +102,7 @@ class MenuScreen extends StatelessWidget {
             },
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(height: 0),
-          ),
+          )
         ],
       ),
     );
@@ -90,10 +118,10 @@ class MenuItem {
 
   MenuItem(
       {required this.title,
-        this.subtitle,
-        required this.route,
-        this.icon,
-        this.iconContainerColor});
+      this.subtitle,
+      required this.route,
+      this.icon,
+      this.iconContainerColor});
 }
 
 class Menu {
@@ -120,7 +148,7 @@ class Menu {
         title: 'Magazyny',
         subtitle: 'Magazyny tematyczne',
         route: const MagazinesRoute(),
-        icon: const Icon(Icons.bookmarks , color: Colors.white),
+        icon: const Icon(Icons.bookmarks, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Karab.in',
@@ -129,22 +157,23 @@ class Menu {
         icon: const Icon(Icons.widgets, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
-        title: 'Ustawienia',
-        subtitle: 'Ustawienia aplikacji',
-        route: const MenuRoute(),
-        icon: const Icon(Icons.settings, color: Colors.white),
-        iconContainerColor: Colors.grey),
-    MenuItem(
         title: 'Wyszukaj',
         subtitle: 'Znajdź w serwisie',
         route: const SearchRoute(),
         icon: const Icon(Icons.search, color: Colors.white),
         iconContainerColor: Colors.red),
+    MenuItem(
+        title: 'Ustawienia',
+        subtitle: 'Ustawienia aplikacji',
+        route: const MenuRoute(),
+        icon: const Icon(Icons.settings, color: Colors.white),
+        iconContainerColor: Colors.grey),
+
   ];
 
   static List<MenuItem> profile = <MenuItem>[
-    MenuItem(title: 'Zaloguj się', route:  const MenuRoute()),
-    MenuItem(title: 'Zarejestruj się', route:  const MenuRoute())
+    MenuItem(title: 'Zaloguj się', route: const MenuRoute()),
+    MenuItem(title: 'Zarejestruj się', route: const MenuRoute())
   ];
 
   List<MenuItem> getMainEntries() {
