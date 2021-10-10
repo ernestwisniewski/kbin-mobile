@@ -20,9 +20,14 @@ class KbinColors {
     return MaterialColor(HexColor(hex).value, color);
   }
 
-  Color getEventBackground(BuildContext context) {
+  Color getEvenBackground(BuildContext context) {
     return ThemeProvider.controllerOf(context).theme.id == 'light_theme'
         ? Colors.black.withOpacity(0.03)
         : Colors.black.withOpacity(0.15);
+  }
+  Color getBottomNavSelectedColor(BuildContext context) {
+    return ThemeProvider.controllerOf(context).theme.id == 'light_theme'
+        ? Colors.black
+        : Colors.white;
   }
 }

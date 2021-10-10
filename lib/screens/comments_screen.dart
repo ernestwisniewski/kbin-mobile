@@ -6,6 +6,7 @@ import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -15,7 +16,10 @@ class CommentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
+    return Scaffold(
+        appBar: buildAppBar(context),
+        body: buildBody(context),
+        bottomNavigationBar: buildBottomNavbar(context, 2));
   }
 }
 
@@ -23,10 +27,10 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
     leading: IconButton(
       alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.menu),
-      tooltip: 'Przejdź do menu',
+      icon: const Icon(Icons.search),
+      tooltip: 'Wyszukaj',
       onPressed: () {
-        context.router.replace(const MenuRoute());
+        context.router.push(const SearchRoute());
       },
     ),
     actions: [
@@ -76,7 +80,7 @@ Widget buildItem(
     },
     child: Container(
       color: index.isEven
-          ? (KbinColors()).getEventBackground(context)
+          ? (KbinColors()).getEvenBackground(context)
           : Colors.transparent,
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
       child: Column(

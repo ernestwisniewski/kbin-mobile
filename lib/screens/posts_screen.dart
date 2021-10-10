@@ -7,6 +7,7 @@ import 'package:kbin_mobile/repositories/posts_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -16,7 +17,10 @@ class PostsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
+    return Scaffold(
+        appBar: buildAppBar(context),
+        body: buildBody(context),
+        bottomNavigationBar: buildBottomNavbar(context, 3));
   }
 }
 
@@ -24,10 +28,10 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
     leading: IconButton(
       alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.menu),
-      tooltip: 'Przejdź do menu',
+      icon: const Icon(Icons.search),
+      tooltip: 'Wyszukaj',
       onPressed: () {
-        context.router.replace(const MenuRoute());
+        context.router.push(const SearchRoute());
       },
     ),
     actions: [
@@ -75,10 +79,12 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
       const Divider(height: 0),
       InkWell(
         onTap: () {
-          context.router.push(PostRoute(id: post.id, magazine: post.magazine.name));
+          context.router
+              .push(PostRoute(id: post.id, magazine: post.magazine.name));
         },
         child: Container(
-          padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -101,8 +107,8 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
                           children: [
                             Expanded(
                               child: Text(post.user.username,
-                                  style:
-                                      const TextStyle(fontWeight: FontWeight.w600)),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600)),
                             ),
                             Align(
                                 alignment: Alignment.centerRight,

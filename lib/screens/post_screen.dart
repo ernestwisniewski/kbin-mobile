@@ -74,7 +74,7 @@ List<Widget> buildSliverLists(BuildContext context, PostItem post) {
             child: Column(
               children: [
                 buildItem(context, post, 1),
-                const Divider(height:0),
+                const Divider(height: 0),
                 buildPostRepliesList(context, post.id)
               ],
             )),
@@ -140,8 +140,8 @@ Widget buildItem(BuildContext context, PostItem post, int index) {
 Widget buildPostRepliesList(BuildContext context, int postId) {
   return FutureBuilder(
     future: (RepliesRepository()).fetchPostReplies(postId),
-    builder:
-        (BuildContext context, AsyncSnapshot<List<ReplyCollectionItem>> snapshot) {
+    builder: (BuildContext context,
+        AsyncSnapshot<List<ReplyCollectionItem>> snapshot) {
       if (snapshot.hasData) {
         int index = 0;
         return Column(
@@ -159,16 +159,15 @@ Widget buildPostRepliesList(BuildContext context, int postId) {
 
 Widget buildReply(BuildContext context, ReplyCollectionItem reply, int index) {
   return Padding(
-    padding: const EdgeInsets.only(left:15),
+    padding: const EdgeInsets.only(left: 15),
     child: Container(
       decoration: BoxDecoration(
           color: index.isEven
-              ? (KbinColors()).getEventBackground(context)
+              ? (KbinColors()).getEvenBackground(context)
               : Colors.transparent,
           border: Border(
             left: BorderSide(width: 2, color: KbinColors().fromHex('#71ac53')),
           )),
-
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

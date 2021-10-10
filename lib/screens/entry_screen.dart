@@ -184,7 +184,7 @@ Widget buildUserInfo(BuildContext context, EntryItem entry) {
     padding: const EdgeInsets.only(top: 15),
     child: Container(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      color: (KbinColors()).getEventBackground(context),
+      color: (KbinColors()).getEvenBackground(context),
       child: Row(
         children: [
           Expanded(

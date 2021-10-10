@@ -20,40 +20,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-        themes: [
-          AppTheme(
-              id: "light_theme",
-              description: "Light Theme",
-              data: ThemeData(
-                primaryColor: KbinColors().fromHex('556880'),
-                brightness: Brightness.light,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-                appBarTheme: AppBarTheme(
-                    backgroundColor: KbinColors().fromHex('556880')),
-                // Shared
-                fontFamily: GoogleFonts.openSans().fontFamily,
-                textTheme: const TextTheme(
-                    subtitle1: TextStyle(fontWeight: FontWeight.w400)),
-              )),
-          AppTheme(
-              id: "dark_theme",
-              description: "Light Theme 2",
-              data: ThemeData(
-                brightness: Brightness.dark,
-                fontFamily: GoogleFonts.openSans().fontFamily,
-                textTheme: const TextTheme(
-                    subtitle1: TextStyle(fontWeight: FontWeight.w400)),
-              ))
-        ],
+        themes: [_getLightAppTheme(), _getDarkAppTheme()],
         child: ThemeConsumer(
           child: Builder(
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate: _appRouter.delegate(),
                 routeInformationParser: _appRouter.defaultRouteParser(),
                 title: 'karab.in',
-                themeMode: ThemeMode.dark,
+                themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),
+        ));
+  }
+
+  AppTheme _getLightAppTheme() {
+    return AppTheme(
+        id: "light_theme",
+        description: "Light Theme",
+        data: ThemeData(
+          primaryColor: KbinColors().fromHex('556880'),
+          brightness: Brightness.light,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme:
+              AppBarTheme(backgroundColor: KbinColors().fromHex('556880')),
+          // Shared
+          fontFamily: GoogleFonts.openSans().fontFamily,
+          textTheme: const TextTheme(
+              subtitle1: TextStyle(fontWeight: FontWeight.w400)),
+        ));
+  }
+
+  AppTheme _getDarkAppTheme() {
+    return AppTheme(
+        id: "dark_theme",
+        description: "Dark Theme",
+        data: ThemeData(
+          brightness: Brightness.dark,
+          fontFamily: GoogleFonts.openSans().fontFamily,
+          textTheme: const TextTheme(
+              subtitle1: TextStyle(fontWeight: FontWeight.w400)),
         ));
   }
 }

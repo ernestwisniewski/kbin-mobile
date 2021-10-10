@@ -24,10 +24,10 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
     leading: IconButton(
       alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.menu),
-      tooltip: 'Przejdź do menu',
+      icon: const Icon(Icons.search),
+      tooltip: 'Wyszukaj',
       onPressed: () {
-        context.router.replace(const MenuRoute());
+        context.router.push(const SearchRoute());
       },
     ),
     actions: [
@@ -151,7 +151,7 @@ Widget _listTile(BuildContext context, String title, String value,
     PageRouteInfo route, int index) {
   return Container(
     color: index.isEven
-        ? (KbinColors()).getEventBackground(context)
+        ? (KbinColors()).getEvenBackground(context)
         : Colors.transparent,
     child: ListTile(
       onTap: () {

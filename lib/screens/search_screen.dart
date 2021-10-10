@@ -27,14 +27,6 @@ class SearchScreen extends StatelessWidget {
 
 PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
-    leading: IconButton(
-      alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.menu),
-      tooltip: 'Przejdź do menu',
-      onPressed: () {
-        context.router.replace(const MenuRoute());
-      },
-    ),
     actions: [
       IconButton(
         icon: const Icon(Icons.more_vert),

@@ -6,6 +6,7 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -15,7 +16,10 @@ class EntriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: buildBody(context));
+    return Scaffold(
+        appBar: buildAppBar(context),
+        body: buildBody(context),
+        bottomNavigationBar: buildBottomNavbar(context, 1));
   }
 }
 
@@ -23,10 +27,10 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
   return AppBar(
     leading: IconButton(
       alignment: Alignment.centerLeft,
-      icon: const Icon(Icons.menu),
-      tooltip: 'Przejdź do menu',
+      icon: const Icon(Icons.search),
+      tooltip: 'Wyszukaj',
       onPressed: () {
-        context.router.replace(const MenuRoute());
+        context.router.push(const SearchRoute());
       },
     ),
     actions: [
@@ -81,7 +85,7 @@ Widget buildItem(BuildContext context, EntryCollectionItem entry,
               padding: const EdgeInsets.only(
                   left: 15, right: 15, top: 20, bottom: 20),
               color: index.isEven
-                  ? (KbinColors()).getEventBackground(context)
+                  ? (KbinColors()).getEvenBackground(context)
                   : Colors.transparent,
               child: Column(
                 children: [
@@ -132,11 +136,10 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
         children: [
           buildMetaItem(entry.uv.toString(), Icons.arrow_upward),
           buildMetaItem(entry.dv.toString(), Icons.arrow_downward),
-          buildMetaItem(entry.comments.toString(),Icons.comment_outlined),
+          buildMetaItem(entry.comments.toString(), Icons.comment_outlined),
           buildMetaItem(entry.user.username, Icons.person, true)
         ],
       ),
     ))
   ]);
 }
-
