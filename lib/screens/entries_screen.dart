@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
+import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
@@ -10,7 +12,7 @@ import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
-import 'package:theme_provider/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -31,9 +33,60 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
       IconButton(
         icon: const Icon(Icons.more_vert),
         tooltip: 'Sortuj',
-        onPressed: () {
-          // handle the press
-        },
+        onPressed: () => showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext context) => CupertinoActionSheet(
+            cancelButton: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Anuluj'),
+            ),
+            title: const Text('Sortuj'),
+            actions: <CupertinoActionSheetAction>[
+              CupertinoActionSheetAction(
+                child: const Text('Ważne'),
+                onPressed: () {
+                  Provider.of<EntriesProvider>(context, listen: false)
+                      .fetch(1, SortOptions.top);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Wschodzące'),
+                onPressed: () {
+                  Provider.of<EntriesProvider>(context, listen: false)
+                      .fetch(1, SortOptions.hot);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Aktywne'),
+                onPressed: () {
+                  Provider.of<EntriesProvider>(context, listen: false)
+                      .fetch(1, SortOptions.active);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Najnowsze'),
+                onPressed: () {
+                  Provider.of<EntriesProvider>(context, listen: false)
+                      .fetch(1, SortOptions.newest);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Komentowane'),
+                onPressed: () {
+                  Provider.of<EntriesProvider>(context, listen: false)
+                      .fetch(1, SortOptions.commented);
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+        ),
       )
     ],
     title: const AppBarTitle(),
@@ -47,15 +100,15 @@ Widget buildBody(BuildContext context) {
 }
 
 Widget buildEntryList(BuildContext context) {
-  return FutureBuilder(
-    future: (EntriesRepository()).fetchEntries(),
-    builder: (BuildContext context,
-        AsyncSnapshot<List<EntryCollectionItem>> snapshot) {
-      if (snapshot.hasData) {
+  Provider.of<EntriesProvider>(context, listen: false)
+      .fetch(1, SortOptions.newest);
+  return Consumer<EntriesProvider>(
+    builder: (context, state, child) {
+      if (state.entries.isNotEmpty) {
         return ListView.builder(
-            itemCount: snapshot.data?.length,
+            itemCount: state.entries.length,
             itemBuilder: (BuildContext context, int index) {
-              EntryCollectionItem entry = snapshot.data![index];
+              EntryCollectionItem entry = state.entries[index];
               return buildItem(context, entry, index);
             });
       }
