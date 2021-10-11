@@ -13,6 +13,7 @@ import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -104,13 +105,17 @@ Widget buildEntryList(BuildContext context) {
       .fetch(1, SortOptions.newest);
   return Consumer<EntriesProvider>(
     builder: (context, state, child) {
-      if (state.entries.isNotEmpty) {
-        return ListView.builder(
-            itemCount: state.entries.length,
-            itemBuilder: (BuildContext context, int index) {
-              EntryCollectionItem entry = state.entries[index];
-              return buildItem(context, entry, index);
-            });
+      if (!state.loading) {
+        if (state.entries.isNotEmpty) {
+          return ListView.builder(
+              itemCount: state.entries.length,
+              itemBuilder: (BuildContext context, int index) {
+                EntryCollectionItem entry = state.entries[index];
+                return buildItem(context, entry, index);
+              });
+        } else {
+          // Empty list
+        }
       }
 
       return buildLoadingFull();
@@ -189,4 +194,63 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
       ),
     ))
   ]);
+}
+
+Widget buildLoading(BuildContext context) {
+  Color color = Colors.grey;
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, left:10, right:10),
+    child: Shimmer.fromColors(
+      baseColor: color,
+      highlightColor: KbinColors().darken(color,.1),
+      enabled: true,
+      child: ListView.builder(
+        itemBuilder: (_, __) => Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 8.0,
+                      color: Colors.white,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 15.0,
+                      color: Colors.white,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Container(
+                      width: 40.0,
+                      height: 8.0,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+              ),
+              Container(
+                width: 90,
+                height: 80,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+        itemCount: 12,
+      ),
+    ),
+  );
 }

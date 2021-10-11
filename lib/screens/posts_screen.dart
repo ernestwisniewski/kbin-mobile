@@ -1,8 +1,10 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
+import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/repositories/posts_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
@@ -11,6 +13,7 @@ import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostsScreen extends StatelessWidget {
@@ -32,9 +35,60 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
       IconButton(
         icon: const Icon(Icons.more_vert),
         tooltip: 'Sortuj',
-        onPressed: () {
-          // handle the press
-        },
+        onPressed: () => showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext context) => CupertinoActionSheet(
+            cancelButton: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Anuluj'),
+            ),
+            title: const Text('Sortuj'),
+            actions: <CupertinoActionSheetAction>[
+              CupertinoActionSheetAction(
+                child: const Text('Ważne'),
+                onPressed: () {
+                  Provider.of<PostsProvider>(context, listen: false)
+                      .fetch(1, SortOptions.top);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Wschodzące'),
+                onPressed: () {
+                  Provider.of<PostsProvider>(context, listen: false)
+                      .fetch(1, SortOptions.hot);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Aktywne'),
+                onPressed: () {
+                  Provider.of<PostsProvider>(context, listen: false)
+                      .fetch(1, SortOptions.active);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Najnowsze'),
+                onPressed: () {
+                  Provider.of<PostsProvider>(context, listen: false)
+                      .fetch(1, SortOptions.newest);
+                  Navigator.pop(context);
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Komentowane'),
+                onPressed: () {
+                  Provider.of<PostsProvider>(context, listen: false)
+                      .fetch(1, SortOptions.commented);
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+        ),
       )
     ],
     title: const AppBarTitle(),
@@ -48,17 +102,21 @@ Widget buildBody(BuildContext context) {
 }
 
 Widget buildPostList(BuildContext context) {
-  return FutureBuilder(
-    future: (PostsRepository()).fetchPosts(),
-    builder: (BuildContext context,
-        AsyncSnapshot<List<PostCollectionItem>> snapshot) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (BuildContext context, int index) {
-              PostCollectionItem post = snapshot.data![index];
-              return buildItem(context, post, index);
-            });
+  Provider.of<PostsProvider>(context, listen: false)
+      .fetch(1, SortOptions.newest);
+  return Consumer<PostsProvider>(
+    builder: (context, state, child) {
+      if (!state.loading) {
+        if (state.posts.isNotEmpty) {
+          return ListView.builder(
+              itemCount: state.posts.length,
+              itemBuilder: (BuildContext context, int index) {
+                PostCollectionItem post = state.posts[index];
+                return buildItem(context, post, index);
+              });
+        } else {
+          // Empty list
+        }
       }
 
       return buildLoadingFull();

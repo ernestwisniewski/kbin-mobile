@@ -5,8 +5,8 @@ import 'package:kbin_mobile/models/post_item_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class PostsRepository {
-  Future<List<PostCollectionItem>> fetchPosts() async {
-    Uri url = Uri.http(ApiProvider().getDomain(), 'api/posts.jsonld');
+  Future<List<PostCollectionItem>> fetchPosts(int page, SortOptions sortOptions) async {
+    Uri url = Uri.http(ApiProvider().getDomain(), 'api/posts.jsonld', {'sort': sortOptions.toParam()});
 
     var response = await http.get(url);
 
@@ -33,5 +33,13 @@ class PostsRepository {
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");
+  }
+}
+
+enum SortOptions { hot, newest, top, active, commented }
+
+extension ParseToString on SortOptions {
+  String toParam() {
+    return toString().split('.').last;
   }
 }

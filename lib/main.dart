@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
+import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
+import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
@@ -14,6 +16,8 @@ void main() {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => EntriesProvider()),
+    ChangeNotifierProvider(create: (context) => CommentsProvider()),
+    ChangeNotifierProvider(create: (context) => PostsProvider()),
   ],
   child: MyApp()));
 }

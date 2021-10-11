@@ -3,9 +3,11 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 
 class EntriesProvider with ChangeNotifier {
-  bool _loading = false;
+  bool _loading = true;
   int _page = 1;
   List<EntryCollectionItem> _entries = [];
+
+  bool get loading => _loading;
 
   int get page => _page;
 
@@ -15,7 +17,6 @@ class EntriesProvider with ChangeNotifier {
     _loading = true;
     _entries = await (EntriesRepository()).fetchEntries(page, sortOptions);
     _loading = false;
-
     notifyListeners();
   }
 }

@@ -25,9 +25,19 @@ class KbinColors {
         ? Colors.black.withOpacity(0.03)
         : Colors.black.withOpacity(0.15);
   }
+
   Color getBottomNavSelectedColor(BuildContext context) {
     return ThemeProvider.controllerOf(context).theme.id == 'light_theme'
         ? Colors.black
         : Colors.white;
+  }
+
+  Color darken(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
   }
 }

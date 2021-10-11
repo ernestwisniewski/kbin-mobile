@@ -5,9 +5,9 @@ import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class CommentsRepository {
-  Future<List<CommentCollectionItem>> fetchComments() async {
+  Future<List<CommentCollectionItem>> fetchComments(int page, SortOptions sortOptions) async {
     Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/entry_comments.jsonld');
+        ApiProvider().getDomain(), 'api/entry_comments.jsonld', {'sort': sortOptions.toParam()});
 
     var response = await http.get(url);
 
@@ -37,5 +37,13 @@ class CommentsRepository {
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");
+  }
+}
+
+enum SortOptions { hot, newest, top, active, commented }
+
+extension ParseToString on SortOptions {
+  String toParam() {
+    return toString().split('.').last;
   }
 }
