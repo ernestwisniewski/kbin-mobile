@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
-import 'package:kbin_mobile/models/post_reply_collection_model.dart';
+import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/repositories/posts_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
@@ -16,8 +16,20 @@ import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class PostsScreen extends StatelessWidget {
+class PostsScreen extends StatefulWidget {
   const PostsScreen({Key? key}) : super(key: key);
+
+  @override
+  _PostsScreenState createState() => _PostsScreenState();
+}
+
+class _PostsScreenState extends State<PostsScreen>  {
+  @override
+  void initState() {
+    super.initState();
+    final posts = Provider.of<PostsProvider>(context, listen: false);
+    posts.fetch(1, SortOptions.hot);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +114,6 @@ Widget buildBody(BuildContext context) {
 }
 
 Widget buildPostList(BuildContext context) {
-  Provider.of<PostsProvider>(context, listen: false)
-      .fetch(1, SortOptions.newest);
   return Consumer<PostsProvider>(
     builder: (context, state, child) {
       if (!state.loading) {
@@ -115,6 +125,7 @@ Widget buildPostList(BuildContext context) {
                 return buildItem(context, post, index);
               });
         } else {
+          return Container(child: Text('brak komentarzy'));
           // Empty list
         }
       }
@@ -189,7 +200,7 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
         ),
       ),
       const Divider(height: 0),
-      for (ReplyCollectionItem item in post.bestReplies!)
+      for (replies.ReplyCollectionItem item in post.bestReplies!)
         buildReply(context, item, i++),
     ],
   );

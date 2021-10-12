@@ -13,10 +13,21 @@ import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
-class EntriesScreen extends StatelessWidget {
+class EntriesScreen extends StatefulWidget {
   const EntriesScreen({Key? key}) : super(key: key);
+
+  @override
+  _EntriesScreenState createState() => _EntriesScreenState();
+}
+
+class _EntriesScreenState extends State<EntriesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final entry = Provider.of<EntriesProvider>(context, listen: false);
+    entry.fetch(1, SortOptions.hot);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +112,6 @@ Widget buildBody(BuildContext context) {
 }
 
 Widget buildEntryList(BuildContext context) {
-  Provider.of<EntriesProvider>(context, listen: false)
-      .fetch(1, SortOptions.newest);
   return Consumer<EntriesProvider>(
     builder: (context, state, child) {
       if (!state.loading) {
@@ -114,6 +123,7 @@ Widget buildEntryList(BuildContext context) {
                 return buildItem(context, entry, index);
               });
         } else {
+          return Container(child: Text('brak treści'));
           // Empty list
         }
       }
@@ -194,63 +204,4 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
       ),
     ))
   ]);
-}
-
-Widget buildLoading(BuildContext context) {
-  Color color = Colors.grey;
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, left:10, right:10),
-    child: Shimmer.fromColors(
-      baseColor: color,
-      highlightColor: KbinColors().darken(color,.1),
-      enabled: true,
-      child: ListView.builder(
-        itemBuilder: (_, __) => Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: 100,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 15.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: 40.0,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
-              Container(
-                width: 90,
-                height: 80,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-        itemCount: 12,
-      ),
-    ),
-  );
 }

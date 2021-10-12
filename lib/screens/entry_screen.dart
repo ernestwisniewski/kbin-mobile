@@ -4,14 +4,16 @@ import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
+import 'package:kbin_mobile/providers/comments_provider.dart';
+import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
-import 'package:kbin_mobile/repositories/entries_repository.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class EntryScreen extends StatelessWidget {
+class EntryScreen extends StatefulWidget {
   final String magazine;
   final int id;
 
@@ -22,14 +24,30 @@ class EntryScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _EntryScreenState createState() => _EntryScreenState();
+}
+
+class _EntryScreenState extends State<EntryScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    final post = Provider.of<EntryProvider>(context, listen: false);
+    post.fetch(widget.id);
+
+    final comments = Provider.of<CommentsProvider>(context, listen: false);
+    comments.fetchEntryComments(widget.id, 1, SortOptions.hot);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context, id, magazine),
-        body: buildBody(context, id));
+        appBar: buildAppBar(context, widget.magazine),
+        body: buildBody(context));
   }
 }
 
-PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
+PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
   return AppBar(
     title: AppBarTitle(title: magazine, fontSize: 16),
     actions: [
@@ -44,23 +62,21 @@ PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
   );
 }
 
-Widget buildBody(BuildContext context, int id) {
+Widget buildBody(BuildContext context) {
   return SafeArea(
-    child: buildEntry(context, id),
+    child: buildEntry(context),
   );
 }
 
-Widget buildEntry(BuildContext context, int id) {
-  return FutureBuilder(
-    future: (EntriesRepository()).fetchEntry(id),
-    builder: (BuildContext context, AsyncSnapshot<EntryItem> snapshot) {
-      if (snapshot.hasData) {
-        EntryItem entry = snapshot.data!;
-
+Widget buildEntry(BuildContext context) {
+  return Consumer<EntryProvider>(
+    builder: (context, state, child) {
+      if (!state.loading) {
         return CustomScrollView(
-          slivers: buildSliverLists(context, entry),
+          slivers: buildSliverLists(context, state.entry),
         );
       }
+
       return buildLoadingFull();
     },
   );
@@ -103,7 +119,7 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
               buildActionButtons(entry),
               buildUserInfo(context, entry),
               buildEntryInfo(entry),
-              buildEntryCommentList(context, entry.id)
+              buildEntryCommentList(context)
             ],
           )),
     ]),
@@ -267,18 +283,16 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
   ));
 }
 
-Widget buildEntryCommentList(BuildContext context, int entryId) {
-  return FutureBuilder(
-    future: (CommentsRepository()).fetchEntryComments(entryId),
-    builder: (BuildContext context,
-        AsyncSnapshot<List<EntryCommentsItem>> snapshot) {
-      if (snapshot.hasData) {
+Widget buildEntryCommentList(BuildContext context) {
+  return Consumer<CommentsProvider>(
+    builder: (context, state, child) {
+      if (state.entryComments.isNotEmpty) {
         int index = 0;
         return Container(
             margin: const EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
-                for (EntryCommentsItem item in snapshot.data!)
+                for (EntryCommentsItem item in state.entryComments)
                   buildComment(context, item, index++),
               ],
             ));

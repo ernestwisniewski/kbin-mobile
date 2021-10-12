@@ -15,8 +15,20 @@ import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class CommentsScreen extends StatelessWidget {
+class CommentsScreen extends StatefulWidget {
   const CommentsScreen({Key? key}) : super(key: key);
+
+  @override
+  _CommentsScreenState createState() => _CommentsScreenState();
+}
+
+class _CommentsScreenState extends State<CommentsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final comments = Provider.of<CommentsProvider>(context, listen: false);
+    comments.fetch(1, SortOptions.hot);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +105,6 @@ Widget buildBody(BuildContext context) {
 }
 
 Widget buildCommentList(BuildContext context) {
-  Provider.of<CommentsProvider>(context, listen: false)
-      .fetch(1, SortOptions.newest);
   return Consumer<CommentsProvider>(
     builder: (context, state, child) {
       if (!state.loading) {

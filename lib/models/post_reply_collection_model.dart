@@ -64,3 +64,11 @@ class PostReplyImage {
 
   Map<String, dynamic> toJson() => _$PostReplyImageToJson(this);
 }
+
+enum SortOptions { hot, newest, top, active, commented }
+
+extension ParseToString on SortOptions {
+  String toParam() {
+    return toString().split('.').last;
+  }
+}

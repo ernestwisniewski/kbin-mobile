@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_item_model.dart';
-import 'package:kbin_mobile/models/post_reply_collection_model.dart';
-import 'package:kbin_mobile/repositories/posts_repository.dart';
-import 'package:kbin_mobile/repositories/replies_repository.dart';
+import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
+import 'package:kbin_mobile/providers/posts_provider.dart';
+import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class PostScreen extends StatelessWidget {
-  final int id;
+class PostScreen extends StatefulWidget {
   final String magazine;
+  final int id;
 
   const PostScreen(
       {Key? key,
@@ -22,14 +23,30 @@ class PostScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  _PostScreenState createState() => _PostScreenState();
+}
+
+class _PostScreenState extends State<PostScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    final post = Provider.of<PostProvider>(context, listen: false);
+    post.fetch(widget.id);
+
+    final comments = Provider.of<RepliesProvider>(context, listen: false);
+    comments.fetch(widget.id, widget.id, replies.SortOptions.top);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(context, id, magazine),
-        body: buildBody(context, id));
+        appBar: buildAppBar(context, widget.magazine),
+        body: buildBody(context));
   }
 }
 
-PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
+PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
   return AppBar(
     title: AppBarTitle(title: magazine, fontSize: 16),
     actions: [
@@ -44,22 +61,21 @@ PreferredSizeWidget buildAppBar(BuildContext context, int id, String magazine) {
   );
 }
 
-Widget buildBody(BuildContext context, int id) {
+Widget buildBody(BuildContext context) {
   return SafeArea(
-    child: buildPost(context, id),
+    child: buildPost(context),
   );
 }
 
-Widget buildPost(BuildContext context, int id) {
-  return FutureBuilder(
-    future: (PostsRepository()).fetchPost(id),
-    builder: (BuildContext context, AsyncSnapshot<PostItem> snapshot) {
-      if (snapshot.hasData) {
-        PostItem post = snapshot.data!;
+Widget buildPost(BuildContext context) {
+  return Consumer<PostProvider>(
+    builder: (context, state, child) {
+      if (!state.loading) {
         return CustomScrollView(
-          slivers: buildSliverLists(context, post),
+          slivers: buildSliverLists(context, state.post),
         );
       }
+
       return buildLoadingFull();
     },
   );
@@ -75,7 +91,7 @@ List<Widget> buildSliverLists(BuildContext context, PostItem post) {
               children: [
                 buildItem(context, post, 1),
                 const Divider(height: 0),
-                buildPostRepliesList(context, post.id)
+                buildPostRepliesList(context)
               ],
             )),
       ]),
@@ -137,16 +153,14 @@ Widget buildItem(BuildContext context, PostItem post, int index) {
   );
 }
 
-Widget buildPostRepliesList(BuildContext context, int postId) {
-  return FutureBuilder(
-    future: (RepliesRepository()).fetchPostReplies(postId),
-    builder: (BuildContext context,
-        AsyncSnapshot<List<ReplyCollectionItem>> snapshot) {
-      if (snapshot.hasData) {
+Widget buildPostRepliesList(BuildContext context) {
+  return Consumer<RepliesProvider>(
+    builder: (context, state, child) {
+      if (!state.loading) {
         int index = 0;
         return Column(
           children: [
-            for (ReplyCollectionItem item in snapshot.data!)
+            for (replies.ReplyCollectionItem item in state.replies)
               buildReply(context, item, index++),
           ],
         );
@@ -157,7 +171,8 @@ Widget buildPostRepliesList(BuildContext context, int postId) {
   );
 }
 
-Widget buildReply(BuildContext context, ReplyCollectionItem reply, int index) {
+Widget buildReply(
+    BuildContext context, replies.ReplyCollectionItem reply, int index) {
   return Padding(
     padding: const EdgeInsets.only(left: 15),
     child: Container(

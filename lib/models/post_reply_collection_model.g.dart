@@ -20,7 +20,8 @@ ReplyCollectionItem _$ReplyCollectionItemFromJson(Map<String, dynamic> json) =>
       lastActive: DateTime.parse(json['lastActive'] as String),
     );
 
-Map<String, dynamic> _$ReplyCollectionItemToJson(ReplyCollectionItem instance) =>
+Map<String, dynamic> _$ReplyCollectionItemToJson(
+        ReplyCollectionItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       '@id': instance.apiUrl,
