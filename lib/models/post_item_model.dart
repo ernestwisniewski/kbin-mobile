@@ -60,8 +60,7 @@ class PostItemUser {
   final String username;
   final PostItemImage? avatar;
 
-  PostItemUser(
-      {required this.apiUrl, required this.username, this.avatar});
+  PostItemUser({required this.apiUrl, required this.username, this.avatar});
 
   factory PostItemUser.fromJson(Map<String, dynamic> json) =>
       _$PostItemUserFromJson(json);

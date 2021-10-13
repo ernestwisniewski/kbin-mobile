@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
@@ -7,9 +8,9 @@ import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
-import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() {

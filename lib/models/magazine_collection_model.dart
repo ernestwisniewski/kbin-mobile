@@ -64,9 +64,9 @@ class MagazineCollectionItemImage {
 
   MagazineCollectionItemImage(
       {required this.apiUrl,
-        required this.filePath,
-        required this.width,
-        required this.height});
+      required this.filePath,
+      required this.width,
+      required this.height});
 
   factory MagazineCollectionItemImage.fromJson(Map<String, dynamic> json) =>
       _$MagazineCollectionItemImageFromJson(json);

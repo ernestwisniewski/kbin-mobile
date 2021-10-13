@@ -37,7 +37,8 @@ class PostPostReplyUser {
   final String username;
   final PostReplyImage? avatar;
 
-  PostPostReplyUser({required this.apiUrl, required this.username, this.avatar});
+  PostPostReplyUser(
+      {required this.apiUrl, required this.username, this.avatar});
 
   factory PostPostReplyUser.fromJson(Map<String, dynamic> json) =>
       _$PostPostReplyUserFromJson(json);

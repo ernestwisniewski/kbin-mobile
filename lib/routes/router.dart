@@ -4,8 +4,8 @@ import 'package:kbin_mobile/screens/entries_screen.dart';
 import 'package:kbin_mobile/screens/entry_screen.dart';
 import 'package:kbin_mobile/screens/magazines_screen.dart';
 import 'package:kbin_mobile/screens/menu_screen.dart';
-import 'package:kbin_mobile/screens/posts_screen.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
+import 'package:kbin_mobile/screens/posts_screen.dart';
 import 'package:kbin_mobile/screens/search_screen.dart';
 
 @MaterialAutoRouter(

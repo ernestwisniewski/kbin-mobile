@@ -57,7 +57,8 @@ class CommentCollectionItemEntry {
   final int id;
   final String title;
 
-  CommentCollectionItemEntry({required this.apiUrl, required this.id, required this.title});
+  CommentCollectionItemEntry(
+      {required this.apiUrl, required this.id, required this.title});
 
   factory CommentCollectionItemEntry.fromJson(Map<String, dynamic> json) =>
       _$CommentCollectionItemEntryFromJson(json);
@@ -72,7 +73,8 @@ class CommentCollectionItemUser {
   final String username;
   final CommentCollectionItemImage? avatar;
 
-  CommentCollectionItemUser({required this.apiUrl, required this.username, this.avatar});
+  CommentCollectionItemUser(
+      {required this.apiUrl, required this.username, this.avatar});
 
   factory CommentCollectionItemUser.fromJson(Map<String, dynamic> json) =>
       _$CommentCollectionItemUserFromJson(json);
