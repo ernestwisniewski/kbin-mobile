@@ -6,9 +6,9 @@ import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class CommentsRepository {
-  Future<List<CommentCollectionItem>> fetchComments(int page, SortOptions sortOptions) async {
+  Future<List<CommentCollectionItem>> fetchComments(int page, SortOptions sortOptions, TimeOptions timeOptions) async {
     Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/entry_comments.jsonld', {'sort': sortOptions.toParam()});
+        ApiProvider().getDomain(), 'api/entry_comments.jsonld', {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
 
     var response = await http.get(url);
 

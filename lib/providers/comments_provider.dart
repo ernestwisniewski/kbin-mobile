@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
-import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 
 class CommentsProvider with ChangeNotifier {
@@ -8,16 +8,21 @@ class CommentsProvider with ChangeNotifier {
   int _page = 1;
   List<CommentCollectionItem> _comments = [];
   SortOptions _sortOptions = SortOptions.hot;
-  List<EntryCommentsItem> _entryComments = [];
+  TimeOptions _timeOptions = TimeOptions.fromall;
 
   bool get loading => _loading;
   int get page => _page;
   List<CommentCollectionItem> get comments => _comments;
-  List<EntryCommentsItem> get entryComments => _entryComments;
   SortOptions get sortOptions => _sortOptions;
+  TimeOptions get timeOptions => _timeOptions;
 
   void setPage(int page) {
     _page = page;
+    fetch();
+  }
+
+  void setTimeOptions(TimeOptions timeOptions) {
+    _timeOptions = timeOptions;
     fetch();
   }
 
@@ -28,7 +33,7 @@ class CommentsProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    _comments = await CommentsRepository().fetchComments(_page, _sortOptions);
+    _comments = await CommentsRepository().fetchComments(_page, _sortOptions, _timeOptions);
     _loading = false;
 
     notifyListeners();
