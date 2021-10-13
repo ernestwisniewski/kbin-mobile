@@ -4,9 +4,8 @@ import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
-import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
-import 'package:kbin_mobile/repositories/comments_repository.dart';
+import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
@@ -35,8 +34,8 @@ class _EntryScreenState extends State<EntryScreen> {
     final post = Provider.of<EntryProvider>(context, listen: false);
     post.fetch(widget.id);
 
-    final comments = Provider.of<CommentsProvider>(context, listen: false);
-    comments.fetchEntryComments(widget.id, 1, SortOptions.hot);
+    final comments = Provider.of<EntryCommentsProvider>(context, listen: false);
+    comments.setEntryId(widget.id);
   }
 
   @override
@@ -284,15 +283,15 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
 }
 
 Widget buildEntryCommentList(BuildContext context) {
-  return Consumer<CommentsProvider>(
+  return Consumer<EntryCommentsProvider>(
     builder: (context, state, child) {
-      if (state.entryComments.isNotEmpty) {
+      if (state.comments.isNotEmpty) {
         int index = 0;
         return Container(
             margin: const EdgeInsets.only(left: 0, right: 0),
             child: Column(
               children: [
-                for (EntryCommentsItem item in state.entryComments)
+                for (EntryCommentsItem item in state.comments)
                   buildComment(context, item, index++),
               ],
             ));

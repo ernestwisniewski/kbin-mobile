@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
+import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => EntriesProvider()),
     ChangeNotifierProvider(create: (context) => EntryProvider()),
+    ChangeNotifierProvider(create: (context) => EntryCommentsProvider()),
     ChangeNotifierProvider(create: (context) => CommentsProvider()),
     ChangeNotifierProvider(create: (context) => PostsProvider()),
     ChangeNotifierProvider(create: (context) => PostProvider()),

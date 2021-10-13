@@ -1,21 +1,22 @@
 import 'package:flutter/foundation.dart';
-import 'package:kbin_mobile/models/post_reply_collection_model.dart';
-import 'package:kbin_mobile/repositories/replies_repository.dart';
+import 'package:kbin_mobile/models/comment_collection_model.dart';
+import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
+import 'package:kbin_mobile/repositories/comments_repository.dart';
 
-class RepliesProvider with ChangeNotifier {
+class EntryCommentsProvider with ChangeNotifier {
   bool _loading = true;
   int _page = 1;
-  late int _postId;
-  List<ReplyCollectionItem> _replies = [];
+  late int _entryId;
+  List<EntryCommentsItem> _comments = [];
   SortOptions _sortOptions = SortOptions.hot;
 
   bool get loading => _loading;
   int get page => _page;
-  List<ReplyCollectionItem> get replies => _replies;
+  List<EntryCommentsItem> get comments => _comments;
   SortOptions get sortOptions => _sortOptions;
 
-  void setPostId(int postId){
-    _postId = postId;
+  void setEntryId(int entryId){
+    _entryId = entryId;
     fetch();
   }
 
@@ -31,7 +32,7 @@ class RepliesProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    _replies = await RepliesRepository().fetchPostReplies(_postId);
+    _comments = await CommentsRepository().fetchEntryComments(_entryId);
     _loading = false;
 
     notifyListeners();

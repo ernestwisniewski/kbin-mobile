@@ -35,7 +35,7 @@ class _PostScreenState extends State<PostScreen> {
     post.fetch(widget.id);
 
     final comments = Provider.of<RepliesProvider>(context, listen: false);
-    comments.fetch(widget.id, widget.id, replies.SortOptions.top);
+    comments.setPostId(widget.id);
   }
 
   @override

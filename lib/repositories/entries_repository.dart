@@ -5,8 +5,8 @@ import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class EntriesRepository {
-  Future<List<EntryCollectionItem>> fetchEntries(int page, SortOptions sortOptions) async {
-    Uri url = Uri.http(ApiProvider().getDomain(), 'api/entries.jsonld', {'sort': sortOptions.toParam()});
+  Future<List<EntryCollectionItem>> fetchEntries(int page, SortOptions sortOptions, TimeOptions timeOptions) async {
+    Uri url = Uri.http(ApiProvider().getDomain(), 'api/entries.jsonld', {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
 
     var response = await http.get(url);
 

@@ -27,7 +27,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   void initState() {
     super.initState();
     final comments = Provider.of<CommentsProvider>(context, listen: false);
-    comments.fetch(1, SortOptions.hot);
+    comments.fetch();
   }
 
   @override
@@ -61,7 +61,7 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
                 child: const Text('Ważne'),
                 onPressed: () {
                   Provider.of<CommentsProvider>(context, listen: false)
-                      .fetch(1, SortOptions.top);
+                      .setSortOptions(SortOptions.top);
                   Navigator.pop(context);
                 },
               ),
@@ -69,7 +69,7 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
                 child: const Text('Wschodzące'),
                 onPressed: () {
                   Provider.of<CommentsProvider>(context, listen: false)
-                      .fetch(1, SortOptions.hot);
+                      .setSortOptions(SortOptions.hot);
                   Navigator.pop(context);
                 },
               ),
@@ -77,7 +77,7 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
                 child: const Text('Aktywne'),
                 onPressed: () {
                   Provider.of<CommentsProvider>(context, listen: false)
-                      .fetch(1, SortOptions.active);
+                      .setSortOptions(SortOptions.active);
                   Navigator.pop(context);
                 },
               ),
@@ -85,7 +85,7 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
                 child: const Text('Najnowsze'),
                 onPressed: () {
                   Provider.of<CommentsProvider>(context, listen: false)
-                      .fetch(1, SortOptions.newest);
+                      .setSortOptions(SortOptions.newest);
                   Navigator.pop(context);
                 },
               ),

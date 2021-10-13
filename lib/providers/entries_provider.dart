@@ -1,22 +1,40 @@
 import 'package:flutter/foundation.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 
 class EntriesProvider with ChangeNotifier {
   bool _loading = true;
   int _page = 1;
   List<EntryCollectionItem> _entries = [];
+  SortOptions _sortOptions = SortOptions.hot;
+  TimeOptions _timeOptions = TimeOptions.fromall;
 
   bool get loading => _loading;
-
   int get page => _page;
-
   List<EntryCollectionItem> get entries => _entries;
+  SortOptions get sortOptions => _sortOptions;
+  TimeOptions get timeOptions => _timeOptions;
 
-  void fetch(int page, SortOptions sortOptions) async {
+  void setPage(int page) {
+    _page = page;
+    fetch();
+  }
+
+  void setTimeOptions(TimeOptions timeOptions) {
+    _timeOptions = timeOptions;
+    fetch();
+  }
+
+  void setSortOptions(SortOptions sortOptions) {
+    _sortOptions = sortOptions;
+    fetch();
+  }
+
+  void fetch() async {
     _loading = true;
-    _entries = await EntriesRepository().fetchEntries(page, sortOptions);
+    _entries = await EntriesRepository().fetchEntries(_page, _sortOptions, _timeOptions);
     _loading = false;
 
     notifyListeners();
