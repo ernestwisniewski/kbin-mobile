@@ -5,7 +5,7 @@ import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/repositories/search_repository.dart';
-import 'package:kbin_mobile/screens/comments_screen.dart' as commentsScreen;
+import 'package:kbin_mobile/screens/comments_screen.dart' as comment_screen;
 import 'package:kbin_mobile/screens/entries_screen.dart' as entries_screen;
 import 'package:kbin_mobile/screens/magazines_screen.dart' as magazines_screen;
 import 'package:kbin_mobile/screens/post_screen.dart' as post_screen;
@@ -71,7 +71,7 @@ Widget buildSubject(BuildContext context, dynamic subject, int index) {
   if (subject is EntryCollectionItem) {
     return entries_screen.buildItem(context, subject, index);
   } else if (subject is CommentCollectionItem) {
-    return commentsScreen.buildItem(context, subject, index);
+    return comment_screen.buildItem(context, subject, index);
   } else if (subject is PostCollectionItem) {
     return posts_screen.buildItem(context, subject, index);
   } else if (subject is ReplyCollectionItem) {

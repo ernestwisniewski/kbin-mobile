@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:kbin_mobile/filters/stort_options_filters.dart';
+import 'package:kbin_mobile/filters/time_options_filters.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
@@ -34,13 +36,5 @@ class EntriesRepository {
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");
-  }
-}
-
-enum SortOptions { hot, newest, top, active, commented }
-
-extension ParseToString on SortOptions {
-  String toParam() {
-    return toString().split('.').last;
   }
 }

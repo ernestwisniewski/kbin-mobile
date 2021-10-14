@@ -5,8 +5,6 @@ import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
 import 'package:kbin_mobile/providers/posts_provider.dart';
-import 'package:kbin_mobile/repositories/api_provider.dart';
-import 'package:kbin_mobile/repositories/posts_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
@@ -14,6 +12,8 @@ import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:kbin_mobile/widgets/sort_options.dart';
+import 'package:kbin_mobile/widgets/time_options.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -47,138 +47,8 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
     actions: [
       Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.watch_later_outlined),
-            tooltip: 'Zakres czasowy',
-            onPressed: () => showCupertinoModalPopup(
-              context: context,
-              builder: (BuildContext context) => CupertinoActionSheet(
-                cancelButton: CupertinoActionSheetAction(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Anuluj'),
-                ),
-                title: const Text('Zakres czasowy'),
-                actions: <CupertinoActionSheetAction>[
-                  CupertinoActionSheetAction(
-                    child: const Text('Wszystko'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.fromall);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('6 godzin'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from6h);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('12 godzin'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from12h);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('dzień'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from1d);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('tydzień'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from1w);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('miesiąc'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from1m);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('rok'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setTimeOptions(TimeOptions.from1y);
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            tooltip: 'Sortuj',
-            onPressed: () => showCupertinoModalPopup(
-              context: context,
-              builder: (BuildContext context) => CupertinoActionSheet(
-                cancelButton: CupertinoActionSheetAction(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Anuluj'),
-                ),
-                title: const Text('Sortuj'),
-                actions: <CupertinoActionSheetAction>[
-                  CupertinoActionSheetAction(
-                    child: const Text('Ważne'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setSortOptions(SortOptions.top);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('Wschodzące'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setSortOptions(SortOptions.hot);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('Aktywne'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setSortOptions(SortOptions.active);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('Najnowsze'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setSortOptions(SortOptions.newest);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  CupertinoActionSheetAction(
-                    child: const Text('Komentowane'),
-                    onPressed: () {
-                      Provider.of<PostsProvider>(context, listen: false)
-                          .setSortOptions(SortOptions.commented);
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ),
-          )
+          timeOptions(context, Provider.of<PostsProvider>(context, listen: false)),
+          sortOptions(context, Provider.of<PostsProvider>(context, listen: false)),
         ],
       )
     ],

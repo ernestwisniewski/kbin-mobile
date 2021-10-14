@@ -8,6 +8,7 @@ import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate: _appRouter.delegate(),
                 routeInformationParser: _appRouter.defaultRouteParser(),
-                title: 'karab.in',
+                title: ApiProvider().getDomain(),
                 themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),

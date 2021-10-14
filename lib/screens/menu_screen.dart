@@ -158,7 +158,7 @@ class Menu {
         icon: const Icon(Icons.bookmarks, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
-        title: 'Karab.in',
+        title: 'Instancja',
         subtitle: 'Informacje o tej instancji',
         route: const MenuRoute(),
         icon: const Icon(Icons.widgets, color: Colors.white),

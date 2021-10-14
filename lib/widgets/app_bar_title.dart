@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class AppBarTitle extends StatelessWidget {
   final String? title;
@@ -13,7 +14,7 @@ class AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title ?? 'karab.in',
+      title ?? ApiProvider().getDomain(),
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
     );
   }
