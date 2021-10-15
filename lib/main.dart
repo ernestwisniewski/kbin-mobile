@@ -8,6 +8,7 @@ import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
+import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ void main() {
     ChangeNotifierProvider(create: (context) => PostsProvider()),
     ChangeNotifierProvider(create: (context) => PostProvider()),
     ChangeNotifierProvider(create: (context) => RepliesProvider()),
+    ChangeNotifierProvider(create: (context) => SearchProvider()),
   ],
   child: MyApp()));
 }

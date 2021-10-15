@@ -157,13 +157,20 @@ Widget buildPostRepliesList(BuildContext context) {
   return Consumer<RepliesProvider>(
     builder: (context, state, child) {
       if (!state.loading) {
-        int index = 0;
-        return Column(
-          children: [
-            for (replies.ReplyCollectionItem item in state.replies)
-              buildReply(context, item, index++),
-          ],
-        );
+        if(state.replies.isNotEmpty) {
+          int index = 0;
+          return Column(
+            children: [
+              for (replies.ReplyCollectionItem item in state.replies)
+                buildReply(context, item, index++),
+            ],
+          );
+        } else {
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak odpowiedzi'));
+        }
       }
 
       return buildLoadingFull();

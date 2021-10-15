@@ -3,7 +3,7 @@ import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/repositories/replies_repository.dart';
 
 class RepliesProvider with ChangeNotifier {
-  bool _loading = true;
+  bool _loading = false;
   int _page = 1;
   late int _postId;
   List<ReplyCollectionItem> _replies = [];

@@ -4,6 +4,7 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
+import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/repositories/search_repository.dart';
 import 'package:kbin_mobile/screens/comments_screen.dart' as comment_screen;
 import 'package:kbin_mobile/screens/entries_screen.dart' as entries_screen;
@@ -14,15 +15,23 @@ import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:provider/provider.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  String? _query;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(context),
-        body: buildBody(context),
+        body: buildBody(context, _query),
         bottomNavigationBar: buildBottomNavbar(context, 3));
   }
 }
@@ -43,27 +52,29 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
   );
 }
 
-Widget buildBody(BuildContext context) {
+Widget buildBody(BuildContext context, String? _query) {
   return SafeArea(
-    child: buildPostList(context),
-  );
-}
+      child: Consumer<SearchProvider>(
+        builder: (context, state, child) {
+          if (!state.loading) {
+            if (state.results.isNotEmpty && _query != null) {
+              return ListView.builder(
+                  itemCount: state.results.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var subject = state.results[index];
+                    return buildSubject(context, subject, index);
+                  });
+            } else {
+              return Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(50),
+                  child: const Text('brak wyników'));
+            }
+          }
 
-Widget buildPostList(BuildContext context) {
-  return FutureBuilder(
-    future: (SearchRepository()).search('rust eventsourcing eventstorming'),
-    builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-      if (snapshot.hasData) {
-        return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (BuildContext context, int index) {
-              var subject = snapshot.data![index];
-              return buildSubject(context, subject, index);
-            });
-      }
-
-      return buildLoadingFull();
-    },
+          return buildLoadingFull();
+        },
+      )
   );
 }
 

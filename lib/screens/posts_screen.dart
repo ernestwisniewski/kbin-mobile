@@ -74,8 +74,10 @@ Widget buildPostList(BuildContext context) {
                 return buildItem(context, post, index);
               });
         } else {
-          return Container(child: Text('brak komentarzy'));
-          // Empty list
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak wpisów'));
         }
       }
 

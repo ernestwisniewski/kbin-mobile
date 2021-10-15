@@ -73,7 +73,10 @@ Widget buildCommentList(BuildContext context) {
                 return buildItem(context, comment, index);
               });
         } else {
-          // Empty list
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak komentarzy'));
         }
       }
 

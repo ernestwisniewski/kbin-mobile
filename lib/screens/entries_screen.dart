@@ -45,8 +45,10 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
     actions: [
       Row(
         children: [
-          timeOptions(context, Provider.of<EntriesProvider>(context, listen: false)),
-          sortOptions(context, Provider.of<EntriesProvider>(context, listen: false)),
+          timeOptions(
+              context, Provider.of<EntriesProvider>(context, listen: false)),
+          sortOptions(
+              context, Provider.of<EntriesProvider>(context, listen: false)),
         ],
       ),
     ],
@@ -72,8 +74,10 @@ Widget buildEntryList(BuildContext context) {
                 return buildItem(context, entry, index);
               });
         } else {
-          return Container(child: Text('brak treści'));
-          // Empty list
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak treści'));
         }
       }
 

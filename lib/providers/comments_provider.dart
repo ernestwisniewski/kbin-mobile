@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:kbin_mobile/filters/stort_options_filters.dart';
 import 'package:kbin_mobile/filters/time_options_filters.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
-import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 
 class CommentsProvider with ChangeNotifier {
-  bool _loading = true;
+  bool _loading = false;
   int _page = 1;
   List<CommentCollectionItem> _comments = [];
   SortOptions _sortOptions = SortOptions.hot;

@@ -285,16 +285,23 @@ Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
 Widget buildEntryCommentList(BuildContext context) {
   return Consumer<EntryCommentsProvider>(
     builder: (context, state, child) {
-      if (state.comments.isNotEmpty) {
-        int index = 0;
-        return Container(
-            margin: const EdgeInsets.only(left: 0, right: 0),
-            child: Column(
-              children: [
-                for (EntryCommentsItem item in state.comments)
-                  buildComment(context, item, index++),
-              ],
-            ));
+      if (!state.loading) {
+        if (state.comments.isNotEmpty) {
+          int index = 0;
+          return Container(
+              margin: const EdgeInsets.only(left: 0, right: 0),
+              child: Column(
+                children: [
+                  for (EntryCommentsItem item in state.comments)
+                    buildComment(context, item, index++),
+                ],
+              ));
+        } else {
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak komentarzy'));
+        }
       }
 
       return buildLoadingFull();

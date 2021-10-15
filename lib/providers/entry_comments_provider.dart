@@ -4,7 +4,7 @@ import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 
 class EntryCommentsProvider with ChangeNotifier {
-  bool _loading = true;
+  bool _loading = false;
   int _page = 1;
   late int _entryId;
   List<EntryCommentsItem> _comments = [];

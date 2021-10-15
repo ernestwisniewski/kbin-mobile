@@ -9,9 +9,8 @@ import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class SearchRepository {
-  Future<List<dynamic>> search(String val) async {
-    Uri url = Uri.http(ApiProvider().getDomain(), 'api/searches.jsonld', {'s': val});
-
+  Future<List<dynamic>> search(String query) async {
+    Uri url = Uri.http(ApiProvider().getDomain(), 'api/searches.jsonld', {'q': query});
 
     var response = await http.get(url);
 
