@@ -81,7 +81,7 @@ Widget buildItem(
                           width: 90)
                       : Container()),
               Expanded(
-                  flex: 3,
+                  flex: magazine.image != null ? 3 : 100,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 25),
                     child: Column(
@@ -94,8 +94,7 @@ Widget buildItem(
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: magazine.description != null
-                              ? Text(magazine.description!,
-                                  textAlign: TextAlign.justify)
+                              ? Text(magazine.description!)
                               : Container(),
                         ),
                         const Padding(

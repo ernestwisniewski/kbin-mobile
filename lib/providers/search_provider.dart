@@ -13,8 +13,9 @@ class SearchProvider with ChangeNotifier {
   List<dynamic> get results => _results;
   String get query => _query;
 
-  void search(SortOptions sortOptions) async {
+  void search(String query) async {
     _loading = true;
+    _query = query;
     _results = await SearchRepository().search(_query);
     _loading = false;
 
