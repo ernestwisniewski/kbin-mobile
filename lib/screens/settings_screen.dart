@@ -35,7 +35,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
 
           return SettingsList(
-            darkBackgroundColor: Colors.transparent,
             sections: [
               SettingsSection(
                 title: 'Ogólne',
@@ -148,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget buildVersion(PackageInfo info) {
     return Text(
-      'Wersja ${info.version}, ${info.buildNumber}',
+      'Wersja ${info.version}, #${info.buildNumber}',
       style: TextStyle(color: Color(0xFF777777)),
     );
   }

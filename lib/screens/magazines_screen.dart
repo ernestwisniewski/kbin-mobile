@@ -77,7 +77,7 @@ Widget buildItem(
               Expanded(
                   child: magazine.image != null
                       ? Image.network(
-                          Media().getThumbUrl(magazine.image!.filePath),
+                          Media().getMagazineThumbUrl(magazine.image!.filePath),
                           width: 90)
                       : Container()),
               Expanded(

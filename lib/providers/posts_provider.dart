@@ -44,11 +44,9 @@ class PostsProvider with ChangeNotifier {
 
 class PostProvider with ChangeNotifier {
   bool _loading = true;
-
   late PostItem _post;
 
   bool get loading => _loading;
-
   PostItem get post => _post;
 
   void fetch(int id) async {

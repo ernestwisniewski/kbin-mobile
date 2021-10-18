@@ -134,7 +134,7 @@ Widget buildMain(BuildContext context, EntryCollectionItem entry) {
       Padding(
         padding: const EdgeInsets.only(left: 10),
         child: entry.image != null
-            ? Image.network(Media().getThumbUrl(entry.image!.filePath),
+            ? Image.network(Media().getEntryThumbUrl(entry.image!.filePath),
                 width: 90)
             : null,
       ),

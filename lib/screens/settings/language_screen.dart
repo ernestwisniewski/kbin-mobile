@@ -22,9 +22,9 @@ class _LanguageScreenState extends State<LanguageScreen> {
               return buildLoadingFull();
             }
 
-            SharedPreferences lang = snapshot.data!;
-            return SettingsList(backgroundColor: Colors.transparent, sections: [
-              SettingsSection(tiles: buildTiles(lang)),
+            SharedPreferences prefs = snapshot.data!;
+            return SettingsList(sections: [
+              SettingsSection(tiles: buildTiles(prefs)),
             ]);
           }),
     );

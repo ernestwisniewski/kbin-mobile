@@ -44,11 +44,9 @@ class EntriesProvider with ChangeNotifier {
 
 class EntryProvider with ChangeNotifier {
   bool _loading = true;
-
   late EntryItem _entry;
 
   bool get loading => _loading;
-
   EntryItem get entry => _entry;
 
   void fetch(int id) async {
