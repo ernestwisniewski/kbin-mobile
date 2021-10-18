@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
@@ -14,7 +15,6 @@ import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -35,29 +35,20 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: buildBody(context, _query),
-        bottomNavigationBar: buildBottomNavbar(context, 3));
-  }
-
-  PreferredSizeWidget buildAppBar(BuildContext context) {
-    return AppBar(
-      leading: buildAppBarLeading(context),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.more_vert),
-          tooltip: 'Sortuj',
-          onPressed: () {
-            // handle the press
-          },
-        )
-      ],
-      title: const AppBarTitle(),
+    return CupertinoTabScaffold(
+      tabBuilder: (BuildContext context, int index) {
+        return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+              middle: const AppBarTitle(),
+              leading: buildAppBarLeading(context)),
+          child: buildBody(context),
+        );
+      },
+      tabBar: buildBottomNavbar(context, 3),
     );
   }
 
-  Widget buildBody(BuildContext context, String? _query) {
+  Widget buildBody(BuildContext context) {
     return SafeArea(
         child: Stack(
       children: [
@@ -85,10 +76,13 @@ class _SearchScreenState extends State<SearchScreen> {
                   return buildSubject(context, subject, index);
                 });
           } else {
-            return Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(50),
-                child: const Text('brak wyników'));
+            return Material(
+              type: MaterialType.transparency,
+              child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(50),
+                  child: const Text('brak wyników')),
+            );
           }
         }
 
@@ -98,29 +92,15 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget buildFloatingSearchBar(BuildContext context, String? query) {
-    return FloatingSearchBar(
-        backdropColor: Colors.transparent,
-        hint: 'Wyszukaj...',
-        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-        transitionDuration: const Duration(milliseconds: 800),
-        transitionCurve: Curves.easeInOut,
-        physics: const BouncingScrollPhysics(),
-        axisAlignment: 0.0,
-        openAxisAlignment: 0.0,
-        width: 600,
-        debounceDelay: const Duration(milliseconds: 500),
-        onQueryChanged: (q) {
-          if (q.isEmpty) {
-            return;
-          }
-
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: CupertinoSearchTextField(
+        onSubmitted: (String q) {
           _changeQuery(q);
           Provider.of<SearchProvider>(context, listen: false).search(q);
         },
-        transition: CircularFloatingSearchBarTransition(),
-        builder: (context, transition) {
-          return Container();
-        });
+      ),
+    );
   }
 
   Widget buildSubject(BuildContext context, dynamic subject, int index) {

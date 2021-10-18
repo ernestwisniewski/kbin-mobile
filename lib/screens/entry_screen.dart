@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
@@ -11,6 +12,7 @@ import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:transparent_image/transparent_image.dart';
 
 class EntryScreen extends StatefulWidget {
   final String magazine;
@@ -40,25 +42,35 @@ class _EntryScreenState extends State<EntryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context, widget.magazine),
-        body: buildBody(context));
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: AppBarTitle(title: widget.magazine),
+          leading: Material(
+            type: MaterialType.transparency,
+            child: IconButton(
+              color: KbinColors().getAppBarTextColor(),
+              alignment: Alignment.centerLeft,
+              icon: const Icon(CupertinoIcons.back),
+              tooltip: 'Wróć',
+              onPressed: () {
+                context.router.pop();
+              },
+            ),
+          ),
+          trailing: Material(
+            type: MaterialType.transparency,
+            child: IconButton(
+              color: KbinColors().getAppBarTextColor(),
+              icon: const Icon(CupertinoIcons.share),
+              tooltip: 'Udostępnij',
+              onPressed: () {
+                // handle the press
+              },
+            ),
+          ),
+        ),
+        child: buildBody(context));
   }
-}
-
-PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
-  return AppBar(
-    title: AppBarTitle(title: magazine, fontSize: 16),
-    actions: [
-      IconButton(
-        icon: const Icon(Icons.share),
-        tooltip: 'Udostępnij',
-        onPressed: () {
-          // handle the press
-        },
-      )
-    ],
-  );
 }
 
 Widget buildBody(BuildContext context) {
@@ -96,13 +108,13 @@ List<Widget> buildSliverLists(BuildContext context, EntryItem entry) {
 Widget buildSliverAppBar(BuildContext context, EntryItem entry) {
   return SliverAppBar(
     leading: const Divider(),
-    backgroundColor: Colors.transparent,
+    backgroundColor: KbinColors().getEvenBackground(context),
     expandedHeight: 200,
     flexibleSpace: FlexibleSpaceBar(
-      background: Image.network(
-        Media().getThumbUrl(entry.image!.filePath),
-        fit: BoxFit.cover,
-      ),
+      background: FadeInImage.memoryNetwork(
+          placeholder: kTransparentImage,
+          fit: BoxFit.cover,
+          image: Media().getThumbUrl(entry.image!.filePath)),
     ),
   );
 }
@@ -114,11 +126,21 @@ Widget buildSliverList(BuildContext context, EntryItem entry) {
           margin: const EdgeInsets.only(left: 0, right: 0),
           child: Column(
             children: [
-              buildEntryCard(context, entry),
-              buildActionButtons(entry),
-              buildUserInfo(context, entry),
-              buildEntryInfo(entry),
-              buildEntryCommentList(context)
+              Material(
+                  type: MaterialType.transparency,
+                  child: buildEntryCard(context, entry)),
+              Material(
+                  type: MaterialType.transparency,
+                  child: buildActionButtons(entry)),
+              Material(
+                  type: MaterialType.transparency,
+                  child: buildUserInfo(context, entry)),
+              Material(
+                  type: MaterialType.transparency,
+                  child: buildEntryInfo(entry)),
+              Material(
+                  type: MaterialType.transparency,
+                  child: buildEntryCommentList(context)),
             ],
           )),
     ]),
@@ -171,12 +193,12 @@ Widget buildActionButtons(EntryItem entry) {
         ),
         child: Row(
           children: [
-            buildActionButton(const Icon(Icons.comment_sharp),
+            buildActionButton(const Icon(CupertinoIcons.chat_bubble_2),
                 entry.comments.toString(), () {}),
-            buildActionButton(
-                const Icon(Icons.arrow_upward), entry.uv.toString(), () {}),
-            buildActionButton(
-                const Icon(Icons.arrow_downward), entry.dv.toString(), () {}),
+            buildActionButton(const Icon(CupertinoIcons.up_arrow),
+                entry.uv.toString(), () {}),
+            buildActionButton(const Icon(CupertinoIcons.down_arrow),
+                entry.dv.toString(), () {}),
           ],
         ),
       ),
@@ -184,9 +206,10 @@ Widget buildActionButtons(EntryItem entry) {
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Row(
           children: [
-            buildActionButton(const Icon(Icons.share), null, () {}),
-            buildActionButton(const Icon(Icons.explore), null, () {}),
-            buildActionButton(const Icon(Icons.report), null, () {}),
+            buildActionButton(const Icon(CupertinoIcons.share), null, () {}),
+            buildActionButton(const Icon(Icons.explore_outlined), null, () {}),
+            buildActionButton(
+                const Icon(CupertinoIcons.xmark_octagon), null, () {}),
           ],
         ),
       )
@@ -248,11 +271,11 @@ Widget buildEntryInfo(EntryItem entry) {
           children: [
             entry.domain != null
                 ? buildActionButton(
-                    const Icon(Icons.public), entry.domain!.name, () {})
+                    const Icon(CupertinoIcons.globe), entry.domain!.name, () {})
                 : Container(),
             buildActionButton(
-                const Icon(Icons.remove_red_eye), entry.views.toString()),
-            buildActionButton(const Icon(Icons.calendar_today),
+                const Icon(CupertinoIcons.eye), entry.views.toString()),
+            buildActionButton(const Icon(CupertinoIcons.calendar),
                 timeago.format(entry.createdAt, locale: 'pl')),
           ],
         ),
@@ -349,8 +372,8 @@ Widget buildComment(
         Padding(
           padding: const EdgeInsets.only(top: 15),
           child: Wrap(children: [
-            buildMetaItem(comment.uv.toString(), Icons.arrow_upward),
-            buildMetaItem(comment.dv.toString(), Icons.arrow_downward)
+            buildMetaItem(comment.uv.toString(), CupertinoIcons.up_arrow),
+            buildMetaItem(comment.dv.toString(), CupertinoIcons.down_arrow)
           ]),
         ),
       ],

@@ -20,6 +20,10 @@ class KbinColors {
     return MaterialColor(HexColor(hex).value, color);
   }
 
+  Color getAppBarTextColor() {
+    return Colors.black54;
+  }
+
   Color getEvenBackground(BuildContext context) {
     return ThemeProvider.controllerOf(context).theme.id == 'light_theme'
         ? Colors.black.withOpacity(0.03)

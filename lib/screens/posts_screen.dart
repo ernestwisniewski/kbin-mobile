@@ -24,7 +24,7 @@ class PostsScreen extends StatefulWidget {
   _PostsScreenState createState() => _PostsScreenState();
 }
 
-class _PostsScreenState extends State<PostsScreen>  {
+class _PostsScreenState extends State<PostsScreen> {
   @override
   void initState() {
     super.initState();
@@ -34,26 +34,27 @@ class _PostsScreenState extends State<PostsScreen>  {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: buildBody(context),
-        bottomNavigationBar: buildBottomNavbar(context, 2));
+    return CupertinoTabScaffold(
+      tabBuilder: (BuildContext context, int index) {
+        return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+              middle: const AppBarTitle(),
+              leading: buildAppBarLeading(context),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  timeOptions(context,
+                      Provider.of<PostsProvider>(context, listen: false)),
+                  sortOptions(context,
+                      Provider.of<PostsProvider>(context, listen: false))
+                ],
+              )),
+          child: buildBody(context),
+        );
+      },
+      tabBar: buildBottomNavbar(context, 2),
+    );
   }
-}
-
-PreferredSizeWidget buildAppBar(BuildContext context) {
-  return AppBar(
-    leading: buildAppBarLeading(context),
-    actions: [
-      Row(
-        children: [
-          timeOptions(context, Provider.of<PostsProvider>(context, listen: false)),
-          sortOptions(context, Provider.of<PostsProvider>(context, listen: false)),
-        ],
-      )
-    ],
-    title: const AppBarTitle(),
-  );
 }
 
 Widget buildBody(BuildContext context) {
@@ -74,10 +75,13 @@ Widget buildPostList(BuildContext context) {
                 return buildItem(context, post, index);
               });
         } else {
-          return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50),
-              child: const Text('brak wpisów'));
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak wpisów')),
+          );
         }
       }
 
@@ -88,71 +92,76 @@ Widget buildPostList(BuildContext context) {
 
 Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
   int i = 0;
-  return Column(
-    children: [
-      const Divider(height: 0),
-      InkWell(
-        onTap: () {
-          context.router
-              .push(PostRoute(id: post.id, magazine: post.magazine.name));
-        },
-        child: Container(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: post.user.avatar != null
-                            ? Image.network(
-                                Media().getThumbUrl(post.user.avatar!.filePath),
-                                fit: BoxFit.cover,
-                              )
-                            : const Icon(Icons.person))),
-                Expanded(
-                    flex: 6,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(post.user.username,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w600)),
-                            ),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: buildMetaItem(
-                                    post.uv.toString(), Icons.arrow_upward)),
-                          ],
-                        ),
-                        Text(timeago.format(post.createdAt, locale: 'pl'),
-                            style: const TextStyle(color: Colors.grey))
-                      ],
-                    )),
-              ]),
-              Padding(
-                padding: const EdgeInsets.only(top: 15, bottom: 15),
-                child: Text(post.body),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: Wrap(children: [
-                  buildMetaItem(post.replies.toString(), Icons.comment),
-                  buildMetaItem(post.magazine.name, Icons.bookmark),
+  return Material(
+    type: MaterialType.transparency,
+    child: Column(
+      children: [
+        const Divider(height: 0),
+        InkWell(
+          onTap: () {
+            context.router
+                .push(PostRoute(id: post.id, magazine: post.magazine.name));
+          },
+          child: Container(
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: post.user.avatar != null
+                              ? Image.network(
+                                  Media()
+                                      .getThumbUrl(post.user.avatar!.filePath),
+                                  fit: BoxFit.cover,
+                                )
+                              : const Icon(CupertinoIcons.person_alt))),
+                  Expanded(
+                      flex: 6,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(post.user.username,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600)),
+                              ),
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: buildMetaItem(post.uv.toString(),
+                                      CupertinoIcons.up_arrow)),
+                            ],
+                          ),
+                          Text(timeago.format(post.createdAt, locale: 'pl'),
+                              style: const TextStyle(color: Colors.grey))
+                        ],
+                      )),
                 ]),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, bottom: 15),
+                  child: Text(post.body),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Wrap(children: [
+                    buildMetaItem(
+                        post.replies.toString(), CupertinoIcons.chat_bubble_2),
+                    buildMetaItem(post.magazine.name, CupertinoIcons.bookmark),
+                  ]),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      const Divider(height: 0),
-      for (replies.ReplyCollectionItem item in post.bestReplies!)
-        buildReply(context, item, i++),
-    ],
+        const Divider(height: 0),
+        for (replies.ReplyCollectionItem item in post.bestReplies!)
+          buildReply(context, item, i++),
+      ],
+    ),
   );
 }

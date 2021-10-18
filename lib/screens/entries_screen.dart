@@ -32,10 +32,26 @@ class _EntriesScreenState extends State<EntriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: buildBody(context),
-        bottomNavigationBar: buildBottomNavbar(context, 0));
+    return CupertinoTabScaffold(
+      tabBuilder: (BuildContext context, int index) {
+        return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+                middle: const AppBarTitle(),
+                leading: buildAppBarLeading(context),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    timeOptions(context,
+                        Provider.of<EntriesProvider>(context, listen: false)),
+                    sortOptions(context,
+                        Provider.of<EntriesProvider>(context, listen: false))
+                  ],
+                )),
+            child: buildBody(context));
+      },
+      tabBar: buildBottomNavbar(context, 0),
+    );
+    // bottomNavigationBar: buildBottomNavbar(context, 0));
   }
 }
 
@@ -74,10 +90,13 @@ Widget buildEntryList(BuildContext context) {
                 return buildItem(context, entry, index);
               });
         } else {
-          return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50),
-              child: const Text('brak treści'));
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak treści')),
+          );
         }
       }
 
@@ -88,29 +107,32 @@ Widget buildEntryList(BuildContext context) {
 
 Widget buildItem(BuildContext context, EntryCollectionItem entry,
     [int index = 1]) {
-  return Row(
-    children: <Widget>[
-      Expanded(
-        child: InkWell(
-          onTap: () {
-            context.router
-                .push(EntryRoute(id: entry.id, magazine: entry.magazine.name));
-          },
-          child: Container(
-              padding: const EdgeInsets.only(
-                  left: 15, right: 15, top: 20, bottom: 20),
-              color: index.isEven
-                  ? (KbinColors()).getEvenBackground(context)
-                  : Colors.transparent,
-              child: Column(
-                children: [
-                  buildMain(context, entry),
-                  buildMeta(context, entry),
-                ],
-              )),
+  return Material(
+    type: MaterialType.transparency,
+    child: Row(
+      children: <Widget>[
+        Expanded(
+          child: InkWell(
+            onTap: () {
+              context.router.push(
+                  EntryRoute(id: entry.id, magazine: entry.magazine.name));
+            },
+            child: Container(
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 20, bottom: 20),
+                color: index.isEven
+                    ? (KbinColors()).getEvenBackground(context)
+                    : Colors.transparent,
+                child: Column(
+                  children: [
+                    buildMain(context, entry),
+                    buildMeta(context, entry),
+                  ],
+                )),
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 
@@ -149,10 +171,10 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
       padding: const EdgeInsets.only(top: 30),
       child: Wrap(
         children: [
-          buildMetaItem(entry.uv.toString(), Icons.arrow_upward),
-          buildMetaItem(entry.dv.toString(), Icons.arrow_downward),
-          buildMetaItem(entry.comments.toString(), Icons.comment_outlined),
-          buildMetaItem(entry.user.username, Icons.person, true)
+          buildMetaItem(entry.uv.toString(), CupertinoIcons.up_arrow),
+          buildMetaItem(entry.dv.toString(), CupertinoIcons.down_arrow),
+          buildMetaItem(entry.comments.toString(), CupertinoIcons.chat_bubble_2),
+          buildMetaItem(entry.user.username, CupertinoIcons.person_alt, true)
         ],
       ),
     ))

@@ -1,16 +1,11 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 
-Widget buildBottomNavbar(BuildContext context, int index) {
-  return BottomNavigationBar(
-    unselectedFontSize: 12,
-    selectedFontSize: 12,
-    showSelectedLabels: false,
-    showUnselectedLabels: false,
-    unselectedItemColor: Colors.grey,
-    selectedItemColor: (KbinColors()).getBottomNavSelectedColor(context),
+CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
+  return CupertinoTabBar(
     currentIndex: index,
     onTap: (int i) {
       if (index == i) {
@@ -36,23 +31,23 @@ Widget buildBottomNavbar(BuildContext context, int index) {
     },
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.home),
+        icon: Icon(CupertinoIcons.home),
         label: 'Treści',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.comment),
+        icon: Icon(CupertinoIcons.chat_bubble_2),
         label: 'Komentarze',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.article),
+        icon: Icon(CupertinoIcons.square_list),
         label: 'Wpisy',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.search),
+        icon: Icon(CupertinoIcons.search),
         label: 'Wyszukaj',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.person),
+        icon: Icon(CupertinoIcons.profile_circled),
         label: 'Profil',
       ),
     ],

@@ -33,26 +33,27 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: buildBody(context),
-        bottomNavigationBar: buildBottomNavbar(context, 1));
+    return CupertinoTabScaffold(
+      tabBuilder: (BuildContext context, int index) {
+        return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+              middle: const AppBarTitle(),
+              leading: buildAppBarLeading(context),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  timeOptions(context,
+                      Provider.of<CommentsProvider>(context, listen: false)),
+                  sortOptions(context,
+                      Provider.of<CommentsProvider>(context, listen: false))
+                ],
+              )),
+          child: buildBody(context),
+        );
+      },
+      tabBar: buildBottomNavbar(context, 1),
+    );
   }
-}
-
-PreferredSizeWidget buildAppBar(BuildContext context) {
-  return AppBar(
-    leading: buildAppBarLeading(context),
-    actions: [
-      Row(
-        children: [
-          timeOptions(context, Provider.of<CommentsProvider>(context, listen: false)),
-          sortOptions(context, Provider.of<CommentsProvider>(context, listen: false)),
-        ],
-      )
-    ],
-    title: const AppBarTitle(),
-  );
 }
 
 Widget buildBody(BuildContext context) {
@@ -73,10 +74,13 @@ Widget buildCommentList(BuildContext context) {
                 return buildItem(context, comment, index);
               });
         } else {
-          return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50),
-              child: const Text('brak komentarzy'));
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak komentarzy')),
+          );
         }
       }
 
@@ -87,61 +91,65 @@ Widget buildCommentList(BuildContext context) {
 
 Widget buildItem(
     BuildContext context, CommentCollectionItem comment, int index) {
-  return InkWell(
-    onTap: () {
-      context.router.push(
-          EntryRoute(id: comment.entry.id, magazine: comment.magazine.name));
-    },
-    child: Container(
-      color: index.isEven
-          ? (KbinColors()).getEvenBackground(context)
-          : Colors.transparent,
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: comment.user.avatar != null
-                  ? Image.network(
-                      Media().getThumbUrl(comment.user.avatar!.filePath),
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(Icons.person),
-            )),
-            Expanded(
-                flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(comment.user.username,
-                        style: const TextStyle(fontWeight: FontWeight.w600)),
-                    Text(timeago.format(comment.createdAt, locale: 'pl'),
-                        style: const TextStyle(color: Colors.grey)),
-                  ],
-                ))
-          ]),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15),
-            child: Text(comment.body),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Wrap(children: [
-              buildMetaItem(comment.uv.toString(), Icons.arrow_upward),
-              buildMetaItem(comment.dv.toString(), Icons.arrow_downward),
-              buildMetaItem(comment.magazine.name, Icons.bookmark)
+  return Material(
+    type: MaterialType.transparency,
+    child: InkWell(
+      onTap: () {
+        context.router.push(
+            EntryRoute(id: comment.entry.id, magazine: comment.magazine.name));
+      },
+      child: Container(
+        color: index.isEven
+            ? (KbinColors()).getEvenBackground(context)
+            : Colors.transparent,
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: comment.user.avatar != null
+                    ? Image.network(
+                        Media().getThumbUrl(comment.user.avatar!.filePath),
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(CupertinoIcons.person_alt),
+              )),
+              Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(comment.user.username,
+                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Text(timeago.format(comment.createdAt, locale: 'pl'),
+                          style: const TextStyle(color: Colors.grey)),
+                    ],
+                  ))
             ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Wrap(children: [
-              buildMetaItem(comment.entry.title, null),
-            ]),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: Text(comment.body),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Wrap(children: [
+                buildMetaItem(comment.uv.toString(), CupertinoIcons.up_arrow),
+                buildMetaItem(comment.dv.toString(), CupertinoIcons.down_arrow),
+                buildMetaItem(comment.magazine.name, CupertinoIcons.bookmark)
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Wrap(children: [
+                buildMetaItem(comment.entry.title, null),
+              ]),
+            )
+          ],
+        ),
       ),
     ),
   );

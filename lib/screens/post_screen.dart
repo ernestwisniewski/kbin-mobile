@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
@@ -40,198 +41,237 @@ class _PostScreenState extends State<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: buildAppBar(context, widget.magazine),
-        body: buildBody(context));
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+          middle: const AppBarTitle(),
+          leading: Material(
+            type: MaterialType.transparency,
+            child: IconButton(
+              color: KbinColors().getAppBarTextColor(),
+              alignment: Alignment.centerLeft,
+              icon: const Icon(CupertinoIcons.back),
+              tooltip: 'Wróć',
+              onPressed: () {
+                context.router.pop();
+              },
+            ),
+          ),
+          trailing: Material(
+            type: MaterialType.transparency,
+            child: IconButton(
+              color: KbinColors().getAppBarTextColor(),
+              icon: const Icon(CupertinoIcons.share),
+              tooltip: 'Udostępnij',
+              onPressed: () {
+                // handle the press
+              },
+            ),
+          )),
+      child: buildBody(context),
+    );
   }
-}
 
-PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
-  return AppBar(
-    title: AppBarTitle(title: magazine, fontSize: 16),
-    actions: [
-      IconButton(
-        icon: const Icon(Icons.share),
-        tooltip: 'Udostępnij',
-        onPressed: () {
-          // handle the press
-        },
-      )
-    ],
-  );
-}
+  PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
+    return AppBar(
+      title: AppBarTitle(title: magazine, fontSize: 16),
+      actions: [
+        IconButton(
+          color: KbinColors().getAppBarTextColor(),
+          icon: const Icon(CupertinoIcons.share),
+          tooltip: 'Udostępnij',
+          onPressed: () {
+            // handle the press
+          },
+        )
+      ],
+    );
+  }
 
-Widget buildBody(BuildContext context) {
-  return SafeArea(
-    child: buildPost(context),
-  );
-}
+  Widget buildBody(BuildContext context) {
+    return SafeArea(
+      child: buildPost(context),
+    );
+  }
 
-Widget buildPost(BuildContext context) {
-  return Consumer<PostProvider>(
-    builder: (context, state, child) {
-      if (!state.loading) {
-        return CustomScrollView(
-          slivers: buildSliverLists(context, state.post),
-        );
-      }
+  Widget buildPost(BuildContext context) {
+    return Consumer<PostProvider>(
+      builder: (context, state, child) {
+        if (!state.loading) {
+          return CustomScrollView(
+            slivers: buildSliverLists(context, state.post),
+          );
+        }
 
-      return buildLoadingFull();
-    },
-  );
-}
+        return buildLoadingFull();
+      },
+    );
+  }
 
-List<Widget> buildSliverLists(BuildContext context, PostItem post) {
-  return [
-    SliverList(
-      delegate: SliverChildListDelegate([
-        Container(
-            margin: const EdgeInsets.only(left: 0, right: 0),
-            child: Column(
-              children: [
-                buildItem(context, post, 1),
-                const Divider(height: 0),
-                buildPostRepliesList(context)
-              ],
-            )),
-      ]),
-    )
-  ];
-}
-
-Widget buildItem(BuildContext context, PostItem post, int index) {
-  return Container(
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-              child: Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: post.user.avatar != null
-                      ? Image.network(
-                          Media().getThumbUrl(post.user.avatar!.filePath),
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(Icons.person))),
-          Expanded(
-              flex: 6,
+  List<Widget> buildSliverLists(BuildContext context, PostItem post) {
+    return [
+      SliverList(
+        delegate: SliverChildListDelegate([
+          Container(
+              margin: const EdgeInsets.only(left: 0, right: 0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(post.user.username,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.w600)),
-                      ),
-                      Align(
-                          alignment: Alignment.centerRight,
-                          child: buildMetaItem(
-                              post.uv.toString(), Icons.arrow_upward)),
-                    ],
-                  ),
-                  Text(timeago.format(post.createdAt, locale: 'pl'),
-                      style: const TextStyle(color: Colors.grey))
+                  buildItem(context, post, 1),
+                  const Divider(height: 0),
+                  buildPostRepliesList(context)
                 ],
               )),
         ]),
-        Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
-          child: Text(post.body),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: Wrap(children: [
-            buildMetaItem(post.replies.toString(), Icons.comment),
-          ]),
-        ),
-      ],
-    ),
-  );
-}
+      )
+    ];
+  }
 
-Widget buildPostRepliesList(BuildContext context) {
-  return Consumer<RepliesProvider>(
-    builder: (context, state, child) {
-      if (!state.loading) {
-        if(state.replies.isNotEmpty) {
-          int index = 0;
-          return Column(
-            children: [
-              for (replies.ReplyCollectionItem item in state.replies)
-                buildReply(context, item, index++),
-            ],
-          );
-        } else {
-          return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50),
-              child: const Text('brak odpowiedzi'));
+  Widget buildItem(BuildContext context, PostItem post, int index) {
+    return Material(
+      type: MaterialType.transparency,
+      child: Container(
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: post.user.avatar != null
+                          ? Image.network(
+                              Media().getThumbUrl(post.user.avatar!.filePath),
+                              fit: BoxFit.cover,
+                            )
+                          : const Icon(CupertinoIcons.person_alt))),
+              Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(post.user.username,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: buildMetaItem(
+                                  post.uv.toString(), CupertinoIcons.up_arrow)),
+                        ],
+                      ),
+                      Text(timeago.format(post.createdAt, locale: 'pl'),
+                          style: const TextStyle(color: Colors.grey))
+                    ],
+                  )),
+            ]),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: Text(post.body),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Wrap(children: [
+                buildMetaItem(
+                    post.replies.toString(), CupertinoIcons.chat_bubble_2),
+              ]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildPostRepliesList(BuildContext context) {
+    return Consumer<RepliesProvider>(
+      builder: (context, state, child) {
+        if (!state.loading) {
+          if (state.replies.isNotEmpty) {
+            int index = 0;
+            return Column(
+              children: [
+                for (replies.ReplyCollectionItem item in state.replies)
+                  buildReply(context, item, index++),
+              ],
+            );
+          } else {
+            return Material(
+              type: MaterialType.transparency,
+              child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(50),
+                  child: const Text('brak odpowiedzi')),
+            );
+          }
         }
-      }
 
-      return buildLoadingFull();
-    },
-  );
+        return buildLoadingFull();
+      },
+    );
+  }
 }
 
 Widget buildReply(
     BuildContext context, replies.ReplyCollectionItem reply, int index) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 15),
-    child: Container(
-      decoration: BoxDecoration(
-          color: index.isEven
-              ? (KbinColors()).getEvenBackground(context)
-              : Colors.transparent,
-          border: Border(
-            left: BorderSide(width: 2, color: KbinColors().fromHex('#71ac53')),
-          )),
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: reply.user.avatar != null
-                        ? Image.network(
-                            Media().getThumbUrl(reply.user.avatar!.filePath),
-                            fit: BoxFit.cover,
-                          )
-                        : const Icon(Icons.person))),
-            Expanded(
-                flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(reply.user.username,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600)),
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: buildMetaItem(
-                                reply.uv.toString(), Icons.arrow_upward)),
-                      ],
-                    ),
-                    Text(timeago.format(reply.createdAt, locale: 'pl'),
-                        style: const TextStyle(color: Colors.grey))
-                  ],
-                )),
-          ]),
-          Padding(
-            padding: const EdgeInsets.only(top: 15, bottom: 15),
-            child: Text(reply.body),
-          )
-        ],
+  return Material(
+    type: MaterialType.transparency,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Container(
+        decoration: BoxDecoration(
+            color: index.isEven
+                ? KbinColors().getEvenBackground(context)
+                : Colors.transparent,
+            border: Border(
+              left:
+                  BorderSide(width: 2, color: KbinColors().fromHex('#71ac53')),
+            )),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: reply.user.avatar != null
+                          ? Image.network(
+                              Media().getThumbUrl(reply.user.avatar!.filePath),
+                              fit: BoxFit.cover,
+                            )
+                          : const Icon(CupertinoIcons.person_alt))),
+              Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(reply.user.username,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600)),
+                          ),
+                          Align(
+                              alignment: Alignment.centerRight,
+                              child: buildMetaItem(reply.uv.toString(),
+                                  CupertinoIcons.up_arrow)),
+                        ],
+                      ),
+                      Text(timeago.format(reply.createdAt, locale: 'pl'),
+                          style: const TextStyle(color: Colors.grey))
+                    ],
+                  )),
+            ]),
+            Padding(
+              padding: const EdgeInsets.only(top: 15, bottom: 15),
+              child: Text(reply.body),
+            )
+          ],
+        ),
       ),
     ),
   );
