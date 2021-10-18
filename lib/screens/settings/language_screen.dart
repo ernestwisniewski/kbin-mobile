@@ -9,56 +9,59 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
-  String languageIndex = 'pl';
+  String lang = 'pl';
+  SharedPreferences? prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Język')),
-      body: FutureBuilder(
-          future: SharedPreferences.getInstance(),
-          builder: (context, AsyncSnapshot<SharedPreferences> snapshot) {
-            if (!snapshot.hasData) {
-              return buildLoadingFull();
-            }
-
-            SharedPreferences prefs = snapshot.data!;
-            return SettingsList(sections: [
-              SettingsSection(tiles: buildTiles(prefs)),
-            ]);
-          }),
-    );
+        appBar: AppBar(title: const Text('Język')),
+        body: SettingsSection(tiles: buildTiles()));
   }
 
-  Widget trailingWidget(String newLang, String current) {
-    return (newLang == current)
-        ? const Icon(Icons.check, color: Colors.blue)
-        : const Icon(null);
-  }
-
-  void changeLanguage(String newLang, SharedPreferences prefs) async {
-    await prefs.setString('lang', newLang);
-    setState(() {
-      languageIndex = newLang;
-    });
-  }
-
-  List<SettingsTile> buildTiles(SharedPreferences prefs) {
-    String index = prefs.getString('lang') ?? 'pl';
+  List<SettingsTile> buildTiles() {
     return [
       SettingsTile(
         title: "English",
-        trailing: trailingWidget('en', index),
+        trailing: trailingWidget('en'),
         onPressed: (BuildContext context) {
-          changeLanguage('en', prefs);
+          changeLanguage('en');
         },
       ),
       SettingsTile(
           title: "Polski",
-          trailing: trailingWidget('pl', index),
+          trailing: trailingWidget('pl'),
           onPressed: (BuildContext context) {
-            changeLanguage('pl', prefs);
+            changeLanguage('pl');
           }),
     ];
+  }
+
+  Widget trailingWidget(String newLang) {
+    return (newLang == lang)
+        ? const Icon(Icons.check, color: Colors.blue)
+        : const Icon(null);
+  }
+
+  void changeLanguage(String newLang) async {
+    await prefs!.setString('lang', newLang);
+    setState(() {
+      lang = newLang;
+    });
+  }
+
+  void load() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    prefs = preferences;
+
+    setState(() {
+      lang = preferences.getString('lang') ?? 'pl';
+    });
   }
 }
