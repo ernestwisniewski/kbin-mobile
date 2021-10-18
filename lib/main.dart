@@ -11,7 +11,9 @@ import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -28,8 +30,7 @@ void main() {
     ChangeNotifierProvider(create: (context) => PostProvider()),
     ChangeNotifierProvider(create: (context) => RepliesProvider()),
     ChangeNotifierProvider(create: (context) => SearchProvider()),
-  ],
-  child: MyApp()));
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +40,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
+        saveThemesOnChange: true,
+        onInitCallback: (controller, previouslySavedThemeFuture) async {
+          String? savedTheme = await previouslySavedThemeFuture;
+          if (savedTheme != null) {
+            controller.setTheme(savedTheme);
+          }
+        },
         themes: [_getLightAppTheme(), _getDarkAppTheme()],
         child: ThemeConsumer(
           child: Builder(

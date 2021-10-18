@@ -57,33 +57,6 @@ class MenuScreen extends StatelessWidget {
             separatorBuilder: (BuildContext context, int index) =>
                 const Divider(height: 0),
           ),
-          ListTile(
-            minVerticalPadding: 15,
-            title: Row(
-              children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: 40.0,
-                          width: 40.0,
-                          decoration: const BoxDecoration(
-                              color: Colors.grey, shape: BoxShape.circle),
-                          child:
-                              const Icon(Icons.lightbulb, color: Colors.white)),
-                    ]),
-                const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text('Zmień motyw'),
-                ),
-              ],
-            ),
-            // subtitle: Text(main[index].subtitle ?? ''),
-            onTap: () {
-              ThemeProvider.controllerOf(context).nextTheme();
-            },
-          ),
           Container(
               color: Colors.black12,
               child: const Padding(
@@ -172,7 +145,7 @@ class Menu {
     MenuItem(
         title: 'Ustawienia',
         subtitle: 'Ustawienia aplikacji',
-        route: const MenuRoute(),
+        route: const SettingsRoute(),
         icon: const Icon(Icons.settings, color: Colors.white),
         iconContainerColor: Colors.grey),
   ];
