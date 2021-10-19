@@ -5,16 +5,18 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i1;
+import 'package:flutter/cupertino.dart' as _i14;
 import 'package:flutter/material.dart' as _i2;
 
-import '../screens/comments_screen.dart' as _i9;
-import '../screens/entries_screen.dart' as _i7;
-import '../screens/entry_screen.dart' as _i8;
-import '../screens/magazines_screen.dart' as _i6;
+import '../screens/comments_screen.dart' as _i10;
+import '../screens/entries_screen.dart' as _i8;
+import '../screens/entry_screen.dart' as _i9;
+import '../screens/magazines_screen.dart' as _i7;
 import '../screens/menu_screen.dart' as _i3;
-import '../screens/post_screen.dart' as _i11;
-import '../screens/posts_screen.dart' as _i10;
-import '../screens/search_screen.dart' as _i12;
+import '../screens/post_screen.dart' as _i12;
+import '../screens/posts_screen.dart' as _i11;
+import '../screens/search_screen.dart' as _i13;
+import '../screens/settings/instance_screen.dart' as _i6;
 import '../screens/settings/language_screen.dart' as _i5;
 import '../screens/settings_screen.dart' as _i4;
 
@@ -27,7 +29,7 @@ class AppRouter extends _i1.RootStackRouter {
     MenuRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i3.MenuScreen();
+          return _i3.MenuScreen();
         }),
     SettingsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -39,15 +41,20 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i5.LanguageScreen();
         }),
+    InstanceRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i6.InstanceScreen();
+        }),
     MagazinesRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i6.MagazinesScreen();
+          return const _i7.MagazinesScreen();
         }),
     EntriesRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i7.EntriesScreen();
+          return const _i8.EntriesScreen();
         }),
     EntryRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -57,18 +64,18 @@ class AppRouter extends _i1.RootStackRouter {
               orElse: () => EntryRouteArgs(
                   magazine: pathParams.getString('magazine'),
                   id: pathParams.getInt('id')));
-          return _i8.EntryScreen(
+          return _i9.EntryScreen(
               key: args.key, magazine: args.magazine, id: args.id);
         }),
     CommentsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i9.CommentsScreen();
+          return const _i10.CommentsScreen();
         }),
     PostsRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i10.PostsScreen();
+          return const _i11.PostsScreen();
         }),
     PostRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -78,13 +85,13 @@ class AppRouter extends _i1.RootStackRouter {
               orElse: () => PostRouteArgs(
                   magazine: pathParams.getString('magazine'),
                   id: pathParams.getInt('id')));
-          return _i11.PostScreen(
+          return _i12.PostScreen(
               key: args.key, magazine: args.magazine, id: args.id);
         }),
     SearchRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return const _i12.SearchScreen();
+          return const _i13.SearchScreen();
         })
   };
 
@@ -93,6 +100,7 @@ class AppRouter extends _i1.RootStackRouter {
         _i1.RouteConfig(MenuRoute.name, path: '/'),
         _i1.RouteConfig(SettingsRoute.name, path: '/settings'),
         _i1.RouteConfig(LanguageRoute.name, path: '/settings/language'),
+        _i1.RouteConfig(InstanceRoute.name, path: '/settings/instance'),
         _i1.RouteConfig(MagazinesRoute.name, path: '/magazines'),
         _i1.RouteConfig(EntriesRoute.name, path: '/t'),
         _i1.RouteConfig(EntryRoute.name, path: '/m/:magazine/t/:id'),
@@ -121,6 +129,12 @@ class LanguageRoute extends _i1.PageRouteInfo<void> {
   static const String name = 'LanguageRoute';
 }
 
+class InstanceRoute extends _i1.PageRouteInfo<void> {
+  const InstanceRoute() : super(name, path: '/settings/instance');
+
+  static const String name = 'InstanceRoute';
+}
+
 class MagazinesRoute extends _i1.PageRouteInfo<void> {
   const MagazinesRoute() : super(name, path: '/magazines');
 
@@ -134,7 +148,7 @@ class EntriesRoute extends _i1.PageRouteInfo<void> {
 }
 
 class EntryRoute extends _i1.PageRouteInfo<EntryRouteArgs> {
-  EntryRoute({_i2.Key? key, required String magazine, required int id})
+  EntryRoute({_i14.Key? key, required String magazine, required int id})
       : super(name,
             path: '/m/:magazine/t/:id',
             args: EntryRouteArgs(key: key, magazine: magazine, id: id),
@@ -146,7 +160,7 @@ class EntryRoute extends _i1.PageRouteInfo<EntryRouteArgs> {
 class EntryRouteArgs {
   const EntryRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i2.Key? key;
+  final _i14.Key? key;
 
   final String magazine;
 
@@ -166,7 +180,7 @@ class PostsRoute extends _i1.PageRouteInfo<void> {
 }
 
 class PostRoute extends _i1.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i2.Key? key, required String magazine, required int id})
+  PostRoute({_i14.Key? key, required String magazine, required int id})
       : super(name,
             path: '/p/:magazine/t/:id',
             args: PostRouteArgs(key: key, magazine: magazine, id: id),
@@ -178,7 +192,7 @@ class PostRoute extends _i1.PageRouteInfo<PostRouteArgs> {
 class PostRouteArgs {
   const PostRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i2.Key? key;
+  final _i14.Key? key;
 
   final String magazine;
 

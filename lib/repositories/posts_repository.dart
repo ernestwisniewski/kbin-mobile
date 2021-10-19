@@ -8,8 +8,12 @@ import 'package:kbin_mobile/models/post_item_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class PostsRepository {
-  Future<List<PostCollectionItem>> fetchPosts(int page, SortOptions sortOptions, TimeOptions timeOptions) async {
-    Uri url = Uri.http(ApiProvider().getDomain(), 'api/posts.jsonld', {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
+  Future<List<PostCollectionItem>> fetchPosts(
+      int page, SortOptions sortOptions, TimeOptions timeOptions) async {
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.http(domain, 'api/posts.jsonld',
+        {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
 
     var response = await http.get(url);
 
@@ -25,7 +29,9 @@ class PostsRepository {
   }
 
   Future<PostItem> fetchPost(int id) async {
-    Uri url = Uri.https(ApiProvider().getDomain(), 'api/posts/$id.jsonld');
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.https(domain, 'api/posts/$id.jsonld');
 
     var response = await http.get(url);
 

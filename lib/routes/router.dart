@@ -7,6 +7,7 @@ import 'package:kbin_mobile/screens/menu_screen.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
 import 'package:kbin_mobile/screens/posts_screen.dart';
 import 'package:kbin_mobile/screens/search_screen.dart';
+import 'package:kbin_mobile/screens/settings/instance_screen.dart';
 import 'package:kbin_mobile/screens/settings/language_screen.dart';
 import 'package:kbin_mobile/screens/settings_screen.dart';
 
@@ -18,6 +19,7 @@ import 'package:kbin_mobile/screens/settings_screen.dart';
     // Settings
     AutoRoute(path: '/settings', page: SettingsScreen),
     AutoRoute(path: '/settings/language', page: LanguageScreen),
+    AutoRoute(path: '/settings/instance', page: InstanceScreen),
 
     // Magazines
     AutoRoute(path: '/magazines', page: MagazinesScreen),

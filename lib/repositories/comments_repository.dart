@@ -8,9 +8,12 @@ import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class CommentsRepository {
-  Future<List<CommentCollectionItem>> fetchComments(int page, SortOptions sortOptions, TimeOptions timeOptions) async {
-    Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/entry_comments.jsonld', {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
+  Future<List<CommentCollectionItem>> fetchComments(
+      int page, SortOptions sortOptions, TimeOptions timeOptions) async {
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.http(domain, 'api/entry_comments.jsonld',
+        {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
 
     var response = await http.get(url);
 
@@ -19,15 +22,17 @@ class CommentsRepository {
 
       List<dynamic> entries = data["hydra:member"];
 
-      return entries.map((json) => CommentCollectionItem.fromJson(json)).toList();
+      return entries
+          .map((json) => CommentCollectionItem.fromJson(json))
+          .toList();
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");
   }
 
   Future<List<EntryCommentsItem>> fetchEntryComments(int entryId) async {
-    Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/entries/$entryId/comments.jsonld');
+    String domain = await ApiProvider().getDomain();
+    Uri url = Uri.http(domain, 'api/entries/$entryId/comments.jsonld');
 
     var response = await http.get(url);
 

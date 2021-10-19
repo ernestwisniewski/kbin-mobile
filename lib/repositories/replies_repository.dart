@@ -6,8 +6,9 @@ import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class RepliesRepository {
   Future<List<ReplyCollectionItem>> fetchPostReplies(int postId) async {
-    Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/posts/$postId/comments.jsonld');
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.http(domain, 'api/posts/$postId/comments.jsonld');
 
     var response = await http.get(url);
 

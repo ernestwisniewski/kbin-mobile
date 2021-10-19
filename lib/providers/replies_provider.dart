@@ -10,11 +10,14 @@ class RepliesProvider with ChangeNotifier {
   SortOptions _sortOptions = SortOptions.hot;
 
   bool get loading => _loading;
+
   int get page => _page;
+
   List<ReplyCollectionItem> get replies => _replies;
+
   SortOptions get sortOptions => _sortOptions;
 
-  void setPostId(int postId){
+  void setPostId(int postId) {
     _postId = postId;
     fetch();
   }

@@ -11,11 +11,14 @@ class EntryCommentsProvider with ChangeNotifier {
   SortOptions _sortOptions = SortOptions.hot;
 
   bool get loading => _loading;
+
   int get page => _page;
+
   List<EntryCommentsItem> get comments => _comments;
+
   SortOptions get sortOptions => _sortOptions;
 
-  void setEntryId(int entryId){
+  void setEntryId(int entryId) {
     _entryId = entryId;
     fetch();
   }

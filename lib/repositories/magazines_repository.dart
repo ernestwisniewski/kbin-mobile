@@ -6,8 +6,9 @@ import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class MagazinesRepository {
   Future<List<MagazineCollectionItem>> fetchMagazines() async {
-    Uri url = Uri.http(
-        ApiProvider().getDomain(), 'api/magazines.jsonld');
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.http(domain, 'api/magazines.jsonld');
 
     var response = await http.get(url);
 
@@ -16,7 +17,9 @@ class MagazinesRepository {
 
       List<dynamic> magazines = data["hydra:member"];
 
-      return magazines.map((json) => MagazineCollectionItem.fromJson(json)).toList();
+      return magazines
+          .map((json) => MagazineCollectionItem.fromJson(json))
+          .toList();
     }
 
     throw Exception("Something went wrong, ${response.statusCode}");

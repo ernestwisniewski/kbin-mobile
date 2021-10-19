@@ -9,11 +9,10 @@ import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -30,12 +29,28 @@ void main() {
     ChangeNotifierProvider(create: (context) => PostProvider()),
     ChangeNotifierProvider(create: (context) => RepliesProvider()),
     ChangeNotifierProvider(create: (context) => SearchProvider()),
+    ChangeNotifierProvider(create: (context) => SettingsProvider()),
   ], child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
+  late SettingsProvider settings;
+
+  @override
+  void initState() {
+    super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,7 @@ class MyApp extends StatelessWidget {
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate: _appRouter.delegate(),
                 routeInformationParser: _appRouter.defaultRouteParser(),
-                title: ApiProvider().getDomain(),
+                title: settings.instance ?? '',
                 themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),

@@ -1,5 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ApiProvider {
-  String getDomain() {
-    return 'karab.in';
+  Future<String> getDomain() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString('instance')!;
   }
 }

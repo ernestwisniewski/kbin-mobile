@@ -12,9 +12,13 @@ class CommentsProvider with ChangeNotifier {
   TimeOptions _timeOptions = TimeOptions.fromall;
 
   bool get loading => _loading;
+
   int get page => _page;
+
   List<CommentCollectionItem> get comments => _comments;
+
   SortOptions get sortOptions => _sortOptions;
+
   TimeOptions get timeOptions => _timeOptions;
 
   void setPage(int page) {
@@ -34,7 +38,8 @@ class CommentsProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    _comments = await CommentsRepository().fetchComments(_page, _sortOptions, _timeOptions);
+    _comments = await CommentsRepository()
+        .fetchComments(_page, _sortOptions, _timeOptions);
     _loading = false;
 
     notifyListeners();

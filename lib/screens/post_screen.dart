@@ -7,9 +7,10 @@ import 'package:kbin_mobile/models/post_item_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -28,9 +29,14 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  late SettingsProvider settings;
+
   @override
   void initState() {
     super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
 
     final post = Provider.of<PostProvider>(context, listen: false);
     post.fetch(widget.id);
@@ -43,7 +49,7 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const AppBarTitle(),
+          middle: const TopBar(),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
@@ -73,7 +79,7 @@ class _PostScreenState extends State<PostScreen> {
 
   PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
     return AppBar(
-      title: AppBarTitle(title: magazine, fontSize: 16),
+      title: TopBar(title: magazine, fontSize: 16),
       actions: [
         IconButton(
           color: KbinColors().getAppBarTextColor(),
@@ -135,15 +141,18 @@ class _PostScreenState extends State<PostScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: post.user.avatar != null
-                          ? Image.network(
-                              Media().getThumbUrl(post.user.avatar!.filePath),
-                              fit: BoxFit.cover,
-                            )
-                          : const Icon(CupertinoIcons.person_alt))),
+              Consumer<SettingsProvider>(builder: (context, settings, child) {
+                return Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: post.user.avatar != null
+                            ? Image.network(
+                                Media().getThumbUrl(post.user.avatar!.filePath,
+                                    settings.instance!),
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(CupertinoIcons.person_alt)));
+              }),
               Expanded(
                   flex: 6,
                   child: Column(
@@ -234,15 +243,18 @@ Widget buildReply(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: reply.user.avatar != null
-                          ? Image.network(
-                              Media().getThumbUrl(reply.user.avatar!.filePath),
-                              fit: BoxFit.cover,
-                            )
-                          : const Icon(CupertinoIcons.person_alt))),
+              Consumer<SettingsProvider>(builder: (context, settings, child) {
+                return Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: reply.user.avatar != null
+                            ? Image.network(
+                                Media().getThumbUrl(
+                                    reply.user.avatar!.filePath, settings.instance!),
+                                fit: BoxFit.cover,
+                              )
+                            : const Icon(CupertinoIcons.person_alt)));
+              }),
               Expanded(
                   flex: 6,
                   child: Column(

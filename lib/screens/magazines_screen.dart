@@ -6,20 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/repositories/magazines_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:provider/provider.dart';
 
-class MagazinesScreen extends StatelessWidget {
+class MagazinesScreen extends StatefulWidget {
   const MagazinesScreen({Key? key}) : super(key: key);
+
+  @override
+  _MagazinesScreenState createState() => _MagazinesScreenState();
+}
+
+class _MagazinesScreenState extends State<MagazinesScreen> {
+  late SettingsProvider settings;
+
+  @override
+  void initState() {
+    super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const AppBarTitle(),
+          middle: const TopBar(),
           leading: buildAppBarLeading(context),
           trailing: Material(
             type: MaterialType.transparency,
@@ -75,12 +92,15 @@ Widget buildItem(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Expanded(
-                    child: magazine.image != null
-                        ? Image.network(
-                            Media().getMagazineThumbUrl(magazine.image!.filePath),
-                            width: 90)
-                        : Container()),
+                Consumer<SettingsProvider>(builder: (context, settings, child) {
+                  return Expanded(
+                      child: magazine.image != null
+                          ? Image.network(
+                              Media().getMagazineThumbUrl(
+                                  magazine.image!.filePath, settings.instance!),
+                              width: 90)
+                          : Container());
+                }),
                 Expanded(
                     flex: magazine.image != null ? 3 : 100,
                     child: Padding(

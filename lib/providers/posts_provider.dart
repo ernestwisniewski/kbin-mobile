@@ -13,9 +13,13 @@ class PostsProvider with ChangeNotifier {
   TimeOptions _timeOptions = TimeOptions.fromall;
 
   bool get loading => _loading;
+
   int get page => _page;
+
   List<PostCollectionItem> get posts => _posts;
+
   SortOptions get sortOptions => _sortOptions;
+
   TimeOptions get timeOptions => _timeOptions;
 
   void setPage(int page) {
@@ -35,7 +39,8 @@ class PostsProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    _posts = await PostsRepository().fetchPosts(_page, _sortOptions, _timeOptions);
+    _posts =
+        await PostsRepository().fetchPosts(_page, _sortOptions, _timeOptions);
     _loading = false;
 
     notifyListeners();
@@ -47,6 +52,7 @@ class PostProvider with ChangeNotifier {
   late PostItem _post;
 
   bool get loading => _loading;
+
   PostItem get post => _post;
 
   void fetch(int id) async {

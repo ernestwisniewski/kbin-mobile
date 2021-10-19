@@ -5,15 +5,16 @@ import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
 import 'package:kbin_mobile/providers/posts_provider.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/screens/post_screen.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -25,9 +26,15 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
+  late SettingsProvider settings;
+
   @override
   void initState() {
     super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
+
     final posts = Provider.of<PostsProvider>(context, listen: false);
     posts.fetch();
   }
@@ -38,7 +45,7 @@ class _PostsScreenState extends State<PostsScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const AppBarTitle(),
+              middle: const TopBar(),
               leading: buildAppBarLeading(context),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -109,16 +116,21 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Expanded(
-                      child: Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: post.user.avatar != null
-                              ? Image.network(
-                                  Media()
-                                      .getThumbUrl(post.user.avatar!.filePath),
-                                  fit: BoxFit.cover,
-                                )
-                              : const Icon(CupertinoIcons.person_alt))),
+                  Consumer<SettingsProvider>(
+                    builder: (context, settings, child) {
+                      return Expanded(
+                          child: Padding(
+                              padding: const EdgeInsets.only(right: 15),
+                              child: post.user.avatar != null
+                                  ? Image.network(
+                                      Media().getThumbUrl(
+                                          post.user.avatar!.filePath,
+                                          settings.instance!),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const Icon(CupertinoIcons.person_alt)));
+                    },
+                  ),
                   Expanded(
                       flex: 6,
                       child: Column(

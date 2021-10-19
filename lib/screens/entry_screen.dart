@@ -7,9 +7,10 @@ import 'package:kbin_mobile/models/entry_comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:transparent_image/transparent_image.dart';
@@ -29,9 +30,14 @@ class EntryScreen extends StatefulWidget {
 }
 
 class _EntryScreenState extends State<EntryScreen> {
+  late SettingsProvider settings;
+
   @override
   void initState() {
     super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
 
     final post = Provider.of<EntryProvider>(context, listen: false);
     post.fetch(widget.id);
@@ -44,7 +50,7 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: AppBarTitle(title: widget.magazine),
+          middle: TopBar(title: widget.magazine),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
@@ -106,17 +112,20 @@ List<Widget> buildSliverLists(BuildContext context, EntryItem entry) {
 }
 
 Widget buildSliverAppBar(BuildContext context, EntryItem entry) {
-  return SliverAppBar(
-    leading: const Divider(),
-    backgroundColor: KbinColors().getEvenBackground(context),
-    expandedHeight: 200,
-    flexibleSpace: FlexibleSpaceBar(
-      background: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          fit: BoxFit.cover,
-          image: Media().getThumbUrl(entry.image!.filePath)),
-    ),
-  );
+  return Consumer<SettingsProvider>(builder: (context, settings, child) {
+    return SliverAppBar(
+      leading: const Divider(),
+      backgroundColor: KbinColors().getEvenBackground(context),
+      expandedHeight: 200,
+      flexibleSpace: FlexibleSpaceBar(
+        background: FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            fit: BoxFit.cover,
+            image:
+                Media().getThumbUrl(entry.image!.filePath, settings.instance!)),
+      ),
+    );
+  });
 }
 
 Widget buildSliverList(BuildContext context, EntryItem entry) {
@@ -225,16 +234,19 @@ Widget buildUserInfo(BuildContext context, EntryItem entry) {
       color: (KbinColors()).getEvenBackground(context),
       child: Row(
         children: [
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: entry.user.avatar != null
-                ? Image.network(
-                    Media().getThumbUrl(entry.user.avatar!.filePath),
-                    fit: BoxFit.cover,
-                  )
-                : const Icon(Icons.person),
-          )),
+          Consumer<SettingsProvider>(builder: (context, settings, child) {
+            return Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: entry.user.avatar != null
+                  ? Image.network(
+                      Media().getThumbUrl(
+                          entry.user.avatar!.filePath, settings.instance!),
+                      fit: BoxFit.cover,
+                    )
+                  : const Icon(Icons.person),
+            ));
+          }),
           Expanded(
               flex: 3,
               child: Column(
@@ -343,16 +355,19 @@ Widget buildComment(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-              child: Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: comment.user.avatar != null
-                ? Image.network(
-                    Media().getThumbUrl(comment.user.avatar!.filePath),
-                    fit: BoxFit.cover,
-                  )
-                : const Icon(Icons.person),
-          )),
+          Consumer<SettingsProvider>(builder: (context, settings, child) {
+            return Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: comment.user.avatar != null
+                  ? Image.network(
+                      Media().getThumbUrl(
+                          comment.user.avatar!.filePath, settings.instance!),
+                      fit: BoxFit.cover,
+                    )
+                  : const Icon(Icons.person),
+            ));
+          }),
           Expanded(
               flex: 6,
               child: Column(

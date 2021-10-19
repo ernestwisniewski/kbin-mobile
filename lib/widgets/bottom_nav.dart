@@ -1,7 +1,6 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 
 CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
@@ -46,10 +45,10 @@ CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
         icon: Icon(CupertinoIcons.search),
         label: 'Wyszukaj',
       ),
-      BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.profile_circled),
-        label: 'Profil',
-      ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(CupertinoIcons.profile_circled),
+      //   label: 'Profil',
+      // ),
     ],
   );
 }

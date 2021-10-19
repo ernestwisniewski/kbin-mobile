@@ -10,7 +10,9 @@ import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class SearchRepository {
   Future<List<dynamic>> search(String query) async {
-    Uri url = Uri.http(ApiProvider().getDomain(), 'api/searches.jsonld', {'q': query});
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.http(domain, 'api/searches.jsonld', {'q': query});
 
     var response = await http.get(url);
 

@@ -12,9 +12,9 @@ import 'package:kbin_mobile/screens/magazines_screen.dart' as magazines_screen;
 import 'package:kbin_mobile/screens/post_screen.dart' as post_screen;
 import 'package:kbin_mobile/screens/posts_screen.dart' as posts_screen;
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -39,8 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const AppBarTitle(),
-              leading: buildAppBarLeading(context)),
+              middle: const TopBar(), leading: buildAppBarLeading(context)),
           child: buildBody(context),
         );
       },

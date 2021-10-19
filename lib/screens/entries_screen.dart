@@ -5,14 +5,15 @@ import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
+import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/app_bar_title.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
+import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 
 class EntriesScreen extends StatefulWidget {
@@ -23,9 +24,15 @@ class EntriesScreen extends StatefulWidget {
 }
 
 class _EntriesScreenState extends State<EntriesScreen> {
+  late SettingsProvider settings;
+
   @override
   void initState() {
     super.initState();
+
+    settings = Provider.of<SettingsProvider>(context, listen: false);
+    settings.fetch();
+
     final entry = Provider.of<EntriesProvider>(context, listen: false);
     entry.fetch();
   }
@@ -36,7 +43,7 @@ class _EntriesScreenState extends State<EntriesScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
-                middle: const AppBarTitle(),
+                middle: const TopBar(),
                 leading: buildAppBarLeading(context),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -68,7 +75,7 @@ PreferredSizeWidget buildAppBar(BuildContext context) {
         ],
       ),
     ],
-    title: const AppBarTitle(),
+    title: const TopBar(),
   );
 }
 
@@ -153,13 +160,17 @@ Widget buildMain(BuildContext context, EntryCollectionItem entry) {
                   const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
         ],
       )),
-      Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: entry.image != null
-            ? Image.network(Media().getEntryThumbUrl(entry.image!.filePath),
-                width: 90)
-            : null,
-      ),
+      Consumer<SettingsProvider>(builder: (context, settings, child) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: entry.image != null
+              ? Image.network(
+                  Media().getEntryThumbUrl(
+                      entry.image!.filePath, settings.instance!),
+                  width: 90)
+              : null,
+        );
+      }),
     ],
   );
 }
@@ -173,7 +184,8 @@ Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
         children: [
           buildMetaItem(entry.uv.toString(), CupertinoIcons.up_arrow),
           buildMetaItem(entry.dv.toString(), CupertinoIcons.down_arrow),
-          buildMetaItem(entry.comments.toString(), CupertinoIcons.chat_bubble_2),
+          buildMetaItem(
+              entry.comments.toString(), CupertinoIcons.chat_bubble_2),
           buildMetaItem(entry.user.username, CupertinoIcons.person_alt, true)
         ],
       ),

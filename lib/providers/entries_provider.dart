@@ -13,9 +13,13 @@ class EntriesProvider with ChangeNotifier {
   TimeOptions _timeOptions = TimeOptions.fromall;
 
   bool get loading => _loading;
+
   int get page => _page;
+
   List<EntryCollectionItem> get entries => _entries;
+
   SortOptions get sortOptions => _sortOptions;
+
   TimeOptions get timeOptions => _timeOptions;
 
   void setPage(int page) {
@@ -35,7 +39,8 @@ class EntriesProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    _entries = await EntriesRepository().fetchEntries(_page, _sortOptions, _timeOptions);
+    _entries = await EntriesRepository()
+        .fetchEntries(_page, _sortOptions, _timeOptions);
     _loading = false;
 
     notifyListeners();
@@ -47,6 +52,7 @@ class EntryProvider with ChangeNotifier {
   late EntryItem _entry;
 
   bool get loading => _loading;
+
   EntryItem get entry => _entry;
 
   void fetch(int id) async {

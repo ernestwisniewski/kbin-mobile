@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/filters/time_options_filters.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
-import 'package:provider/provider.dart';
 
 Widget timeOptions(BuildContext context, dynamic provider) {
   return Material(
