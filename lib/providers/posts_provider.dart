@@ -57,8 +57,6 @@ class PostProvider with ChangeNotifier {
 
   void fetch(int id) async {
     _loading = true;
-    notifyListeners();
-
     _post = await PostsRepository().fetchPost(id);
     _loading = false;
     notifyListeners();

@@ -31,8 +31,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    // settings = Provider.of<SettingsProvider>(context, listen: false);
+    // settings.fetch();
 
     final comments = Provider.of<CommentsProvider>(context, listen: false);
     comments.fetch();

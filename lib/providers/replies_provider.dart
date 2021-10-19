@@ -34,8 +34,6 @@ class RepliesProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
-    notifyListeners();
-
     _replies = await RepliesRepository().fetchPostReplies(_postId);
     _loading = false;
     notifyListeners();
