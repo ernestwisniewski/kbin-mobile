@@ -38,10 +38,11 @@ class CommentsProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
+    notifyListeners();
+
     _comments = await CommentsRepository()
         .fetchComments(_page, _sortOptions, _timeOptions);
     _loading = false;
-
     notifyListeners();
   }
 }

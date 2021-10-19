@@ -57,9 +57,10 @@ class EntryProvider with ChangeNotifier {
 
   void fetch(int id) async {
     _loading = true;
+    notifyListeners();
+
     _entry = await EntriesRepository().fetchEntry(id);
     _loading = false;
-
     notifyListeners();
   }
 }

@@ -35,9 +35,10 @@ class EntryCommentsProvider with ChangeNotifier {
 
   void fetch() async {
     _loading = true;
+    notifyListeners();
+
     _comments = await CommentsRepository().fetchEntryComments(_entryId);
     _loading = false;
-
     notifyListeners();
   }
 }

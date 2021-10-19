@@ -14,14 +14,9 @@ class MenuScreen extends StatefulWidget {
 
 
 class _MenuScreenState extends State<MenuScreen> {
-  late SettingsProvider settings;
-
   @override
   void initState() {
     super.initState();
-
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
   }
 
   @override

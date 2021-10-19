@@ -17,10 +17,11 @@ class SearchProvider with ChangeNotifier {
 
   void search(String query) async {
     _loading = true;
+    notifyListeners();
+
     _query = query;
     _results = await SearchRepository().search(_query);
     _loading = false;
-
     notifyListeners();
   }
 }

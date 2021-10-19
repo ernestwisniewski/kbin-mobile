@@ -27,7 +27,7 @@ class _InstanceScreenState extends State<InstanceScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            middle: const TopBar(title: 'Język'),
+            middle: const TopBar(title: 'Instancja'),
             leading: Material(
               type: MaterialType.transparency,
               child: IconButton(
