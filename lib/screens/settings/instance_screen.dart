@@ -39,17 +39,6 @@ class _InstanceScreenState extends State<InstanceScreen> {
                   context.router.pop();
                 },
               ),
-            ),
-            trailing: Material(
-              type: MaterialType.transparency,
-              child: IconButton(
-                color: KbinColors().getAppBarTextColor(),
-                icon: const Icon(CupertinoIcons.share),
-                tooltip: 'Udostępnij',
-                onPressed: () {
-                  // handle the press
-                },
-              ),
             )),
         child: SafeArea(
             child: Material(

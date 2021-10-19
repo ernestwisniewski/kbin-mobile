@@ -12,6 +12,7 @@ import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostScreen extends StatefulWidget {
@@ -69,27 +70,11 @@ class _PostScreenState extends State<PostScreen> {
               icon: const Icon(CupertinoIcons.share),
               tooltip: 'Udostępnij',
               onPressed: () {
-                // handle the press
+                Share.share('https://${settings.instance!}/m/${widget.magazine}/w/${widget.id}');
               },
             ),
           )),
       child: buildBody(context),
-    );
-  }
-
-  PreferredSizeWidget buildAppBar(BuildContext context, String magazine) {
-    return AppBar(
-      title: TopBar(title: magazine, fontSize: 16),
-      actions: [
-        IconButton(
-          color: KbinColors().getAppBarTextColor(),
-          icon: const Icon(CupertinoIcons.share),
-          tooltip: 'Udostępnij',
-          onPressed: () {
-            // handle the press
-          },
-        )
-      ],
     );
   }
 

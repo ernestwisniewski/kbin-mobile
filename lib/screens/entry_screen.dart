@@ -12,6 +12,7 @@ import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:transparent_image/transparent_image.dart';
 
@@ -39,8 +40,8 @@ class _EntryScreenState extends State<EntryScreen> {
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
 
-    final post = Provider.of<EntryProvider>(context, listen: false);
-    post.fetch(widget.id);
+    final entry = Provider.of<EntryProvider>(context, listen: false);
+    entry.fetch(widget.id);
 
     final comments = Provider.of<EntryCommentsProvider>(context, listen: false);
     comments.setEntryId(widget.id);
@@ -70,328 +71,335 @@ class _EntryScreenState extends State<EntryScreen> {
               icon: const Icon(CupertinoIcons.share),
               tooltip: 'Udostępnij',
               onPressed: () {
-                // handle the press
+                Share.share(
+                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
               },
             ),
           ),
         ),
         child: buildBody(context));
   }
-}
 
-Widget buildBody(BuildContext context) {
-  return SafeArea(
-    child: buildEntry(context),
-  );
-}
-
-Widget buildEntry(BuildContext context) {
-  return Consumer<EntryProvider>(
-    builder: (context, state, child) {
-      if (!state.loading) {
-        return CustomScrollView(
-          slivers: buildSliverLists(context, state.entry),
-        );
-      }
-
-      return buildLoadingFull();
-    },
-  );
-}
-
-List<Widget> buildSliverLists(BuildContext context, EntryItem entry) {
-  List<Widget> list = [];
-
-  if (entry.image != null) {
-    list.add(buildSliverAppBar(context, entry));
+  Widget buildBody(BuildContext context) {
+    return SafeArea(
+      child: buildEntry(context),
+    );
   }
 
-  list.add(buildSliverList(context, entry));
+  Widget buildEntry(BuildContext context) {
+    return Consumer<EntryProvider>(
+      builder: (context, state, child) {
+        if (!state.loading) {
+          return CustomScrollView(
+            slivers: buildSliverLists(context, state.entry),
+          );
+        }
 
-  return list;
-}
-
-Widget buildSliverAppBar(BuildContext context, EntryItem entry) {
-  return Consumer<SettingsProvider>(builder: (context, settings, child) {
-    return SliverAppBar(
-      leading: const Divider(),
-      backgroundColor: KbinColors().getEvenBackground(context),
-      expandedHeight: 200,
-      flexibleSpace: FlexibleSpaceBar(
-        background: FadeInImage.memoryNetwork(
-            placeholder: kTransparentImage,
-            fit: BoxFit.cover,
-            image:
-                Media().getThumbUrl(entry.image!.filePath, settings.instance!)),
-      ),
+        return buildLoadingFull();
+      },
     );
-  });
-}
+  }
 
-Widget buildSliverList(BuildContext context, EntryItem entry) {
-  return SliverList(
-    delegate: SliverChildListDelegate([
-      Container(
-          margin: const EdgeInsets.only(left: 0, right: 0),
-          child: Column(
-            children: [
-              Material(
-                  type: MaterialType.transparency,
-                  child: buildEntryCard(context, entry)),
-              Material(
-                  type: MaterialType.transparency,
-                  child: buildActionButtons(entry)),
-              Material(
-                  type: MaterialType.transparency,
-                  child: buildUserInfo(context, entry)),
-              Material(
-                  type: MaterialType.transparency,
-                  child: buildEntryInfo(entry)),
-              Material(
-                  type: MaterialType.transparency,
-                  child: buildEntryCommentList(context)),
-            ],
-          )),
-    ]),
-  );
-}
+  List<Widget> buildSliverLists(BuildContext context, EntryItem entry) {
+    List<Widget> list = [];
 
-Widget buildEntryCard(BuildContext context, EntryItem entry) {
-  return Row(
-    children: <Widget>[
-      Expanded(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
-          child: Column(
+    if (entry.image != null) {
+      list.add(buildSliverAppBar(context, entry));
+    }
+
+    list.add(buildSliverList(context, entry));
+
+    return list;
+  }
+
+  Widget buildSliverAppBar(BuildContext context, EntryItem entry) {
+    return Consumer<SettingsProvider>(builder: (context, settings, child) {
+      return SliverAppBar(
+        leading: const Divider(),
+        backgroundColor: KbinColors().getEvenBackground(context),
+        expandedHeight: 200,
+        flexibleSpace: FlexibleSpaceBar(
+          background: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              fit: BoxFit.cover,
+              image: Media()
+                  .getThumbUrl(entry.image!.filePath, settings.instance!)),
+        ),
+      );
+    });
+  }
+
+  Widget buildSliverList(BuildContext context, EntryItem entry) {
+    return SliverList(
+      delegate: SliverChildListDelegate([
+        Container(
+            margin: const EdgeInsets.only(left: 0, right: 0),
+            child: Column(
+              children: [
+                Material(
+                    type: MaterialType.transparency,
+                    child: buildEntryCard(context, entry)),
+                Material(
+                    type: MaterialType.transparency,
+                    child: buildActionButtons(entry)),
+                Material(
+                    type: MaterialType.transparency,
+                    child: buildUserInfo(context, entry)),
+                Material(
+                    type: MaterialType.transparency,
+                    child: buildEntryInfo(entry)),
+                Material(
+                    type: MaterialType.transparency,
+                    child: buildEntryCommentList(context)),
+              ],
+            )),
+      ]),
+    );
+  }
+
+  Widget buildEntryCard(BuildContext context, EntryItem entry) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(entry.title,
+                            style: Theme.of(context).textTheme.headline6),
+                      ],
+                    ))
+                  ],
+                ),
+                entry.body != null
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: Text(entry.body.toString(),
+                            style: Theme.of(context).textTheme.bodyText1),
+                      )
+                    : Container()
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildActionButtons(EntryItem entry) {
+    return Wrap(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 15,
+            right: 15,
+          ),
+          child: Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(entry.title,
-                          style: Theme.of(context).textTheme.headline6),
-                    ],
-                  ))
-                ],
-              ),
-              entry.body != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: Text(entry.body.toString(),
-                          style: Theme.of(context).textTheme.bodyText1),
-                    )
-                  : Container()
+              buildActionButton(const Icon(CupertinoIcons.chat_bubble_2),
+                  entry.comments.toString(), () {}),
+              buildActionButton(const Icon(CupertinoIcons.up_arrow),
+                  entry.uv.toString(), () {}),
+              buildActionButton(const Icon(CupertinoIcons.down_arrow),
+                  entry.dv.toString(), () {}),
             ],
           ),
         ),
-      ),
-    ],
-  );
-}
+        Padding(
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            children: [
+              buildActionButton(const Icon(CupertinoIcons.share), null, () {
+                Share.share(
+                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+              }),
+              buildActionButton(
+                  const Icon(Icons.explore_outlined), null, () {}),
+              buildActionButton(
+                  const Icon(CupertinoIcons.xmark_octagon), null, () {}),
+            ],
+          ),
+        )
+      ],
+    );
+  }
 
-Widget buildActionButtons(EntryItem entry) {
-  return Wrap(
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(
-          left: 15,
-          right: 15,
-        ),
+  Widget buildUserInfo(BuildContext context, EntryItem entry) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Container(
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+        color: (KbinColors()).getEvenBackground(context),
         child: Row(
           children: [
-            buildActionButton(const Icon(CupertinoIcons.chat_bubble_2),
-                entry.comments.toString(), () {}),
-            buildActionButton(const Icon(CupertinoIcons.up_arrow),
-                entry.uv.toString(), () {}),
-            buildActionButton(const Icon(CupertinoIcons.down_arrow),
-                entry.dv.toString(), () {}),
+            Consumer<SettingsProvider>(builder: (context, settings, child) {
+              return Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: entry.user.avatar != null
+                    ? Image.network(
+                        Media().getThumbUrl(
+                            entry.user.avatar!.filePath, settings.instance!),
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(Icons.person),
+              ));
+            }),
+            Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(entry.user.username,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18)),
+                    Wrap(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text(entry.comments.toString(),
+                            style: const TextStyle(color: Colors.grey)),
+                      ),
+                      const Text('obserwujących',
+                          style: TextStyle(color: Colors.grey)),
+                    ])
+                  ],
+                ))
           ],
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15),
-        child: Row(
-          children: [
-            buildActionButton(const Icon(CupertinoIcons.share), null, () {}),
-            buildActionButton(const Icon(Icons.explore_outlined), null, () {}),
-            buildActionButton(
-                const Icon(CupertinoIcons.xmark_octagon), null, () {}),
-          ],
-        ),
-      )
-    ],
-  );
-}
+    );
+  }
 
-Widget buildUserInfo(BuildContext context, EntryItem entry) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 15),
-    child: Container(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-      color: (KbinColors()).getEvenBackground(context),
-      child: Row(
-        children: [
-          Consumer<SettingsProvider>(builder: (context, settings, child) {
-            return Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: entry.user.avatar != null
-                  ? Image.network(
-                      Media().getThumbUrl(
-                          entry.user.avatar!.filePath, settings.instance!),
-                      fit: BoxFit.cover,
+  Widget buildEntryInfo(EntryItem entry) {
+    return Wrap(
+      children: [
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, bottom: 30, top: 15),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              entry.domain != null
+                  ? buildActionButton(const Icon(CupertinoIcons.globe),
+                      entry.domain!.name, () {})
+                  : Container(),
+              buildActionButton(
+                  const Icon(CupertinoIcons.eye), entry.views.toString()),
+              buildActionButton(const Icon(CupertinoIcons.calendar),
+                  timeago.format(entry.createdAt, locale: 'pl')),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget buildActionButton(
+      [Icon? icon, String? label, GestureTapCallback? fn]) {
+    return Expanded(
+        child: InkWell(
+      onTap: fn,
+      child: Container(
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          child: TextButton(
+            onPressed: null,
+            child: Column(children: [
+              icon ?? Container(),
+              label != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Text(label, textAlign: TextAlign.center),
                     )
-                  : const Icon(Icons.person),
-            ));
-          }),
-          Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(entry.user.username,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18)),
-                  Wrap(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Text(entry.comments.toString(),
-                          style: const TextStyle(color: Colors.grey)),
-                    ),
-                    const Text('obserwujących',
-                        style: TextStyle(color: Colors.grey)),
-                  ])
-                ],
-              ))
+                  : Container()
+            ]),
+          )),
+    ));
+  }
+
+  Widget buildEntryCommentList(BuildContext context) {
+    return Consumer<EntryCommentsProvider>(
+      builder: (context, state, child) {
+        if (!state.loading) {
+          if (state.comments.isNotEmpty) {
+            int index = 0;
+            return Container(
+                margin: const EdgeInsets.only(left: 0, right: 0),
+                child: Column(
+                  children: [
+                    for (EntryCommentsItem item in state.comments)
+                      buildComment(context, item, index++),
+                  ],
+                ));
+          } else {
+            return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak komentarzy'));
+          }
+        }
+
+        return buildLoadingFull();
+      },
+    );
+  }
+
+  Widget buildComment(
+      BuildContext context, EntryCommentsItem comment, int index) {
+    return Container(
+      color: index.isEven
+          ? (KbinColors()).getEvenBackground(context)
+          : Colors.transparent,
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Consumer<SettingsProvider>(builder: (context, settings, child) {
+              return Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: comment.user.avatar != null
+                    ? Image.network(
+                        Media().getThumbUrl(
+                            comment.user.avatar!.filePath, settings.instance!),
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(Icons.person),
+              ));
+            }),
+            Expanded(
+                flex: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(comment.user.username,
+                        style: const TextStyle(fontWeight: FontWeight.w600)),
+                    Text(timeago.format(comment.createdAt, locale: 'pl'),
+                        style: const TextStyle(color: Colors.grey))
+                  ],
+                ))
+          ]),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            child: Text(comment.body),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: Wrap(children: [
+              buildMetaItem(comment.uv.toString(), CupertinoIcons.up_arrow),
+              buildMetaItem(comment.dv.toString(), CupertinoIcons.down_arrow)
+            ]),
+          ),
         ],
       ),
-    ),
-  );
-}
-
-Widget buildEntryInfo(EntryItem entry) {
-  return Wrap(
-    children: [
-      Padding(
-        padding:
-            const EdgeInsets.only(left: 15, right: 15, bottom: 30, top: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            entry.domain != null
-                ? buildActionButton(
-                    const Icon(CupertinoIcons.globe), entry.domain!.name, () {})
-                : Container(),
-            buildActionButton(
-                const Icon(CupertinoIcons.eye), entry.views.toString()),
-            buildActionButton(const Icon(CupertinoIcons.calendar),
-                timeago.format(entry.createdAt, locale: 'pl')),
-          ],
-        ),
-      )
-    ],
-  );
-}
-
-Widget buildActionButton([Icon? icon, String? label, GestureTapCallback? fn]) {
-  return Expanded(
-      child: InkWell(
-    onTap: fn,
-    child: Container(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
-        child: TextButton(
-          onPressed: null,
-          child: Column(children: [
-            icon ?? Container(),
-            label != null
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(label, textAlign: TextAlign.center),
-                  )
-                : Container()
-          ]),
-        )),
-  ));
-}
-
-Widget buildEntryCommentList(BuildContext context) {
-  return Consumer<EntryCommentsProvider>(
-    builder: (context, state, child) {
-      if (!state.loading) {
-        if (state.comments.isNotEmpty) {
-          int index = 0;
-          return Container(
-              margin: const EdgeInsets.only(left: 0, right: 0),
-              child: Column(
-                children: [
-                  for (EntryCommentsItem item in state.comments)
-                    buildComment(context, item, index++),
-                ],
-              ));
-        } else {
-          return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50),
-              child: const Text('brak komentarzy'));
-        }
-      }
-
-      return buildLoadingFull();
-    },
-  );
-}
-
-Widget buildComment(
-    BuildContext context, EntryCommentsItem comment, int index) {
-  return Container(
-    color: index.isEven
-        ? (KbinColors()).getEvenBackground(context)
-        : Colors.transparent,
-    padding: const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Consumer<SettingsProvider>(builder: (context, settings, child) {
-            return Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: comment.user.avatar != null
-                  ? Image.network(
-                      Media().getThumbUrl(
-                          comment.user.avatar!.filePath, settings.instance!),
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(Icons.person),
-            ));
-          }),
-          Expanded(
-              flex: 6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(comment.user.username,
-                      style: const TextStyle(fontWeight: FontWeight.w600)),
-                  Text(timeago.format(comment.createdAt, locale: 'pl'),
-                      style: const TextStyle(color: Colors.grey))
-                ],
-              ))
-        ]),
-        Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
-          child: Text(comment.body),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: Wrap(children: [
-            buildMetaItem(comment.uv.toString(), CupertinoIcons.up_arrow),
-            buildMetaItem(comment.dv.toString(), CupertinoIcons.down_arrow)
-          ]),
-        ),
-      ],
-    ),
-  );
+    );
+  }
 }
