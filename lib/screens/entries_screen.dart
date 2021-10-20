@@ -1,16 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
-import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
-import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
+import 'package:kbin_mobile/widgets/entry.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
-import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
 import 'package:kbin_mobile/widgets/top_bar.dart';
@@ -60,135 +56,54 @@ class _EntriesScreenState extends State<EntriesScreen> {
     );
     // bottomNavigationBar: buildBottomNavbar(context, 0));
   }
-}
 
-PreferredSizeWidget buildAppBar(BuildContext context) {
-  return AppBar(
-    leading: buildAppBarLeading(context),
-    actions: [
-      Row(
-        children: [
-          timeOptions(
-              context, Provider.of<EntriesProvider>(context, listen: false)),
-          sortOptions(
-              context, Provider.of<EntriesProvider>(context, listen: false)),
-        ],
-      ),
-    ],
-    title: const TopBar(),
-  );
-}
-
-Widget buildBody(BuildContext context) {
-  return SafeArea(
-    child: buildEntryList(context),
-  );
-}
-
-Widget buildEntryList(BuildContext context) {
-  return Consumer<EntriesProvider>(
-    builder: (context, state, child) {
-      if (!state.loading) {
-        if (state.entries.isNotEmpty) {
-          return ListView.builder(
-              itemCount: state.entries.length,
-              itemBuilder: (BuildContext context, int index) {
-                EntryCollectionItem entry = state.entries[index];
-                return buildItem(context, entry, index);
-              });
-        } else {
-          return Material(
-            type: MaterialType.transparency,
-            child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(50),
-                child: const Text('brak treści')),
-          );
-        }
-      }
-
-      return buildLoadingFull();
-    },
-  );
-}
-
-Widget buildItem(BuildContext context, EntryCollectionItem entry,
-    [int index = 1]) {
-  return Material(
-    type: MaterialType.transparency,
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              context.router.push(
-                  EntryRoute(id: entry.id, magazine: entry.magazine.name));
-            },
-            child: Container(
-                padding: const EdgeInsets.only(
-                    left: 15, right: 15, top: 20, bottom: 20),
-                color: index.isEven
-                    ? (KbinColors()).getEvenBackground(context)
-                    : Colors.transparent,
-                child: Column(
-                  children: [
-                    buildMain(context, entry),
-                    buildMeta(context, entry),
-                  ],
-                )),
-          ),
+  PreferredSizeWidget buildAppBar(BuildContext context) {
+    return AppBar(
+      leading: buildAppBarLeading(context),
+      actions: [
+        Row(
+          children: [
+            timeOptions(
+                context, Provider.of<EntriesProvider>(context, listen: false)),
+            sortOptions(
+                context, Provider.of<EntriesProvider>(context, listen: false)),
+          ],
         ),
       ],
-    ),
-  );
-}
+      title: const TopBar(),
+    );
+  }
 
-Widget buildMain(BuildContext context, EntryCollectionItem entry) {
-  return Row(
-    children: [
-      Expanded(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text('/m/' + entry.magazine.name,
-                style: const TextStyle(color: Colors.grey)),
-          ),
-          Text(entry.title,
-              style:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-        ],
-      )),
-      Consumer<SettingsProvider>(builder: (context, settings, child) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: entry.image != null
-              ? Image.network(
-                  Media().getEntryThumbUrl(
-                      entry.image!.filePath, settings.instance!),
-                  width: 90)
-              : null,
-        );
-      }),
-    ],
-  );
-}
+  Widget buildBody(BuildContext context) {
+    return SafeArea(
+      child: buildEntryList(context),
+    );
+  }
 
-Widget buildMeta(BuildContext context, EntryCollectionItem entry) {
-  return Row(children: [
-    Expanded(
-        child: Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: Wrap(
-        children: [
-          buildMetaItem(entry.uv.toString(), CupertinoIcons.up_arrow),
-          buildMetaItem(entry.dv.toString(), CupertinoIcons.down_arrow),
-          buildMetaItem(
-              entry.comments.toString(), CupertinoIcons.chat_bubble_2),
-          buildMetaItem(entry.user.username, CupertinoIcons.person_alt, true)
-        ],
-      ),
-    ))
-  ]);
+  Widget buildEntryList(BuildContext context) {
+    return Consumer<EntriesProvider>(
+      builder: (context, state, child) {
+        if (!state.loading) {
+          if (state.entries.isNotEmpty) {
+            return ListView.builder(
+                itemCount: state.entries.length,
+                itemBuilder: (BuildContext context, int index) {
+                  EntryCollectionItem entry = state.entries[index];
+                  return buildItem(context, entry, index);
+                });
+          } else {
+            return Material(
+              type: MaterialType.transparency,
+              child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(50),
+                  child: const Text('brak treści')),
+            );
+          }
+        }
+
+        return buildLoadingFull();
+      },
+    );
+  }
 }

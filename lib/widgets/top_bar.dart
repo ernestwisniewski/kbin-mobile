@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
-import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:provider/provider.dart';
 
 class TopBar extends StatefulWidget {
   final String? title;
   final double? fontSize;
+
   const TopBar({Key? key, this.title, this.fontSize}) : super(key: key);
 
   @override
@@ -30,5 +30,4 @@ class _TopBarState extends State<TopBar> {
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: widget.fontSize),
     );
   }
-
 }

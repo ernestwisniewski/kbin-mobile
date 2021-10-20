@@ -6,14 +6,14 @@ import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
-import 'package:kbin_mobile/screens/comments_screen.dart' as comment_screen;
-import 'package:kbin_mobile/screens/entries_screen.dart' as entries_screen;
-import 'package:kbin_mobile/screens/magazines_screen.dart' as magazines_screen;
-import 'package:kbin_mobile/screens/post_screen.dart' as post_screen;
-import 'package:kbin_mobile/screens/posts_screen.dart' as posts_screen;
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
+import 'package:kbin_mobile/widgets/comment.dart' as comment;
+import 'package:kbin_mobile/widgets/entry.dart' as entry;
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/magazine.dart' as magazine;
+import 'package:kbin_mobile/widgets/post.dart' as post;
+import 'package:kbin_mobile/widgets/reply.dart' as reply;
 import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -104,15 +104,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget buildSubject(BuildContext context, dynamic subject, int index) {
     if (subject is EntryCollectionItem) {
-      return entries_screen.buildItem(context, subject, index);
+      return entry.buildItem(context, subject, index);
     } else if (subject is CommentCollectionItem) {
-      return comment_screen.buildItem(context, subject, index);
+      return comment.buildItem(context, subject, index);
     } else if (subject is PostCollectionItem) {
-      return posts_screen.buildItem(context, subject, index);
+      return post.buildItem(context, subject, index);
     } else if (subject is ReplyCollectionItem) {
-      return post_screen.buildReply(context, subject, index);
+      return reply.buildItem(context, subject, index);
     } else if (subject is MagazineCollectionItem) {
-      return magazines_screen.buildItem(context, subject, index);
+      return magazine.buildItem(context, subject, index);
     }
 
     return Container();

@@ -10,6 +10,7 @@ import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
+import 'package:kbin_mobile/widgets/reply.dart' as reply;
 import 'package:kbin_mobile/widgets/top_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -187,7 +188,7 @@ class _PostScreenState extends State<PostScreen> {
             return Column(
               children: [
                 for (replies.ReplyCollectionItem item in state.replies)
-                  buildReply(context, item, index++),
+                  reply.buildItem(context, item, index++),
               ],
             );
           } else {
@@ -205,71 +206,4 @@ class _PostScreenState extends State<PostScreen> {
       },
     );
   }
-}
-
-Widget buildReply(
-    BuildContext context, replies.ReplyCollectionItem reply, int index) {
-  return Material(
-    type: MaterialType.transparency,
-    child: Padding(
-      padding: const EdgeInsets.only(left: 15),
-      child: Container(
-        decoration: BoxDecoration(
-            color: index.isEven
-                ? KbinColors().getEvenBackground(context)
-                : Colors.transparent,
-            border: Border(
-              left:
-                  BorderSide(width: 2, color: KbinColors().fromHex('#71ac53')),
-            )),
-        padding:
-            const EdgeInsets.only(left: 15, right: 15, top: 30, bottom: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Consumer<SettingsProvider>(builder: (context, settings, child) {
-                return Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: reply.user.avatar != null
-                            ? Image.network(
-                                Media().getThumbUrl(
-                                    reply.user.avatar!.filePath, settings.instance!),
-                                fit: BoxFit.cover,
-                              )
-                            : const Icon(CupertinoIcons.person_alt)));
-              }),
-              Expanded(
-                  flex: 6,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(reply.user.username,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                          Align(
-                              alignment: Alignment.centerRight,
-                              child: buildMetaItem(reply.uv.toString(),
-                                  CupertinoIcons.up_arrow)),
-                        ],
-                      ),
-                      Text(timeago.format(reply.createdAt, locale: 'pl'),
-                          style: const TextStyle(color: Colors.grey))
-                    ],
-                  )),
-            ]),
-            Padding(
-              padding: const EdgeInsets.only(top: 15, bottom: 15),
-              child: Text(reply.body),
-            )
-          ],
-        ),
-      ),
-    ),
-  );
 }

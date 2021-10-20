@@ -10,7 +10,6 @@ import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
-import 'package:kbin_mobile/repositories/api_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';

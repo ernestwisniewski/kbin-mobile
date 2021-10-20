@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:transparent_image/transparent_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EntryScreen extends StatefulWidget {
   final String magazine;
@@ -32,6 +33,7 @@ class EntryScreen extends StatefulWidget {
 
 class _EntryScreenState extends State<EntryScreen> {
   late SettingsProvider settings;
+  Future<void>? _launched;
 
   @override
   void initState() {
@@ -45,6 +47,18 @@ class _EntryScreenState extends State<EntryScreen> {
 
     final comments = Provider.of<EntryCommentsProvider>(context, listen: false);
     comments.setEntryId(widget.id);
+  }
+
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+        forceWebView: false,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -161,31 +175,38 @@ class _EntryScreenState extends State<EntryScreen> {
     return Row(
       children: <Widget>[
         Expanded(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 15, right: 15, top: 40, bottom: 40),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(entry.title,
-                            style: Theme.of(context).textTheme.headline6),
-                      ],
-                    ))
-                  ],
-                ),
-                entry.body != null
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 40),
-                        child: Text(entry.body.toString(),
-                            style: Theme.of(context).textTheme.bodyText1),
-                      )
-                    : Container()
-              ],
+          child: InkWell(
+            onTap: entry.url != null
+                ? () {
+                    _launched = _launchInBrowser(entry.url!);
+                  }
+                : null,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 15, right: 15, top: 40, bottom: 40),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(entry.title,
+                              style: Theme.of(context).textTheme.headline6),
+                        ],
+                      ))
+                    ],
+                  ),
+                  entry.body != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 40),
+                          child: Text(entry.body.toString(),
+                              style: Theme.of(context).textTheme.bodyText1),
+                        )
+                      : Container()
+                ],
+              ),
             ),
           ),
         ),
@@ -221,7 +242,13 @@ class _EntryScreenState extends State<EntryScreen> {
                     'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
               }),
               buildActionButton(
-                  const Icon(Icons.explore_outlined), null, () {}),
+                  const Icon(Icons.explore_outlined),
+                  null,
+                  entry.url != null
+                      ? () {
+                          _launched = _launchInBrowser(entry.url!);
+                        }
+                      : null),
               buildActionButton(
                   const Icon(CupertinoIcons.xmark_octagon), null, () {}),
             ],
