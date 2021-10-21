@@ -12,7 +12,7 @@ class SearchRepository {
   Future<List<dynamic>> search(String query) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.http(domain, 'api/searches.jsonld', {'q': query});
+    Uri url = Uri.https(domain, 'api/searches.jsonld', {'q': query});
 
     var response = await http.get(url);
 

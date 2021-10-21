@@ -50,6 +50,7 @@ dependencies:
   transparent_image: ^2.0.0
   share: ^2.0.4
   url_launcher: ^6.0.12
+#  shared_preferences_web: ^2.0.2
 
 dev_dependencies:
   flutter_test:

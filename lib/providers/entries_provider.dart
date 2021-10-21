@@ -8,6 +8,7 @@ import 'package:kbin_mobile/repositories/entries_repository.dart';
 class EntriesProvider with ChangeNotifier {
   bool _loading = false;
   int _page = 1;
+  String? _pageView;
   List<EntryCollectionItem> _entries = [];
   SortOptions _sortOptions = SortOptions.hot;
   TimeOptions _timeOptions = TimeOptions.fromall;
@@ -15,6 +16,8 @@ class EntriesProvider with ChangeNotifier {
   bool get loading => _loading;
 
   int get page => _page;
+
+  String? get pageView => _pageView;
 
   List<EntryCollectionItem> get entries => _entries;
 
@@ -37,10 +40,15 @@ class EntriesProvider with ChangeNotifier {
     fetch();
   }
 
+  void setPageView(String pageView) {
+    _pageView = pageView;
+    fetch();
+  }
+
   void fetch() async {
     _loading = true;
     _entries = await EntriesRepository()
-        .fetchEntries(_page, _sortOptions, _timeOptions);
+        .fetchEntries(_page, _sortOptions, _timeOptions, _pageView);
     _loading = false;
 
     notifyListeners();

@@ -8,6 +8,7 @@ import 'package:kbin_mobile/repositories/posts_repository.dart';
 class PostsProvider with ChangeNotifier {
   bool _loading = false;
   int _page = 1;
+  String? _pageView;
   List<PostCollectionItem> _posts = [];
   SortOptions _sortOptions = SortOptions.hot;
   TimeOptions _timeOptions = TimeOptions.fromall;
@@ -15,6 +16,8 @@ class PostsProvider with ChangeNotifier {
   bool get loading => _loading;
 
   int get page => _page;
+
+  String? get pageView => _pageView;
 
   List<PostCollectionItem> get posts => _posts;
 
@@ -37,10 +40,15 @@ class PostsProvider with ChangeNotifier {
     fetch();
   }
 
+  void setPageView(String pageView) {
+    _pageView = pageView;
+    fetch();
+  }
+
   void fetch() async {
     _loading = true;
-    _posts =
-        await PostsRepository().fetchPosts(_page, _sortOptions, _timeOptions);
+    _posts = await PostsRepository()
+        .fetchPosts(_page, _sortOptions, _timeOptions, _pageView);
     _loading = false;
 
     notifyListeners();

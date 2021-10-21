@@ -9,11 +9,22 @@ import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class EntriesRepository {
   Future<List<EntryCollectionItem>> fetchEntries(
-      int page, SortOptions sortOptions, TimeOptions timeOptions) async {
+      int page,
+      SortOptions sortOptions,
+      TimeOptions timeOptions,
+      String? pageView) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.http(domain, 'api/entries.jsonld',
-        {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
+    Map<String, dynamic>? filters = {
+      'sort': sortOptions.toParam(),
+      'time': timeOptions.toParam()
+    };
+
+    filters['magazine'] = 'selfhosted';
+    if (pageView != null) {
+    }
+
+    Uri url = Uri.https(domain, 'api/entries.jsonld', filters);
 
     var response = await http.get(url);
 

@@ -8,12 +8,20 @@ import 'package:kbin_mobile/models/post_item_model.dart';
 import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class PostsRepository {
-  Future<List<PostCollectionItem>> fetchPosts(
-      int page, SortOptions sortOptions, TimeOptions timeOptions) async {
+  Future<List<PostCollectionItem>> fetchPosts(int page, SortOptions sortOptions,
+      TimeOptions timeOptions, String? pageView) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.http(domain, 'api/posts.jsonld',
-        {'sort': sortOptions.toParam(), 'time': timeOptions.toParam()});
+    Map<String, dynamic>? filters = {
+      'sort': sortOptions.toParam(),
+      'time': timeOptions.toParam()
+    };
+
+    if (pageView != null) {
+      filters['magazine'] = 'selfhosted';
+    }
+
+    Uri url = Uri.https(domain, 'api/posts.jsonld', filters);
 
     var response = await http.get(url);
 

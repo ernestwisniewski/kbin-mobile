@@ -65,6 +65,12 @@ class _InstanceScreenState extends State<InstanceScreen> {
                     onPressed: (BuildContext context) {
                       changeInstance('kbin.pub');
                     }),
+                SettingsTile(
+                    title: "kbin.test",
+                    trailing: trailingWidget('kbin.test'),
+                    onPressed: (BuildContext context) {
+                      changeInstance('kbin.test');
+                    }),
               ]);
             },
           ),

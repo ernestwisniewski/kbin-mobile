@@ -7,6 +7,7 @@ import 'package:kbin_mobile/repositories/comments_repository.dart';
 class CommentsProvider with ChangeNotifier {
   bool _loading = false;
   int _page = 1;
+  String? _pageView;
   List<CommentCollectionItem> _comments = [];
   SortOptions _sortOptions = SortOptions.hot;
   TimeOptions _timeOptions = TimeOptions.fromall;
@@ -14,6 +15,8 @@ class CommentsProvider with ChangeNotifier {
   bool get loading => _loading;
 
   int get page => _page;
+
+  String? get pageView => _pageView;
 
   List<CommentCollectionItem> get comments => _comments;
 
@@ -36,10 +39,15 @@ class CommentsProvider with ChangeNotifier {
     fetch();
   }
 
+  void setPageView(String pageView) {
+    _pageView = pageView;
+    fetch();
+  }
+
   void fetch() async {
     _loading = true;
     _comments = await CommentsRepository()
-        .fetchComments(_page, _sortOptions, _timeOptions);
+        .fetchComments(_page, _sortOptions, _timeOptions, _pageView);
     _loading = false;
     notifyListeners();
   }
