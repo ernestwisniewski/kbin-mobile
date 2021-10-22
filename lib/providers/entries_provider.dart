@@ -3,21 +3,24 @@ import 'package:kbin_mobile/filters/stort_options_filters.dart';
 import 'package:kbin_mobile/filters/time_options_filters.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/models/entry_item_model.dart';
+import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/repositories/entries_repository.dart';
 
 class EntriesProvider with ChangeNotifier {
+  final FiltersProvider? _filtersProvider;
   bool _loading = false;
   int _page = 1;
-  String? _pageView;
   List<EntryCollectionItem> _entries = [];
   SortOptions _sortOptions = SortOptions.hot;
   TimeOptions _timeOptions = TimeOptions.fromall;
+
+  EntriesProvider(this._filtersProvider);
 
   bool get loading => _loading;
 
   int get page => _page;
 
-  String? get pageView => _pageView;
+  String? get screenView => _filtersProvider != null ? _filtersProvider!.screenView : null;
 
   List<EntryCollectionItem> get entries => _entries;
 
@@ -40,15 +43,10 @@ class EntriesProvider with ChangeNotifier {
     fetch();
   }
 
-  void setPageView(String pageView) {
-    _pageView = pageView;
-    fetch();
-  }
-
   void fetch() async {
     _loading = true;
     _entries = await EntriesRepository()
-        .fetchEntries(_page, _sortOptions, _timeOptions, _pageView);
+        .fetchEntries(_page, _sortOptions, _timeOptions, screenView);
     _loading = false;
 
     notifyListeners();

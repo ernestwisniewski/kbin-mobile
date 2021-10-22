@@ -4,19 +4,24 @@ import 'package:kbin_mobile/filters/time_options_filters.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/repositories/comments_repository.dart';
 
+import 'filters_provider.dart';
+
 class CommentsProvider with ChangeNotifier {
+  final FiltersProvider? _filtersProvider;
   bool _loading = false;
   int _page = 1;
-  String? _pageView;
   List<CommentCollectionItem> _comments = [];
   SortOptions _sortOptions = SortOptions.hot;
   TimeOptions _timeOptions = TimeOptions.fromall;
+
+  CommentsProvider(this._filtersProvider);
 
   bool get loading => _loading;
 
   int get page => _page;
 
-  String? get pageView => _pageView;
+  String? get screenView =>
+      _filtersProvider != null ? _filtersProvider!.screenView : null;
 
   List<CommentCollectionItem> get comments => _comments;
 
@@ -39,15 +44,20 @@ class CommentsProvider with ChangeNotifier {
     fetch();
   }
 
-  void setPageView(String pageView) {
-    _pageView = pageView;
+  void setScreenView(String? screenView) {
+    if (screenView != null) {
+      _filtersProvider!.setScreenView(screenView);
+    } else {
+      _filtersProvider!.clearScreenView();
+    }
+
     fetch();
   }
 
   void fetch() async {
     _loading = true;
     _comments = await CommentsRepository()
-        .fetchComments(_page, _sortOptions, _timeOptions, _pageView);
+        .fetchComments(_page, _sortOptions, _timeOptions, screenView);
     _loading = false;
     notifyListeners();
   }

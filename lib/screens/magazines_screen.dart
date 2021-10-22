@@ -32,7 +32,7 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const TopBar(),
+          middle: const TopBar(title: 'Magazyny'),
           leading: buildAppBarLeading(context),
           trailing: Material(
             type: MaterialType.transparency,
@@ -61,12 +61,16 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
       builder: (BuildContext context,
           AsyncSnapshot<List<MagazineCollectionItem>> snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: (BuildContext context, int index) {
-                MagazineCollectionItem magazine = snapshot.data![index];
-                return buildItem(context, magazine, index);
-              });
+          return Scrollbar(
+            showTrackOnHover: true,
+            isAlwaysShown: false,
+            child: ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  MagazineCollectionItem magazine = snapshot.data![index];
+                  return buildItem(context, magazine, index);
+                }),
+          );
         }
 
         return buildLoadingFull();

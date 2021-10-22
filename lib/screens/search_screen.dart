@@ -68,12 +68,16 @@ class _SearchScreenState extends State<SearchScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.results.isNotEmpty && _query != null) {
-            return ListView.builder(
-                itemCount: state.results.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var subject = state.results[index];
-                  return buildSubject(context, subject, index);
-                });
+            return Scrollbar(
+              showTrackOnHover: true,
+              isAlwaysShown: false,
+              child: ListView.builder(
+                  itemCount: state.results.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    var subject = state.results[index];
+                    return buildSubject(context, subject, index);
+                  }),
+            );
           } else {
             return Material(
               type: MaterialType.transparency,

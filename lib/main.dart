@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
+import 'package:kbin_mobile/helpers/theme.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
+import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
@@ -20,11 +20,21 @@ void main() {
   timeago.setLocaleMessages('pl', timeago.PlMessages());
 
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => EntriesProvider()),
+    ChangeNotifierProvider(create: (context) => FiltersProvider()),
+    ChangeNotifierProxyProvider<FiltersProvider, EntriesProvider>(
+        create: (context) => EntriesProvider(null),
+        update: (context, filters, previousMessages) =>
+            EntriesProvider(filters)),
     ChangeNotifierProvider(create: (context) => EntryProvider()),
     ChangeNotifierProvider(create: (context) => EntryCommentsProvider()),
-    ChangeNotifierProvider(create: (context) => CommentsProvider()),
-    ChangeNotifierProvider(create: (context) => PostsProvider()),
+    ChangeNotifierProxyProvider<FiltersProvider, CommentsProvider>(
+        create: (context) => CommentsProvider(null),
+        update: (context, filters, previousMessages) =>
+            CommentsProvider(filters)),
+    ChangeNotifierProxyProvider<FiltersProvider, PostsProvider>(
+        create: (context) => PostsProvider(null),
+        update: (context, filters, previousMessages) =>
+            PostsProvider(filters)),
     ChangeNotifierProvider(create: (context) => PostProvider()),
     ChangeNotifierProvider(create: (context) => RepliesProvider()),
     ChangeNotifierProvider(create: (context) => SearchProvider()),
@@ -61,7 +71,7 @@ class _MyAppState extends State<MyApp> {
             controller.setTheme(savedTheme);
           }
         },
-        themes: [_getLightAppTheme(), _getDarkAppTheme()],
+        themes: [getLightAppTheme(), getDarkAppTheme()],
         child: ThemeConsumer(
           child: Builder(
             builder: (themeContext) => MaterialApp.router(
@@ -71,35 +81,6 @@ class _MyAppState extends State<MyApp> {
                 themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),
-        ));
-  }
-
-  AppTheme _getLightAppTheme() {
-    return AppTheme(
-        id: "light_theme",
-        description: "Light Theme",
-        data: ThemeData(
-          primaryColor: KbinColors().fromHex('556880'),
-          brightness: Brightness.light,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          appBarTheme:
-              AppBarTheme(backgroundColor: KbinColors().fromHex('556880')),
-          // Shared
-          fontFamily: GoogleFonts.openSans().fontFamily,
-          textTheme: const TextTheme(
-              subtitle1: TextStyle(fontWeight: FontWeight.w400)),
-        ));
-  }
-
-  AppTheme _getDarkAppTheme() {
-    return AppTheme(
-        id: "dark_theme",
-        description: "Dark Theme",
-        data: ThemeData(
-          brightness: Brightness.dark,
-          fontFamily: GoogleFonts.openSans().fontFamily,
-          textTheme: const TextTheme(
-              subtitle1: TextStyle(fontWeight: FontWeight.w400)),
         ));
   }
 }

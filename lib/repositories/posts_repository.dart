@@ -9,7 +9,7 @@ import 'package:kbin_mobile/repositories/api_provider.dart';
 
 class PostsRepository {
   Future<List<PostCollectionItem>> fetchPosts(int page, SortOptions sortOptions,
-      TimeOptions timeOptions, String? pageView) async {
+      TimeOptions timeOptions, String? screenView) async {
     String domain = await ApiProvider().getDomain();
 
     Map<String, dynamic>? filters = {
@@ -17,8 +17,8 @@ class PostsRepository {
       'time': timeOptions.toParam()
     };
 
-    if (pageView != null) {
-      filters['magazine'] = 'selfhosted';
+    if (screenView != null) {
+      filters['magazine'] = screenView;
     }
 
     Uri url = Uri.https(domain, 'api/posts.jsonld', filters);

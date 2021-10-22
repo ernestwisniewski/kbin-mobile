@@ -11,20 +11,20 @@ CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
         return;
       }
 
-      context.router.popUntilRoot();
+      // context.router.popUntilRoot();
 
       switch (i) {
         case 0:
-          context.router.replace(const EntriesRoute());
+          context.router.push(const EntriesRoute());
           break;
         case 1:
-          context.router.replace(const CommentsRoute());
+          context.router.push(const CommentsRoute());
           break;
         case 2:
-          context.router.replace(const PostsRoute());
+          context.router.push(const PostsRoute());
           break;
         case 3:
-          context.router.replace(const SearchRoute());
+          context.router.push(const SearchRoute());
           break;
       }
     },

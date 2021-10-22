@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
@@ -39,7 +40,7 @@ class _PostsScreenState extends State<PostsScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const TopBar(),
+              middle: const TopBar(route: PostsRoute()),
               leading: buildAppBarLeading(context),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -68,12 +69,16 @@ class _PostsScreenState extends State<PostsScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.posts.isNotEmpty) {
-            return ListView.builder(
-                itemCount: state.posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  PostCollectionItem post = state.posts[index];
-                  return buildItem(context, post, index);
-                });
+            return Scrollbar(
+              showTrackOnHover: true,
+              isAlwaysShown: false,
+              child: ListView.builder(
+                  itemCount: state.posts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    PostCollectionItem post = state.posts[index];
+                    return buildItem(context, post, index);
+                  }),
+            );
           } else {
             return Material(
               type: MaterialType.transparency,

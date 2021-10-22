@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/entry.dart';
@@ -39,7 +40,7 @@ class _EntriesScreenState extends State<EntriesScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
-                middle: const TopBar(),
+                middle: const TopBar(route: EntriesRoute()),
                 leading: buildAppBarLeading(context),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -57,23 +58,6 @@ class _EntriesScreenState extends State<EntriesScreen> {
     // bottomNavigationBar: buildBottomNavbar(context, 0));
   }
 
-  PreferredSizeWidget buildAppBar(BuildContext context) {
-    return AppBar(
-      leading: buildAppBarLeading(context),
-      actions: [
-        Row(
-          children: [
-            timeOptions(
-                context, Provider.of<EntriesProvider>(context, listen: false)),
-            sortOptions(
-                context, Provider.of<EntriesProvider>(context, listen: false)),
-          ],
-        ),
-      ],
-      title: const TopBar(),
-    );
-  }
-
   Widget buildBody(BuildContext context) {
     return SafeArea(
       child: buildEntryList(context),
@@ -85,12 +69,16 @@ class _EntriesScreenState extends State<EntriesScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.entries.isNotEmpty) {
-            return ListView.builder(
-                itemCount: state.entries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  EntryCollectionItem entry = state.entries[index];
-                  return buildItem(context, entry, index);
-                });
+            return Scrollbar(
+              showTrackOnHover: true,
+              isAlwaysShown: false,
+              child: ListView.builder(
+                  itemCount: state.entries.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    EntryCollectionItem entry = state.entries[index];
+                    return buildItem(context, entry, index);
+                  }),
+            );
           } else {
             return Material(
               type: MaterialType.transparency,

@@ -8,6 +8,7 @@ import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/reply.dart' as reply;
@@ -51,7 +52,7 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const TopBar(),
+          middle: TopBar(route: const PostsRoute(), magazine: widget.magazine),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
@@ -71,7 +72,8 @@ class _PostScreenState extends State<PostScreen> {
               icon: const Icon(CupertinoIcons.share),
               tooltip: 'Udostępnij',
               onPressed: () {
-                Share.share('https://${settings.instance!}/m/${widget.magazine}/w/${widget.id}');
+                Share.share(
+                    'https://${settings.instance!}/m/${widget.magazine}/w/${widget.id}');
               },
             ),
           )),

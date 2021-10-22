@@ -12,7 +12,7 @@ class EntriesRepository {
       int page,
       SortOptions sortOptions,
       TimeOptions timeOptions,
-      String? pageView) async {
+      String? screenView) async {
     String domain = await ApiProvider().getDomain();
 
     Map<String, dynamic>? filters = {
@@ -20,8 +20,8 @@ class EntriesRepository {
       'time': timeOptions.toParam()
     };
 
-    filters['magazine'] = 'selfhosted';
-    if (pageView != null) {
+    if (screenView != null) {
+      filters['magazine'] = screenView;
     }
 
     Uri url = Uri.https(domain, 'api/entries.jsonld', filters);

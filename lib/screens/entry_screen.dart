@@ -8,6 +8,7 @@ import 'package:kbin_mobile/models/entry_item_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/entry_comments_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/top_bar.dart';
@@ -65,7 +66,7 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: TopBar(title: widget.magazine),
+          middle: TopBar(magazine: widget.magazine, route: EntriesRoute()),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
@@ -130,7 +131,7 @@ class _EntryScreenState extends State<EntryScreen> {
     return Consumer<SettingsProvider>(builder: (context, settings, child) {
       return SliverAppBar(
         leading: const Divider(),
-        backgroundColor: KbinColors().getEvenBackground(context),
+        backgroundColor: Colors.transparent,
         expandedHeight: 200,
         flexibleSpace: FlexibleSpaceBar(
           background: FadeInImage.memoryNetwork(
@@ -237,10 +238,6 @@ class _EntryScreenState extends State<EntryScreen> {
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Row(
             children: [
-              buildActionButton(const Icon(CupertinoIcons.share), null, () {
-                Share.share(
-                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
-              }),
               buildActionButton(
                   const Icon(Icons.explore_outlined),
                   null,
@@ -249,6 +246,10 @@ class _EntryScreenState extends State<EntryScreen> {
                           _launched = _launchInBrowser(entry.url!);
                         }
                       : null),
+              buildActionButton(const Icon(CupertinoIcons.share), null, () {
+                Share.share(
+                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+              }),
               buildActionButton(
                   const Icon(CupertinoIcons.xmark_octagon), null, () {}),
             ],

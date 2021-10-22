@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
 import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/comment.dart';
@@ -39,7 +40,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const TopBar(),
+              middle: const TopBar(
+                  route: CommentsRoute(), provider: CommentsProvider),
               leading: buildAppBarLeading(context),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -68,12 +70,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.comments.isNotEmpty) {
-            return ListView.builder(
-                itemCount: state.comments.length,
-                itemBuilder: (BuildContext context, int index) {
-                  CommentCollectionItem comment = state.comments[index];
-                  return buildItem(context, comment, index);
-                });
+            return Scrollbar(
+              showTrackOnHover: true,
+              isAlwaysShown: false,
+              child: ListView.builder(
+                  itemCount: state.comments.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    CommentCollectionItem comment = state.comments[index];
+                    return buildItem(context, comment, index);
+                  }),
+            );
           } else {
             return Material(
               type: MaterialType.transparency,

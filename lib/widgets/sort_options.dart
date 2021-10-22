@@ -19,7 +19,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
             },
             child: const Text('Anuluj'),
           ),
-          title: const Text('Sortuj'),
+          title: const Text('Jakie treści wyświetlić'),
           actions: <CupertinoActionSheetAction>[
             CupertinoActionSheetAction(
               child: const Text('Ważne'),

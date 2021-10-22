@@ -125,21 +125,18 @@ class Menu {
         title: 'Treści',
         subtitle: 'Strona główna',
         route: const EntriesRoute(),
-        routeType: 'replace',
         icon: const Icon(CupertinoIcons.home, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Komentarze',
         subtitle: 'O tym sie dyskutuje',
         route: const CommentsRoute(),
-        routeType: 'replace',
         icon: const Icon(CupertinoIcons.chat_bubble_2, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Wpisy',
         subtitle: 'Krótka forma mikroblogowa',
         route: const PostsRoute(),
-        routeType: 'replace',
         icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(

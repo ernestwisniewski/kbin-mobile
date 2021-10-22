@@ -19,7 +19,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
             child: const Text('Anuluj'),
           ),
-          title: const Text('Zakres czasowy'),
+          title: const Text('Z jakiego zakresu czasowego treści wyświetlić?'),
           actions: <CupertinoActionSheetAction>[
             CupertinoActionSheetAction(
               child: const Text('Wszystko'),

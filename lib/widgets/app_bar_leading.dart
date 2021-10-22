@@ -13,7 +13,6 @@ Widget buildAppBarLeading(BuildContext context) {
       tooltip: 'Menu',
       onPressed: () {
         context.router.popUntilRoot();
-        context.router.replace(const MenuRoute());
       },
     ),
   );
