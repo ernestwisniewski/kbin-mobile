@@ -32,7 +32,7 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const TopBar(title: 'Magazyny'),
+          middle: const FittedBox(child: TopBar(title: 'Magazyny')),
           leading: buildAppBarLeading(context),
           trailing: Material(
             type: MaterialType.transparency,

@@ -40,7 +40,7 @@ class _PostsScreenState extends State<PostsScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const TopBar(route: PostsRoute()),
+              middle: const FittedBox(child: TopBar(route: PostsRoute())),
               leading: buildAppBarLeading(context),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,

@@ -52,7 +52,9 @@ class _PostScreenState extends State<PostScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: TopBar(route: const PostsRoute(), magazine: widget.magazine),
+          middle: FittedBox(
+              child:
+                  TopBar(route: const PostsRoute(), magazine: widget.magazine)),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(

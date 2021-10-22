@@ -66,7 +66,7 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: TopBar(magazine: widget.magazine, route: EntriesRoute()),
+          middle: FittedBox(child: TopBar(magazine: widget.magazine, route: const EntriesRoute())),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(

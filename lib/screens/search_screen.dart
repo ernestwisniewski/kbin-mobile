@@ -39,7 +39,8 @@ class _SearchScreenState extends State<SearchScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const TopBar(), leading: buildAppBarLeading(context)),
+              middle: const FittedBox(child: TopBar()),
+              leading: buildAppBarLeading(context)),
           child: buildBody(context),
         );
       },

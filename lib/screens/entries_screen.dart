@@ -40,7 +40,8 @@ class _EntriesScreenState extends State<EntriesScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
-                middle: const TopBar(route: EntriesRoute()),
+                middle:
+                    const FittedBox(child: const TopBar(route: EntriesRoute())),
                 leading: buildAppBarLeading(context),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,

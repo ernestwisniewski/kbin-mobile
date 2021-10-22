@@ -23,7 +23,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: TopBar(),
+          middle: FittedBox(child: TopBar()),
         ),
         child: SafeArea(
           child: ListView(

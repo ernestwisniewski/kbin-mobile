@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const TopBar(title: 'Ustawienia'),
+        middle: const FittedBox(child: TopBar(title: 'Ustawienia')),
         leading: Material(
           type: MaterialType.transparency,
           child: IconButton(

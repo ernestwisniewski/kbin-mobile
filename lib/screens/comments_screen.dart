@@ -40,8 +40,10 @@ class _CommentsScreenState extends State<CommentsScreen> {
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-              middle: const TopBar(
-                  route: CommentsRoute(), provider: CommentsProvider),
+              middle: const FittedBox(
+                child:
+                    TopBar(route: CommentsRoute(), provider: CommentsProvider),
+              ),
               leading: buildAppBarLeading(context),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
