@@ -5,7 +5,6 @@ import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/entry.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
@@ -22,10 +21,13 @@ class EntriesScreen extends StatefulWidget {
 
 class _EntriesScreenState extends State<EntriesScreen> {
   late SettingsProvider settings;
+  late ScrollController _controller;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = ScrollController();
 
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
@@ -36,27 +38,20 @@ class _EntriesScreenState extends State<EntriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoPageScaffold(
-            navigationBar: CupertinoNavigationBar(
-                middle:
-                    const FittedBox(child: const TopBar(route: EntriesRoute())),
-                leading: buildAppBarLeading(context),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    timeOptions(context,
-                        Provider.of<EntriesProvider>(context, listen: false)),
-                    sortOptions(context,
-                        Provider.of<EntriesProvider>(context, listen: false))
-                  ],
-                )),
-            child: buildBody(context));
-      },
-      tabBar: buildBottomNavbar(context, 0),
-    );
-    // bottomNavigationBar: buildBottomNavbar(context, 0));
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+            middle: const FittedBox(child: const TopBar(route: EntriesRoute())),
+            leading: buildAppBarLeading(context),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                timeOptions(context,
+                    Provider.of<EntriesProvider>(context, listen: false)),
+                sortOptions(context,
+                    Provider.of<EntriesProvider>(context, listen: false))
+              ],
+            )),
+        child: buildBody(context));
   }
 
   Widget buildBody(BuildContext context) {
@@ -70,10 +65,11 @@ class _EntriesScreenState extends State<EntriesScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.entries.isNotEmpty) {
-            return Scrollbar(
-              showTrackOnHover: true,
+            return CupertinoScrollbar(
+              controller: _controller,
               isAlwaysShown: false,
               child: ListView.builder(
+                  controller: _controller,
                   itemCount: state.entries.length,
                   itemBuilder: (BuildContext context, int index) {
                     EntryCollectionItem entry = state.entries[index];

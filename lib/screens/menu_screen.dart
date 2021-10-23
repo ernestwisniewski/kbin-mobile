@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:kbin_mobile/screens/scene_screen.dart';
 import 'package:kbin_mobile/widgets/top_bar.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: FittedBox(child: TopBar()),
+          middle: TopBar(),
         ),
         child: SafeArea(
           child: ListView(
@@ -124,19 +125,22 @@ class Menu {
     MenuItem(
         title: 'Treści',
         subtitle: 'Strona główna',
-        route: const EntriesRoute(),
+        route:  SceneRoute(),
+        routeType: 'tab',
         icon: const Icon(CupertinoIcons.home, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Komentarze',
         subtitle: 'O tym sie dyskutuje',
-        route: const CommentsRoute(),
+        route: SceneRoute(index: 1),
+        routeType: 'tab',
         icon: const Icon(CupertinoIcons.chat_bubble_2, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Wpisy',
         subtitle: 'Krótka forma mikroblogowa',
-        route: const PostsRoute(),
+        route: SceneRoute(index: 2),
+        routeType: 'tab',
         icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
@@ -154,7 +158,7 @@ class Menu {
     MenuItem(
         title: 'Wyszukaj',
         subtitle: 'Znajdź w serwisie',
-        route: const SearchRoute(),
+        route: SearchRoute(),
         icon: const Icon(CupertinoIcons.search, color: Colors.white),
         iconContainerColor: Colors.red),
     MenuItem(

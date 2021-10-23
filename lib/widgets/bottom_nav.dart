@@ -1,36 +1,13 @@
-import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/routes/router.gr.dart';
 
 CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
+
   return CupertinoTabBar(
     currentIndex: index,
-    onTap: (int i) {
-      if (index == i) {
-        return;
-      }
-
-      // context.router.popUntilRoot();
-
-      switch (i) {
-        case 0:
-          context.router.push(const EntriesRoute());
-          break;
-        case 1:
-          context.router.push(const CommentsRoute());
-          break;
-        case 2:
-          context.router.push(const PostsRoute());
-          break;
-        case 3:
-          context.router.push(const SearchRoute());
-          break;
-      }
-    },
     items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.home),
+        icon: Icon(CupertinoIcons.square_list),
         label: 'Treści',
       ),
       BottomNavigationBarItem(
@@ -38,7 +15,7 @@ CupertinoTabBar buildBottomNavbar(BuildContext context, int index) {
         label: 'Komentarze',
       ),
       BottomNavigationBarItem(
-        icon: Icon(CupertinoIcons.square_list),
+        icon: Icon(CupertinoIcons.text_badge_plus),
         label: 'Wpisy',
       ),
       BottomNavigationBarItem(

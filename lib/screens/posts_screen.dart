@@ -5,7 +5,6 @@ import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/post.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
@@ -36,25 +35,20 @@ class _PostsScreenState extends State<PostsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-              middle: const FittedBox(child: TopBar(route: PostsRoute())),
-              leading: buildAppBarLeading(context),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  timeOptions(context,
-                      Provider.of<PostsProvider>(context, listen: false)),
-                  sortOptions(context,
-                      Provider.of<PostsProvider>(context, listen: false))
-                ],
-              )),
-          child: buildBody(context),
-        );
-      },
-      tabBar: buildBottomNavbar(context, 2),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+          middle: const FittedBox(child: TopBar(route: PostsRoute())),
+          leading: buildAppBarLeading(context),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              timeOptions(
+                  context, Provider.of<PostsProvider>(context, listen: false)),
+              sortOptions(
+                  context, Provider.of<PostsProvider>(context, listen: false))
+            ],
+          )),
+      child: buildBody(context),
     );
   }
 
