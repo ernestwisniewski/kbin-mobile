@@ -8,7 +8,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
     type: MaterialType.transparency,
     child: IconButton(
       color: KbinColors().getAppBarTextColor(),
-      icon: const Icon(CupertinoIcons.ellipsis_vertical),
+      icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 20),
       tooltip: 'Sortuj',
       onPressed: () => showCupertinoModalPopup(
         context: context,
@@ -22,35 +22,55 @@ Widget sortOptions(BuildContext context, dynamic provider) {
           title: const Text('Jakie treści wyświetlić'),
           actions: <CupertinoActionSheetAction>[
             CupertinoActionSheetAction(
-              child: const Text('Ważne'),
+              child:  Text('Ważne',
+                  style: TextStyle(
+                      fontWeight: provider.sortOptions == SortOptions.top
+                          ? FontWeight.bold
+                          : FontWeight.normal)),
               onPressed: () {
                 provider.setSortOptions(SortOptions.top);
                 Navigator.pop(context);
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Wschodzące'),
+              child: Text('Wschodzące',
+                  style: TextStyle(
+                      fontWeight: provider.sortOptions == SortOptions.hot
+                          ? FontWeight.bold
+                          : FontWeight.normal)),
               onPressed: () {
                 provider.setSortOptions(SortOptions.hot);
                 Navigator.pop(context);
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Aktywne'),
+              child: Text('Aktywne',
+                  style: TextStyle(
+                      fontWeight: provider.sortOptions == SortOptions.active
+                          ? FontWeight.bold
+                          : FontWeight.normal)),
               onPressed: () {
                 provider.setSortOptions(SortOptions.active);
                 Navigator.pop(context);
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Najnowsze'),
+              child: Text('Najnowsze',
+                  style: TextStyle(
+                      fontWeight: provider.sortOptions == SortOptions.newest
+                          ? FontWeight.bold
+                          : FontWeight.normal)),
               onPressed: () {
                 provider.setSortOptions(SortOptions.newest);
                 Navigator.pop(context);
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Komentowane'),
+              child:  Text('Komentowane',
+                  style: TextStyle(
+                      fontWeight: provider.sortOptions == SortOptions.commented
+                          ? FontWeight.bold
+                          : FontWeight.normal)),
               onPressed: () {
                 provider.setSortOptions(SortOptions.commented);
                 Navigator.pop(context);

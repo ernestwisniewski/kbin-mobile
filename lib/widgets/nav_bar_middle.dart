@@ -7,14 +7,14 @@ import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 
-class TopBar extends StatefulWidget {
+class NavBarMiddle extends StatefulWidget {
   final String? title;
   final String? magazine;
   final double? fontSize;
   final PageRouteInfo? route;
   final Type? provider;
 
-  const TopBar(
+  const NavBarMiddle(
       {Key? key,
       this.title,
       this.magazine,
@@ -24,10 +24,10 @@ class TopBar extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TopBarState createState() => _TopBarState();
+  _NavBarMiddleState createState() => _NavBarMiddleState();
 }
 
-class _TopBarState extends State<TopBar> {
+class _NavBarMiddleState extends State<NavBarMiddle> {
   late SettingsProvider settings;
 
   @override
@@ -57,7 +57,10 @@ class _TopBarState extends State<TopBar> {
                 CupertinoActionSheetAction(
                   child: Text(
                       filters.screenView ?? widget.magazine ?? 'Losowy magazyn',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                      style: TextStyle(
+                          fontWeight: filters.screenView != null
+                              ? FontWeight.bold
+                              : FontWeight.normal)),
                   onPressed: () {
                     if (widget.magazine != null) {
                       filters.setScreenView(widget.magazine!);
@@ -68,7 +71,11 @@ class _TopBarState extends State<TopBar> {
                   },
                 ),
                 CupertinoActionSheetAction(
-                  child: const Text('Wszystkie'),
+                  child: Text('Wszystkie',
+                      style: TextStyle(
+                          fontWeight: filters.screenView == null
+                              ? FontWeight.bold
+                              : FontWeight.normal)),
                   onPressed: () {
                     filters.clearScreenView();
 
@@ -78,21 +85,11 @@ class _TopBarState extends State<TopBar> {
                 ),
                 CupertinoActionSheetAction(
                   child: const Text('Subskrybowane'),
-                  onPressed: () {
-                    filters.clearScreenView();
-
-                    context.router.popUntilRoot();
-                    context.router.push(SceneRoute(route: widget.route!));
-                  },
+                  onPressed: () {},
                 ),
                 CupertinoActionSheetAction(
                   child: const Text('Moderowane'),
-                  onPressed: () {
-                    filters.clearScreenView();
-
-                    context.router.popUntilRoot();
-                    context.router.push(SceneRoute(route: widget.route!));
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),

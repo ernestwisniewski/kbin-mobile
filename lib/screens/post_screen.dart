@@ -12,7 +12,7 @@ import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
 import 'package:kbin_mobile/widgets/reply.dart' as reply;
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -54,13 +54,13 @@ class _PostScreenState extends State<PostScreen> {
       navigationBar: CupertinoNavigationBar(
           middle: FittedBox(
               child:
-                  TopBar(route: const PostsRoute(), magazine: widget.magazine)),
+                  NavBarMiddle(route: const PostsRoute(), magazine: widget.magazine)),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
               alignment: Alignment.centerLeft,
-              icon: const Icon(CupertinoIcons.back),
+              icon: const Icon(CupertinoIcons.back, size:20),
               tooltip: 'Wróć',
               onPressed: () {
                 context.router.pop();
@@ -71,7 +71,7 @@ class _PostScreenState extends State<PostScreen> {
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.share),
+              icon: const Icon(CupertinoIcons.share, size:20),
               tooltip: 'Udostępnij',
               onPressed: () {
                 Share.share(

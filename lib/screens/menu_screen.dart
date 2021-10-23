@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/screens/scene_screen.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -24,7 +23,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
-          middle: TopBar(),
+          middle: NavBarMiddle(),
         ),
         child: SafeArea(
           child: ListView(
@@ -127,7 +126,7 @@ class Menu {
         subtitle: 'Strona główna',
         route:  SceneRoute(),
         routeType: 'tab',
-        icon: const Icon(CupertinoIcons.home, color: Colors.white),
+        icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Komentarze',
@@ -141,7 +140,7 @@ class Menu {
         subtitle: 'Krótka forma mikroblogowa',
         route: SceneRoute(index: 2),
         routeType: 'tab',
-        icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
+        icon: const Icon(CupertinoIcons.text_badge_plus, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),
     MenuItem(
         title: 'Magazyny',

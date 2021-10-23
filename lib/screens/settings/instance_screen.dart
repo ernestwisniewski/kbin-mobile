@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -27,13 +27,13 @@ class _InstanceScreenState extends State<InstanceScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            middle: const FittedBox(child: TopBar(title: 'Instancja')),
+            middle: const FittedBox(child: NavBarMiddle(title: 'Instancja')),
             leading: Material(
               type: MaterialType.transparency,
               child: IconButton(
                 color: KbinColors().getAppBarTextColor(),
                 alignment: Alignment.centerLeft,
-                icon: const Icon(CupertinoIcons.back),
+                icon: const Icon(CupertinoIcons.back, size: 20),
                 tooltip: 'Wróć',
                 onPressed: () {
                   context.router.pop();

@@ -4,12 +4,12 @@ import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/app_bar_leading.dart';
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/comment.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
@@ -41,9 +41,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           middle: const FittedBox(
-            child: TopBar(route: CommentsRoute(), provider: CommentsProvider),
+            child: NavBarMiddle(route: CommentsRoute(), provider: CommentsProvider),
           ),
-          leading: buildAppBarLeading(context),
+          leading: buildNavBarLeading(context),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

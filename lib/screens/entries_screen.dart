@@ -4,12 +4,12 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/app_bar_leading.dart';
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/entry.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
 class EntriesScreen extends StatefulWidget {
@@ -40,8 +40,8 @@ class _EntriesScreenState extends State<EntriesScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            middle: const FittedBox(child: const TopBar(route: EntriesRoute())),
-            leading: buildAppBarLeading(context),
+            middle: const FittedBox(child: NavBarMiddle(route: EntriesRoute())),
+            leading: buildNavBarLeading(context),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

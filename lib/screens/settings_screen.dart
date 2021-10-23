@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -32,13 +32,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const FittedBox(child: TopBar(title: 'Ustawienia')),
+        middle: const FittedBox(child: NavBarMiddle(title: 'Ustawienia')),
         leading: Material(
           type: MaterialType.transparency,
           child: IconButton(
             color: KbinColors().getAppBarTextColor(),
             alignment: Alignment.centerLeft,
-            icon: const Icon(CupertinoIcons.back),
+            icon: const Icon(CupertinoIcons.back, size:20),
             tooltip: 'Wróć',
             onPressed: () {
               context.router.pop();

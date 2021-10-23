@@ -11,7 +11,7 @@ import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
-import 'package:kbin_mobile/widgets/top_bar.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -66,13 +66,15 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: FittedBox(child: TopBar(magazine: widget.magazine, route: const EntriesRoute())),
+          middle: FittedBox(
+              child: NavBarMiddle(
+                  magazine: widget.magazine, route: const EntriesRoute())),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
               alignment: Alignment.centerLeft,
-              icon: const Icon(CupertinoIcons.back),
+              icon: const Icon(CupertinoIcons.back, size: 20),
               tooltip: 'Wróć',
               onPressed: () {
                 context.router.pop();
@@ -83,7 +85,7 @@ class _EntryScreenState extends State<EntryScreen> {
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.share),
+              icon: const Icon(CupertinoIcons.share, size: 20),
               tooltip: 'Udostępnij',
               onPressed: () {
                 Share.share(
