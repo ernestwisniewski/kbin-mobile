@@ -158,7 +158,7 @@ class Menu {
     MenuItem(
         title: 'Wyszukaj',
         subtitle: 'Znajdź w serwisie',
-        route: SearchRoute(),
+        route: SceneRoute(index: 3),
         icon: const Icon(CupertinoIcons.search, color: Colors.white),
         iconContainerColor: Colors.red),
     MenuItem(

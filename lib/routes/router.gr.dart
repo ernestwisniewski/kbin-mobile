@@ -5,6 +5,7 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/cupertino.dart' as _i15;
 import 'package:flutter/material.dart' as _i14;
 
 import '../screens/comments_screen.dart' as _i9;
@@ -47,7 +48,8 @@ class AppRouter extends _i13.RootStackRouter {
           orElse: () => const SceneRouteArgs());
       return _i13.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i5.SceneScreen(key: args.key, index: args.index));
+          child: _i5.SceneScreen(
+              key: args.key, route: args.route, index: args.index));
     },
     MagazinesRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
@@ -140,17 +142,20 @@ class InstanceRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for [_i5.SceneScreen]
 class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
-  SceneRoute({_i14.Key? key, int? index})
+  SceneRoute({_i15.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
       : super(name,
-            path: '/scene', args: SceneRouteArgs(key: key, index: index));
+            path: '/scene',
+            args: SceneRouteArgs(key: key, route: route, index: index));
 
   static const String name = 'SceneRoute';
 }
 
 class SceneRouteArgs {
-  const SceneRouteArgs({this.key, this.index});
+  const SceneRouteArgs({this.key, this.route, this.index});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
+
+  final _i13.PageRouteInfo<dynamic>? route;
 
   final int? index;
 }
@@ -171,7 +176,7 @@ class EntriesRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for [_i8.EntryScreen]
 class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
-  EntryRoute({_i14.Key? key, required String magazine, required int id})
+  EntryRoute({_i15.Key? key, required String magazine, required int id})
       : super(name,
             path: '/m/:magazine/t/:id',
             args: EntryRouteArgs(key: key, magazine: magazine, id: id),
@@ -183,7 +188,7 @@ class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
 class EntryRouteArgs {
   const EntryRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String magazine;
 
@@ -206,7 +211,7 @@ class PostsRoute extends _i13.PageRouteInfo<void> {
 
 /// generated route for [_i11.PostScreen]
 class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i14.Key? key, required String magazine, required int id})
+  PostRoute({_i15.Key? key, required String magazine, required int id})
       : super(name,
             path: '/p/:magazine/t/:id',
             args: PostRouteArgs(key: key, magazine: magazine, id: id),
@@ -218,7 +223,7 @@ class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
 class PostRouteArgs {
   const PostRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String magazine;
 

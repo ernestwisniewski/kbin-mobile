@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 
 class TopBar extends StatefulWidget {
@@ -63,7 +64,7 @@ class _TopBarState extends State<TopBar> {
                     }
 
                     context.router.popUntilRoot();
-                    context.router.push(widget.route!);
+                    context.router.push(SceneRoute(route: widget.route!));
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -72,7 +73,7 @@ class _TopBarState extends State<TopBar> {
                     filters.clearScreenView();
 
                     context.router.popUntilRoot();
-                    context.router.push(widget.route!);
+                    context.router.push(SceneRoute(route: widget.route!));
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -81,7 +82,7 @@ class _TopBarState extends State<TopBar> {
                     filters.clearScreenView();
 
                     context.router.popUntilRoot();
-                    context.router.push(widget.route!);
+                    context.router.push(SceneRoute(route: widget.route!));
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -90,7 +91,7 @@ class _TopBarState extends State<TopBar> {
                     filters.clearScreenView();
 
                     context.router.popUntilRoot();
-                    context.router.push(widget.route!);
+                    context.router.push(SceneRoute(route: widget.route!));
                   },
                 ),
               ],

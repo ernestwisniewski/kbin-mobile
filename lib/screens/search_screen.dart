@@ -7,7 +7,6 @@ import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/widgets/app_bar_leading.dart';
-import 'package:kbin_mobile/widgets/bottom_nav.dart';
 import 'package:kbin_mobile/widgets/comment.dart' as comment;
 import 'package:kbin_mobile/widgets/entry.dart' as entry;
 import 'package:kbin_mobile/widgets/loading_full.dart';
@@ -35,16 +34,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBuilder: (BuildContext context, int index) {
-        return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-              middle: const FittedBox(child: TopBar()),
-              leading: buildAppBarLeading(context)),
-          child: buildBody(context),
-        );
-      },
-      tabBar: buildBottomNavbar(context, 3),
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+          middle: const FittedBox(child: TopBar()),
+          leading: buildAppBarLeading(context)),
+      child: buildBody(context),
     );
   }
 
