@@ -4,12 +4,12 @@ import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:kbin_mobile/widgets/post.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
-import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -21,6 +21,7 @@ class PostsScreen extends StatefulWidget {
 
 class _PostsScreenState extends State<PostsScreen> {
   late SettingsProvider settings;
+  late PostsProvider posts;
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _PostsScreenState extends State<PostsScreen> {
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
 
-    final posts = Provider.of<PostsProvider>(context, listen: false);
+    posts = Provider.of<PostsProvider>(context, listen: false);
     posts.fetch();
   }
 
@@ -42,10 +43,8 @@ class _PostsScreenState extends State<PostsScreen> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              timeOptions(
-                  context, Provider.of<PostsProvider>(context, listen: false)),
-              sortOptions(
-                  context, Provider.of<PostsProvider>(context, listen: false))
+              timeOptions(context, posts),
+              sortOptions(context, posts)
             ],
           )),
       child: buildBody(context),

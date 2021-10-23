@@ -113,7 +113,7 @@ class _PostScreenState extends State<PostScreen> {
                 children: [
                   buildItem(context, post, 1),
                   const Divider(height: 0),
-                  buildPostRepliesList(context)
+                  buildRepliesList(context)
                 ],
               )),
         ]),
@@ -183,7 +183,7 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 
-  Widget buildPostRepliesList(BuildContext context) {
+  Widget buildRepliesList(BuildContext context) {
     return Consumer<RepliesProvider>(
       builder: (context, state, child) {
         if (!state.loading) {

@@ -21,6 +21,7 @@ class CommentsScreen extends StatefulWidget {
 
 class _CommentsScreenState extends State<CommentsScreen> {
   late SettingsProvider settings;
+  late CommentsProvider comments;
   late ScrollController _controller;
 
   @override
@@ -32,7 +33,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
 
-    final comments = Provider.of<CommentsProvider>(context, listen: false);
+    comments = Provider.of<CommentsProvider>(context, listen: false);
     comments.fetch();
   }
 
@@ -47,10 +48,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              timeOptions(context,
-                  Provider.of<CommentsProvider>(context, listen: false)),
-              sortOptions(context,
-                  Provider.of<CommentsProvider>(context, listen: false))
+              timeOptions(context, comments),
+              sortOptions(context, comments)
             ],
           )),
       child: buildBody(context),
