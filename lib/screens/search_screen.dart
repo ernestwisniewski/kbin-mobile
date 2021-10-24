@@ -24,7 +24,15 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  late ScrollController _controller;
   String? _query;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = ScrollController();
+  }
 
   _changeQuery(query) {
     setState(() {
@@ -63,10 +71,11 @@ class _SearchScreenState extends State<SearchScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.results.isNotEmpty && _query != null) {
-            return Scrollbar(
-              showTrackOnHover: true,
+            return CupertinoScrollbar(
+              controller: _controller,
               isAlwaysShown: false,
               child: ListView.builder(
+                  controller: _controller,
                   itemCount: state.results.length,
                   itemBuilder: (BuildContext context, int index) {
                     var subject = state.results[index];

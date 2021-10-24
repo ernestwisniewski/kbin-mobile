@@ -61,8 +61,7 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
       builder: (BuildContext context,
           AsyncSnapshot<List<MagazineCollectionItem>> snapshot) {
         if (snapshot.hasData) {
-          return Scrollbar(
-            showTrackOnHover: true,
+          return CupertinoScrollbar(
             isAlwaysShown: false,
             child: ListView.builder(
                 itemCount: snapshot.data?.length,

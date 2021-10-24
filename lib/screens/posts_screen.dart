@@ -20,12 +20,15 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
+  late ScrollController _controller;
   late SettingsProvider settings;
   late PostsProvider posts;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = ScrollController();
 
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
@@ -62,10 +65,11 @@ class _PostsScreenState extends State<PostsScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           if (state.posts.isNotEmpty) {
-            return Scrollbar(
-              showTrackOnHover: true,
+            return CupertinoScrollbar(
+              controller: _controller,
               isAlwaysShown: false,
               child: ListView.builder(
+                  controller: _controller,
                   itemCount: state.posts.length,
                   itemBuilder: (BuildContext context, int index) {
                     PostCollectionItem post = state.posts[index];

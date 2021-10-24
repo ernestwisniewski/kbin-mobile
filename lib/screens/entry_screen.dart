@@ -107,8 +107,10 @@ class _EntryScreenState extends State<EntryScreen> {
     return Consumer<EntryProvider>(
       builder: (context, state, child) {
         if (!state.loading) {
-          return CustomScrollView(
-            slivers: buildSliverLists(context, state.entry),
+          return CupertinoScrollbar(
+            child: CustomScrollView(
+              slivers: buildSliverLists(context, state.entry),
+            ),
           );
         }
 
@@ -149,27 +151,18 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget buildSliverList(BuildContext context, EntryItem entry) {
     return SliverList(
       delegate: SliverChildListDelegate([
-        Container(
-            margin: const EdgeInsets.only(left: 0, right: 0),
-            child: Column(
-              children: [
-                Material(
-                    type: MaterialType.transparency,
-                    child: buildEntryCard(context, entry)),
-                Material(
-                    type: MaterialType.transparency,
-                    child: buildActionButtons(entry)),
-                Material(
-                    type: MaterialType.transparency,
-                    child: buildUserInfo(context, entry)),
-                Material(
-                    type: MaterialType.transparency,
-                    child: buildEntryInfo(entry)),
-                Material(
-                    type: MaterialType.transparency,
-                    child: buildEntryCommentList(context)),
-              ],
-            )),
+        Material(
+            type: MaterialType.transparency,
+            child: buildEntryCard(context, entry)),
+        Material(
+            type: MaterialType.transparency, child: buildActionButtons(entry)),
+        Material(
+            type: MaterialType.transparency,
+            child: buildUserInfo(context, entry)),
+        Material(type: MaterialType.transparency, child: buildEntryInfo(entry)),
+        Material(
+            type: MaterialType.transparency,
+            child: buildEntryCommentList(context)),
       ]),
     );
   }

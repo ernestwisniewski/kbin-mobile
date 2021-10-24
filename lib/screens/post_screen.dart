@@ -11,8 +11,8 @@ import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/meta_item.dart';
-import 'package:kbin_mobile/widgets/reply.dart' as reply;
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
+import 'package:kbin_mobile/widgets/reply.dart' as reply;
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -53,14 +53,14 @@ class _PostScreenState extends State<PostScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           middle: FittedBox(
-              child:
-                  NavBarMiddle(route: const PostsRoute(), magazine: widget.magazine)),
+              child: NavBarMiddle(
+                  route: const PostsRoute(), magazine: widget.magazine)),
           leading: Material(
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
               alignment: Alignment.centerLeft,
-              icon: const Icon(CupertinoIcons.back, size:20),
+              icon: const Icon(CupertinoIcons.back, size: 20),
               tooltip: 'Wróć',
               onPressed: () {
                 context.router.pop();
@@ -71,7 +71,7 @@ class _PostScreenState extends State<PostScreen> {
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.share, size:20),
+              icon: const Icon(CupertinoIcons.share, size: 20),
               tooltip: 'Udostępnij',
               onPressed: () {
                 Share.share(
@@ -93,8 +93,10 @@ class _PostScreenState extends State<PostScreen> {
     return Consumer<PostProvider>(
       builder: (context, state, child) {
         if (!state.loading) {
-          return CustomScrollView(
-            slivers: buildSliverLists(context, state.post),
+          return CupertinoScrollbar(
+            child: CustomScrollView(
+              slivers: buildSliverLists(context, state.post),
+            ),
           );
         }
 
