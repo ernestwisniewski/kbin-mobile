@@ -51,14 +51,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
-  late SettingsProvider settings;
+  late SettingsProvider _settings;
 
   @override
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
+
+    if(_settings.instance == null) {
+      _settings.setInstance('karab.in');
+    }
+
+    if(_settings.lang == null) {
+      _settings.setLang('pl');
+    }
   }
 
   @override
@@ -77,7 +85,7 @@ class _MyAppState extends State<MyApp> {
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate: _appRouter.delegate(),
                 routeInformationParser: _appRouter.defaultRouteParser(),
-                title: settings.instance ?? '',
+                title: _settings.instance ?? '',
                 themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),

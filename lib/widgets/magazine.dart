@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
+import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
@@ -21,70 +22,49 @@ Widget buildItem(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Consumer<SettingsProvider>(builder: (context, settings, child) {
-                  return Expanded(
-                      child: magazine.image != null
-                          ? Image.network(
-                              Media().getMagazineThumbUrl(
-                                  magazine.image!.filePath, settings.instance!),
-                              width: 90)
-                          : Container());
-                }),
-                Expanded(
-                    flex: magazine.image != null ? 3 : 100,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 25),
-                      child: Column(
-                        children: [
-                          Text(magazine.title,
-                              style: Theme.of(context).textTheme.headline6,
-                              textAlign: TextAlign.center),
-                          Text('/m/' + magazine.name,
-                              style: const TextStyle(color: Colors.grey)),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: magazine.description != null
-                                ? Text(magazine.description!)
-                                : Container(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 15),
-                            child: Divider(),
-                          ),
-                          _listTile(
-                              context,
-                              'Subskrypcje',
-                              magazine.subscriptionsCount.toString(),
-                              const EntriesRoute(),
-                              1),
-                          _listTile(
-                              context,
-                              'Treści',
-                              magazine.entryCount.toString(),
-                              const EntriesRoute(),
-                              2),
-                          _listTile(
-                              context,
-                              'Komentarze',
-                              magazine.entryCommentCount.toString(),
-                              const CommentsRoute(),
-                              3),
-                          _listTile(
-                              context,
-                              'Mikroblog',
-                              (magazine.postCount + magazine.postCommentCount)
-                                  .toString(),
-                              const PostsRoute(),
-                              4),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 15, bottom: 15),
-                            child: Divider(),
-                          ),
-                        ],
-                      ),
-                    )),
-              ])
+              Column(
+                children: [
+                  buildTitle(context, magazine),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: magazine.description != null
+                        ? Text(magazine.description!)
+                        : Container(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: Divider(),
+                  ),
+                  _listTile(
+                      context,
+                      magazine.name,
+                      'Subskrypcje',
+                      magazine.subscriptionsCount.toString(),
+                      const EntriesRoute(),
+                      1),
+                  _listTile(context, magazine.name, 'Treści',
+                      magazine.entryCount.toString(), const EntriesRoute(), 2),
+                  _listTile(
+                      context,
+                      magazine.name,
+                      'Komentarze',
+                      magazine.entryCommentCount.toString(),
+                      const CommentsRoute(),
+                      3),
+                  _listTile(
+                      context,
+                      magazine.name,
+                      'Mikroblog',
+                      (magazine.postCount + magazine.postCommentCount)
+                          .toString(),
+                      const PostsRoute(),
+                      4),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    child: Divider(),
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -93,15 +73,47 @@ Widget buildItem(
   );
 }
 
-Widget _listTile(BuildContext context, String title, String value,
-    PageRouteInfo route, int index) {
+Widget buildTitle(BuildContext context, MagazineCollectionItem magazine) {
+  return Row(
+    children: [
+      Consumer<SettingsProvider>(builder: (context, settings, child) {
+        return Container(
+            child: magazine.image != null
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: Image.network(
+                        Media().getMagazineThumbUrl(
+                            magazine.image!.filePath, settings.instance!),
+                        width: 120),
+                  )
+                : Container());
+      }),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(magazine.title, style: Theme.of(context).textTheme.headline6),
+            Text('/m/' + magazine.name,
+                style: const TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget _listTile(BuildContext context, String magazine, String title,
+    String value, PageRouteInfo route, int index) {
   return Container(
     color: index.isEven
         ? (KbinColors()).getEvenBackground(context)
         : Colors.transparent,
     child: ListTile(
       onTap: () {
-        context.router.push(route);
+        FiltersProvider filters =
+            Provider.of<FiltersProvider>(context, listen: false);
+        filters.setScreenView(magazine);
+        context.router.push(SceneRoute(route: route));
       },
       dense: true,
       title: Text(title),
@@ -122,9 +134,9 @@ Widget _listTile(BuildContext context, String title, String value,
                       fontSize: 12)),
             ),
             const Padding(
-              padding: EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(left: 30),
               child: Icon(
-                CupertinoIcons.back,
+                CupertinoIcons.right_chevron,
                 size: 14,
               ),
             ),

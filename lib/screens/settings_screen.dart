@@ -17,8 +17,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool lockInBackground = true;
-  bool notificationsEnabled = true;
+  bool _lockInBackground = true;
+  bool _notificationsEnabled = true;
 
   @override
   void initState() {
@@ -99,11 +99,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile.switchTile(
                 title: 'Pozwól aplikacji działać w tle',
                 leading: const Icon(Icons.phonelink_lock),
-                switchValue: lockInBackground,
+                switchValue: _lockInBackground,
                 onToggle: (bool value) {
                   setState(() {
-                    lockInBackground = value;
-                    notificationsEnabled = value;
+                    _lockInBackground = value;
+                    _notificationsEnabled = value;
                   });
                 },
               ),
@@ -117,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SettingsTile.switchTile(
                 title: 'Włącz powiadomienia',
-                enabled: notificationsEnabled,
+                enabled: _notificationsEnabled,
                 leading: const Icon(Icons.notifications_active),
                 switchValue: true,
                 onToggle: (value) {},

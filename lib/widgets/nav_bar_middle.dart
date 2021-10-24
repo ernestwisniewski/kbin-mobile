@@ -28,14 +28,14 @@ class NavBarMiddle extends StatefulWidget {
 }
 
 class _NavBarMiddleState extends State<NavBarMiddle> {
-  late SettingsProvider settings;
+  late SettingsProvider _settings;
 
   @override
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
   }
 
   @override
@@ -95,7 +95,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
             ),
           ),
           child: Text(
-            filters.screenView ?? widget.magazine ?? settings.instance ?? '',
+            filters.screenView ?? widget.magazine ?? _settings.instance ?? '',
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: widget.fontSize),
           ),
@@ -103,7 +103,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
       }
 
       return Text(
-        widget.title ?? settings.instance ?? '',
+        widget.title ?? _settings.instance ?? '',
         style:
             TextStyle(fontWeight: FontWeight.bold, fontSize: widget.fontSize),
       );

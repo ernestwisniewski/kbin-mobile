@@ -20,8 +20,8 @@ class EntriesScreen extends StatefulWidget {
 }
 
 class _EntriesScreenState extends State<EntriesScreen> {
-  late SettingsProvider settings;
-  late EntriesProvider entries;
+  late SettingsProvider _settings;
+  late EntriesProvider _entries;
   late ScrollController _controller;
 
   @override
@@ -30,11 +30,11 @@ class _EntriesScreenState extends State<EntriesScreen> {
 
     _controller = ScrollController();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
 
-    entries = Provider.of<EntriesProvider>(context, listen: false);
-    entries.fetch();
+    _entries = Provider.of<EntriesProvider>(context, listen: false);
+    _entries.fetch();
   }
 
   @override
@@ -46,8 +46,8 @@ class _EntriesScreenState extends State<EntriesScreen> {
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                timeOptions(context, entries),
-                sortOptions(context, entries)
+                timeOptions(context, _entries),
+                sortOptions(context, _entries)
               ],
             )),
         child: buildBody(context));

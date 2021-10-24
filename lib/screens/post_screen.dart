@@ -32,14 +32,14 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  late SettingsProvider settings;
+  late SettingsProvider _settings;
 
   @override
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
 
     final post = Provider.of<PostProvider>(context, listen: false);
     post.fetch(widget.id);
@@ -75,7 +75,7 @@ class _PostScreenState extends State<PostScreen> {
               tooltip: 'Udostępnij',
               onPressed: () {
                 Share.share(
-                    'https://${settings.instance!}/m/${widget.magazine}/w/${widget.id}');
+                    'https://${_settings.instance!}/m/${widget.magazine}/w/${widget.id}');
               },
             ),
           )),
@@ -109,15 +109,9 @@ class _PostScreenState extends State<PostScreen> {
     return [
       SliverList(
         delegate: SliverChildListDelegate([
-          Container(
-              margin: const EdgeInsets.only(left: 0, right: 0),
-              child: Column(
-                children: [
-                  buildItem(context, post, 1),
-                  const Divider(height: 0),
-                  buildRepliesList(context)
-                ],
-              )),
+          buildItem(context, post, 1),
+          const Divider(height: 0),
+          buildRepliesList(context)
         ]),
       )
     ];

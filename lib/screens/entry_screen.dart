@@ -33,15 +33,15 @@ class EntryScreen extends StatefulWidget {
 }
 
 class _EntryScreenState extends State<EntryScreen> {
-  late SettingsProvider settings;
+  late SettingsProvider _settings;
   Future<void>? _launched;
 
   @override
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
 
     final entry = Provider.of<EntryProvider>(context, listen: false);
     entry.fetch(widget.id);
@@ -89,7 +89,7 @@ class _EntryScreenState extends State<EntryScreen> {
               tooltip: 'Udostępnij',
               onPressed: () {
                 Share.share(
-                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+                    'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
               },
             ),
           ),
@@ -243,7 +243,7 @@ class _EntryScreenState extends State<EntryScreen> {
                       : null),
               buildActionButton(const Icon(CupertinoIcons.share), null, () {
                 Share.share(
-                    'https://${settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+                    'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
               }),
               buildActionButton(
                   const Icon(CupertinoIcons.xmark_octagon), null, () {}),
@@ -339,7 +339,7 @@ class _EntryScreenState extends State<EntryScreen> {
               label != null
                   ? Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: Text(label, textAlign: TextAlign.center),
+                      child: FittedBox(child:Text(label, textAlign: TextAlign.center)),
                     )
                   : Container()
             ]),

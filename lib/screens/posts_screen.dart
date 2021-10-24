@@ -21,8 +21,8 @@ class PostsScreen extends StatefulWidget {
 
 class _PostsScreenState extends State<PostsScreen> {
   late ScrollController _controller;
-  late SettingsProvider settings;
-  late PostsProvider posts;
+  late SettingsProvider _settings;
+  late PostsProvider _posts;
 
   @override
   void initState() {
@@ -30,11 +30,11 @@ class _PostsScreenState extends State<PostsScreen> {
 
     _controller = ScrollController();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
 
-    posts = Provider.of<PostsProvider>(context, listen: false);
-    posts.fetch();
+    _posts = Provider.of<PostsProvider>(context, listen: false);
+    _posts.fetch();
   }
 
   @override
@@ -46,8 +46,8 @@ class _PostsScreenState extends State<PostsScreen> {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              timeOptions(context, posts),
-              sortOptions(context, posts)
+              timeOptions(context, _posts),
+              sortOptions(context, _posts)
             ],
           )),
       child: buildBody(context),

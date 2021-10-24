@@ -18,14 +18,14 @@ class MagazinesScreen extends StatefulWidget {
 }
 
 class _MagazinesScreenState extends State<MagazinesScreen> {
-  late SettingsProvider settings;
+  late SettingsProvider _settings;
 
   @override
   void initState() {
     super.initState();
 
-    settings = Provider.of<SettingsProvider>(context, listen: false);
-    settings.fetch();
+    _settings = Provider.of<SettingsProvider>(context, listen: false);
+    _settings.fetch();
   }
 
   @override
@@ -38,7 +38,7 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
             type: MaterialType.transparency,
             child: IconButton(
               color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.ellipsis_vertical),
+              icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 20),
               tooltip: 'Sortuj',
               onPressed: () {
                 // handle the press
