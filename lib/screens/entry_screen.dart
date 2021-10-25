@@ -140,7 +140,7 @@ class _EntryScreenState extends State<EntryScreen> {
         flexibleSpace: FlexibleSpaceBar(
           background: FadeInImage.memoryNetwork(
               placeholder: kTransparentImage,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               image: Media()
                   .getThumbUrl(entry.image!.filePath, settings.instance!)),
         ),
@@ -259,7 +259,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     ? Media().getImage(
                         Media().getThumbUrl(
                             entry.user.avatar!.filePath, settings.instance!),
-                        BoxFit.cover,
+                        null,
                         100)
                     : const Icon(Icons.person),
               );
@@ -298,7 +298,7 @@ class _EntryScreenState extends State<EntryScreen> {
             children: [
               entry.domain != null
                   ? buildActionButton(const Icon(CupertinoIcons.globe),
-                      entry.domain!.name, null)
+                      entry.domain!.name, null, true)
                   : Container(),
               buildActionButton(
                   const Icon(CupertinoIcons.eye), entry.views.toString()),
@@ -312,7 +312,7 @@ class _EntryScreenState extends State<EntryScreen> {
   }
 
   Widget buildActionButton(
-      [Icon? icon, String? label, GestureTapCallback? fn]) {
+      [Icon? icon, String? label, GestureTapCallback? fn, bool? fitted]) {
     return Expanded(
         child: Container(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -323,7 +323,11 @@ class _EntryScreenState extends State<EntryScreen> {
                 label != null
                     ? Padding(
                         padding: const EdgeInsets.only(top: 5),
-                        child: Text(label,
+                        child: fitted ?? false ? FittedBox(
+                          child: Text(label,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 13)),
+                        ) : Text(label,
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 13)),
                       )
@@ -346,12 +350,12 @@ class _EntryScreenState extends State<EntryScreen> {
                       buildComment(context, item, index++),
                   ],
                 ));
-          } else {
-            return Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(50),
-                child: const Text('brak komentarzy'));
           }
+
+          return Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: const Text('brak komentarzy'));
         }
 
         return buildLoadingFull();
@@ -378,7 +382,7 @@ class _EntryScreenState extends State<EntryScreen> {
                     ? Media().getImage(
                         Media().getThumbUrl(
                             comment.user.avatar!.filePath, settings.instance!),
-                        BoxFit.cover,
+                        null,
                         null)
                     : const Icon(Icons.person),
               ));

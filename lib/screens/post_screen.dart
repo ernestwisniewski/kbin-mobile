@@ -135,7 +135,7 @@ class _PostScreenState extends State<PostScreen> {
                             ? Media().getImage(
                                 Media().getThumbUrl(post.user.avatar!.filePath,
                                     settings.instance!),
-                                BoxFit.cover,
+                                null,
                                 null)
                             : const Icon(CupertinoIcons.person_alt)));
               }),
@@ -191,15 +191,15 @@ class _PostScreenState extends State<PostScreen> {
                   reply.buildItem(context, item, index++),
               ],
             );
-          } else {
-            return Material(
-              type: MaterialType.transparency,
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(50),
-                  child: const Text('brak odpowiedzi')),
-            );
           }
+
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak odpowiedzi')),
+          );
         }
 
         return buildLoadingFull();

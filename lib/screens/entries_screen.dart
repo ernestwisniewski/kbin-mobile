@@ -4,12 +4,12 @@ import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
-import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/entry.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
-import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
 class EntriesScreen extends StatefulWidget {
@@ -78,15 +78,15 @@ class _EntriesScreenState extends State<EntriesScreen> {
                     }),
               ),
             );
-          } else {
-            return Material(
-              type: MaterialType.transparency,
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(50),
-                  child: const Text('brak treści')),
-            );
           }
+
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak treści')),
+          );
         }
 
         return buildLoadingFull();

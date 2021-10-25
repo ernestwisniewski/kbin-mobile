@@ -17,7 +17,7 @@ class Media {
     try {
       return Image.network(
         url,
-        fit: fit ?? BoxFit.none,
+        fit: fit ?? BoxFit.fitWidth,
         width: size,
       );
     } catch (e) {

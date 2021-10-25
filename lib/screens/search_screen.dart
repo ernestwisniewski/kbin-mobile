@@ -82,15 +82,15 @@ class _SearchScreenState extends State<SearchScreen> {
                     return buildSubject(context, subject, index);
                   }),
             );
-          } else {
-            return Material(
-              type: MaterialType.transparency,
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(50),
-                  child: const Text('brak wyników')),
-            );
           }
+
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak wyników')),
+          );
         }
 
         return buildLoadingFull();

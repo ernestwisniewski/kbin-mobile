@@ -79,15 +79,15 @@ class _PostsScreenState extends State<PostsScreen> {
                     }),
               ),
             );
-          } else {
-            return Material(
-              type: MaterialType.transparency,
-              child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(50),
-                  child: const Text('brak wpisów')),
-            );
           }
+
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(50),
+                child: const Text('brak wpisów')),
+          );
         }
 
         return buildLoadingFull();
