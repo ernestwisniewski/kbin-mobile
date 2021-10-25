@@ -7,7 +7,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
     padding: EdgeInsets.zero,
     alignment: Alignment.centerRight,
     child: const Icon(CupertinoIcons.ellipsis_vertical,
-        size: 20, color: CupertinoColors.inactiveGray),
+        size: 20),
     onPressed: () => showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(

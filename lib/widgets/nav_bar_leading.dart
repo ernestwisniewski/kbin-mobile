@@ -7,7 +7,7 @@ Widget buildNavBarLeading(BuildContext context) {
     padding: EdgeInsets.zero,
     alignment: Alignment.centerLeft,
     child:
-        const Icon(Icons.menu, size: 20, color: CupertinoColors.inactiveGray),
+        const Icon(Icons.menu, size: 20),
     onPressed: () {
       context.router.popUntilRoot();
     },

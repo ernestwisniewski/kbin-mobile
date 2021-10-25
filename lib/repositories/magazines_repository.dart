@@ -24,4 +24,30 @@ class MagazinesRepository {
 
     throw Exception("Something went wrong, ${response.statusCode}");
   }
+
+  Future<MagazineCollectionItem?> fetchRandom() async {
+    String domain = await ApiProvider().getDomain();
+
+    Uri url = Uri.https(domain, 'api/random_magazines.jsonld');
+
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Map data = jsonDecode(response.body);
+
+      List<dynamic> magazines = data["hydra:member"];
+
+      magazines = magazines
+          .map((json) => MagazineCollectionItem.fromJson(json))
+          .toList();
+
+      print(magazines);
+      // @todo MagazineItem
+      return magazines.isNotEmpty
+          ? magazines.first
+          : null;
+    }
+
+    throw Exception("Something went wrong, ${response.statusCode}");
+  }
 }

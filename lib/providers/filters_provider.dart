@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:kbin_mobile/models/magazine_collection_model.dart';
+import 'package:kbin_mobile/repositories/magazines_repository.dart';
 
 class FiltersProvider with ChangeNotifier {
   String? _screenView;
 
   String? get screenView => _screenView;
+
+  get http => null;
 
   void setScreenView(String screenView) async {
     _screenView = screenView;
@@ -15,5 +19,12 @@ class FiltersProvider with ChangeNotifier {
     _screenView = null;
 
     notifyListeners();
+  }
+
+  void setRandomMagazine() async {
+    MagazineCollectionItem? magazine =
+        await MagazinesRepository().fetchRandom();
+
+    _screenView = magazine?.name;
   }
 }

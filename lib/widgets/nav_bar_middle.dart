@@ -29,13 +29,17 @@ class NavBarMiddle extends StatefulWidget {
 
 class _NavBarMiddleState extends State<NavBarMiddle> {
   late SettingsProvider _settings;
+  late FiltersProvider _filters;
 
   @override
   void initState() {
     super.initState();
 
+
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     _settings.fetch();
+
+    _filters = Provider.of<FiltersProvider>(context, listen: false);
   }
 
   @override
@@ -63,6 +67,10 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                 onPressed: () {
                   if (widget.magazine != null) {
                     filters.setScreenView(widget.magazine!);
+                  }
+
+                  if(filters.screenView == null && widget.magazine == null) {
+                    _filters.setRandomMagazine();
                   }
 
                   context.router.popUntilRoot();
@@ -98,7 +106,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: widget.fontSize ?? 25,
-              color: Colors.black),
+              color: Colors.black87),
         ),
       );
     });

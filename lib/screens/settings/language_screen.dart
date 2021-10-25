@@ -32,7 +32,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               padding: EdgeInsets.zero,
               alignment: Alignment.centerLeft,
               child: const Icon(CupertinoIcons.back,
-                  size: 20, color: CupertinoColors.inactiveGray),
+                  size: 20),
               onPressed: () {
                 context.router.pop();
               },

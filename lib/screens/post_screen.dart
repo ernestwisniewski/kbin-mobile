@@ -61,7 +61,7 @@ class _PostScreenState extends State<PostScreen> {
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
             child: const Icon(CupertinoIcons.back,
-                size: 20, color: CupertinoColors.inactiveGray),
+                size: 20),
             onPressed: () {
               context.router.pop();
             },
@@ -70,7 +70,7 @@ class _PostScreenState extends State<PostScreen> {
             padding: EdgeInsets.zero,
             alignment: Alignment.centerRight,
             child: const Icon(CupertinoIcons.share,
-                size: 20, color: CupertinoColors.inactiveGray),
+                size: 20),
             onPressed: () {
               Share.share(
                   'https://${_settings.instance!}/m/${widget.magazine}/w/${widget.id}');
