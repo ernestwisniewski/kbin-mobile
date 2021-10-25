@@ -1,7 +1,6 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
@@ -32,20 +31,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle: const FittedBox(child: NavBarMiddle(title: 'Ustawienia')),
-        leading: Material(
-          type: MaterialType.transparency,
-          child: IconButton(
-            color: KbinColors().getAppBarTextColor(),
+          middle: const FittedBox(child: NavBarMiddle(title: 'Ustawienia')),
+          leading: CupertinoButton(
+            padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
-            icon: const Icon(CupertinoIcons.back, size:20),
-            tooltip: 'Wróć',
+            child: const Icon(CupertinoIcons.back,
+                size: 20, color: CupertinoColors.inactiveGray),
             onPressed: () {
               context.router.pop();
             },
-          ),
-        ),
-      ),
+          )),
       child: SafeArea(child: buildSettingsList(context)),
     );
   }

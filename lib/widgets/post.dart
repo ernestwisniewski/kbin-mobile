@@ -36,12 +36,12 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
                           child: Padding(
                               padding: const EdgeInsets.only(right: 15),
                               child: post.user.avatar != null
-                                  ? Image.network(
+                                  ? Media().getImage(
                                       Media().getThumbUrl(
                                           post.user.avatar!.filePath,
                                           settings.instance!),
-                                      fit: BoxFit.cover,
-                                    )
+                                      BoxFit.cover,
+                                      null)
                                   : const Icon(CupertinoIcons.person_alt)));
                     },
                   ),

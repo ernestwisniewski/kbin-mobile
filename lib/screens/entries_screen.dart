@@ -67,13 +67,16 @@ class _EntriesScreenState extends State<EntriesScreen> {
             return CupertinoScrollbar(
               controller: _controller,
               isAlwaysShown: false,
-              child: ListView.builder(
-                  controller: _controller,
-                  itemCount: state.entries.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    EntryCollectionItem entry = state.entries[index];
-                    return buildItem(context, entry, index);
-                  }),
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView.builder(
+                    controller: _controller,
+                    itemCount: state.entries.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      EntryCollectionItem entry = state.entries[index];
+                      return buildItem(context, entry, index);
+                    }),
+              ),
             );
           } else {
             return Material(
@@ -89,5 +92,9 @@ class _EntriesScreenState extends State<EntriesScreen> {
         return buildLoadingFull();
       },
     );
+  }
+
+  Future<List<EntryCollectionItem>> _refresh() async {
+    return _entries.fetch();
   }
 }

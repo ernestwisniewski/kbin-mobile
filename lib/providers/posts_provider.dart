@@ -44,13 +44,15 @@ class PostsProvider with ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<List<PostCollectionItem>> fetch() async {
     _loading = true;
     _posts = await PostsRepository()
         .fetchPosts(_page, _sortOptions, _timeOptions, screenView);
     _loading = false;
 
     notifyListeners();
+
+    return _posts;
   }
 }
 

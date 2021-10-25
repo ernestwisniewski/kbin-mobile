@@ -81,10 +81,11 @@ Widget buildTitle(BuildContext context, MagazineCollectionItem magazine) {
             child: magazine.image != null
                 ? Padding(
                     padding: const EdgeInsets.only(right: 15),
-                    child: Image.network(
+                    child: Media().getImage(
                         Media().getMagazineThumbUrl(
                             magazine.image!.filePath, settings.instance!),
-                        width: 120),
+                        null,
+                        120),
                   )
                 : Container());
       }),

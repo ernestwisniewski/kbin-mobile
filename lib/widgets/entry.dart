@@ -59,15 +59,20 @@ Widget buildMain(BuildContext context, EntryCollectionItem entry) {
         ],
       )),
       Consumer<SettingsProvider>(builder: (context, settings, child) {
-        return Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: entry.image != null
-              ? Image.network(
-                  Media().getEntryThumbUrl(
-                      entry.image!.filePath, settings.instance!),
-                  width: 90)
-              : null,
-        );
+        try {
+          return Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: entry.image != null
+                ? Media().getImage(
+                    Media().getEntryThumbUrl(
+                        entry.image!.filePath, settings.instance!),
+                    null,
+                    90)
+                : null
+          );
+        } catch (e) {
+          return Container();
+        }
       }),
     ],
   );

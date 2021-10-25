@@ -35,11 +35,8 @@ Widget buildItem(
                     child: Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: comment.user.avatar != null
-                      ? Image.network(
-                          Media().getThumbUrl(comment.user.avatar!.filePath,
-                              settings.instance!),
-                          fit: BoxFit.cover,
-                        )
+                      ? Media().getImage(Media().getThumbUrl(
+                          comment.user.avatar!.filePath, settings.instance!), BoxFit.cover, null)
                       : const Icon(CupertinoIcons.person_alt),
                 ));
               }),

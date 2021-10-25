@@ -34,11 +34,11 @@ Widget buildItem(BuildContext context, ReplyCollectionItem reply, int index) {
                     child: Padding(
                         padding: const EdgeInsets.only(right: 15),
                         child: reply.user.avatar != null
-                            ? Image.network(
+                            ? Media().getImage(
                                 Media().getThumbUrl(reply.user.avatar!.filePath,
                                     settings.instance!),
-                                fit: BoxFit.cover,
-                              )
+                                BoxFit.cover,
+                                null)
                             : const Icon(CupertinoIcons.person_alt)));
               }),
               Expanded(

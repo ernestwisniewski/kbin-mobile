@@ -43,13 +43,15 @@ class EntriesProvider with ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<List<EntryCollectionItem>> fetch() async {
     _loading = true;
     _entries = await EntriesRepository()
         .fetchEntries(_page, _sortOptions, _timeOptions, screenView);
     _loading = false;
 
     notifyListeners();
+
+    return _entries;
   }
 }
 

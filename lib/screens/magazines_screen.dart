@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/repositories/magazines_repository.dart';
-import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/magazine.dart';
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
@@ -33,18 +32,7 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           middle: const FittedBox(child: NavBarMiddle(title: 'Magazyny')),
-          leading: buildNavBarLeading(context),
-          trailing: Material(
-            type: MaterialType.transparency,
-            child: IconButton(
-              color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 20),
-              tooltip: 'Sortuj',
-              onPressed: () {
-                // handle the press
-              },
-            ),
-          )),
+          leading: buildNavBarLeading(context)),
       child: buildBody(context),
     );
   }

@@ -28,17 +28,14 @@ class _LanguageScreenState extends State<LanguageScreen> {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
             middle: const FittedBox(child: NavBarMiddle(title: 'Język')),
-            leading: Material(
-              type: MaterialType.transparency,
-              child: IconButton(
-                color: KbinColors().getAppBarTextColor(),
-                alignment: Alignment.centerLeft,
-                icon: const Icon(CupertinoIcons.back, size: 20),
-                tooltip: 'Wróć',
-                onPressed: () {
-                  context.router.pop();
-                },
-              ),
+            leading: CupertinoButton(
+              padding: EdgeInsets.zero,
+              alignment: Alignment.centerLeft,
+              child: const Icon(CupertinoIcons.back,
+                  size: 20, color: CupertinoColors.inactiveGray),
+              onPressed: () {
+                context.router.pop();
+              },
             )),
         child: SafeArea(
           child: Material(

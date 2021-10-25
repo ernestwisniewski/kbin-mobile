@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/helpers/media.dart';
 import 'package:kbin_mobile/models/post_item_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart' as replies;
+import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/providers/posts_provider.dart';
 import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
@@ -33,6 +33,8 @@ class PostScreen extends StatefulWidget {
 
 class _PostScreenState extends State<PostScreen> {
   late SettingsProvider _settings;
+  late PostProvider _post;
+  late RepliesProvider _replies;
 
   @override
   void initState() {
@@ -41,11 +43,11 @@ class _PostScreenState extends State<PostScreen> {
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     _settings.fetch();
 
-    final post = Provider.of<PostProvider>(context, listen: false);
-    post.fetch(widget.id);
+    _post = Provider.of<PostProvider>(context, listen: false);
+    _post.fetch(widget.id);
 
-    final comments = Provider.of<RepliesProvider>(context, listen: false);
-    comments.setPostId(widget.id);
+    _replies = Provider.of<RepliesProvider>(context, listen: false);
+    _replies.setPostId(widget.id);
   }
 
   @override
@@ -55,29 +57,24 @@ class _PostScreenState extends State<PostScreen> {
           middle: FittedBox(
               child: NavBarMiddle(
                   route: const PostsRoute(), magazine: widget.magazine)),
-          leading: Material(
-            type: MaterialType.transparency,
-            child: IconButton(
-              color: KbinColors().getAppBarTextColor(),
-              alignment: Alignment.centerLeft,
-              icon: const Icon(CupertinoIcons.back, size: 20),
-              tooltip: 'Wróć',
-              onPressed: () {
-                context.router.pop();
-              },
-            ),
+          leading: CupertinoButton(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
+            child: const Icon(CupertinoIcons.back,
+                size: 20, color: CupertinoColors.inactiveGray),
+            onPressed: () {
+              context.router.pop();
+            },
           ),
-          trailing: Material(
-            type: MaterialType.transparency,
-            child: IconButton(
-              color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.share, size: 20),
-              tooltip: 'Udostępnij',
-              onPressed: () {
-                Share.share(
-                    'https://${_settings.instance!}/m/${widget.magazine}/w/${widget.id}');
-              },
-            ),
+          trailing: CupertinoButton(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerRight,
+            child: const Icon(CupertinoIcons.share,
+                size: 20, color: CupertinoColors.inactiveGray),
+            onPressed: () {
+              Share.share(
+                  'https://${_settings.instance!}/m/${widget.magazine}/w/${widget.id}');
+            },
           )),
       child: buildBody(context),
     );
@@ -94,8 +91,11 @@ class _PostScreenState extends State<PostScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           return CupertinoScrollbar(
-            child: CustomScrollView(
-              slivers: buildSliverLists(context, state.post),
+            child: RefreshIndicator(
+              onRefresh: _refresh,
+              child: CustomScrollView(
+                slivers: buildSliverLists(context, state.post),
+              ),
             ),
           );
         }
@@ -132,11 +132,11 @@ class _PostScreenState extends State<PostScreen> {
                     child: Padding(
                         padding: const EdgeInsets.only(right: 15),
                         child: post.user.avatar != null
-                            ? Image.network(
+                            ? Media().getImage(
                                 Media().getThumbUrl(post.user.avatar!.filePath,
                                     settings.instance!),
-                                fit: BoxFit.cover,
-                              )
+                                BoxFit.cover,
+                                null)
                             : const Icon(CupertinoIcons.person_alt)));
               }),
               Expanded(
@@ -205,5 +205,10 @@ class _PostScreenState extends State<PostScreen> {
         return buildLoadingFull();
       },
     );
+  }
+
+  Future<List<ReplyCollectionItem>> _refresh() async {
+    _post.fetch(widget.id);
+    return _replies.fetch();
   }
 }

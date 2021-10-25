@@ -1,7 +1,7 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
+import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +14,7 @@ class InstanceScreen extends StatefulWidget {
 
 class _InstanceScreenState extends State<InstanceScreen> {
   late SettingsProvider settings;
+  late FiltersProvider _filters;
 
   @override
   void initState() {
@@ -21,6 +22,8 @@ class _InstanceScreenState extends State<InstanceScreen> {
 
     settings = Provider.of<SettingsProvider>(context, listen: false);
     settings.fetch();
+
+    _filters = Provider.of<FiltersProvider>(context, listen: false);
   }
 
   @override
@@ -28,17 +31,14 @@ class _InstanceScreenState extends State<InstanceScreen> {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
             middle: const FittedBox(child: NavBarMiddle(title: 'Instancja')),
-            leading: Material(
-              type: MaterialType.transparency,
-              child: IconButton(
-                color: KbinColors().getAppBarTextColor(),
-                alignment: Alignment.centerLeft,
-                icon: const Icon(CupertinoIcons.back, size: 20),
-                tooltip: 'Wróć',
-                onPressed: () {
-                  context.router.pop();
-                },
-              ),
+            leading: CupertinoButton(
+              padding: EdgeInsets.zero,
+              alignment: Alignment.centerLeft,
+              child: const Icon(CupertinoIcons.back,
+                  size: 20, color: CupertinoColors.inactiveGray),
+              onPressed: () {
+                context.router.pop();
+              },
             )),
         child: SafeArea(
             child: Material(
@@ -85,5 +85,6 @@ class _InstanceScreenState extends State<InstanceScreen> {
 
   void changeInstance(String newInstance) async {
     settings.setInstance(newInstance);
+    _filters.clearScreenView();
   }
 }

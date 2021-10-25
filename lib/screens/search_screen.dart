@@ -6,14 +6,14 @@ import 'package:kbin_mobile/models/magazine_collection_model.dart';
 import 'package:kbin_mobile/models/post_collection_model.dart';
 import 'package:kbin_mobile/models/post_reply_collection_model.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
-import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/comment.dart' as comment;
 import 'package:kbin_mobile/widgets/entry.dart' as entry;
 import 'package:kbin_mobile/widgets/loading_full.dart';
 import 'package:kbin_mobile/widgets/magazine.dart' as magazine;
+import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
+import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:kbin_mobile/widgets/post.dart' as post;
 import 'package:kbin_mobile/widgets/reply.dart' as reply;
-import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const FittedBox(child: NavBarMiddle()),
+          middle: const FittedBox(child: NavBarMiddle(title: 'Wyszukaj')),
           leading: buildNavBarLeading(context)),
       child: buildBody(context),
     );

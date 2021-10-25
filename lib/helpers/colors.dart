@@ -44,4 +44,8 @@ class KbinColors {
 
     return hslDark.toColor();
   }
+
+  Color getPrimary() {
+    return fromHex('556880');
+  }
 }

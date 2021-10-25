@@ -68,13 +68,16 @@ class _PostsScreenState extends State<PostsScreen> {
             return CupertinoScrollbar(
               controller: _controller,
               isAlwaysShown: false,
-              child: ListView.builder(
-                  controller: _controller,
-                  itemCount: state.posts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    PostCollectionItem post = state.posts[index];
-                    return buildItem(context, post, index);
-                  }),
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView.builder(
+                    controller: _controller,
+                    itemCount: state.posts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      PostCollectionItem post = state.posts[index];
+                      return buildItem(context, post, index);
+                    }),
+              ),
             );
           } else {
             return Material(
@@ -90,5 +93,9 @@ class _PostsScreenState extends State<PostsScreen> {
         return buildLoadingFull();
       },
     );
+  }
+
+  Future<List<PostCollectionItem>> _refresh() async {
+    return _posts.fetch();
   }
 }

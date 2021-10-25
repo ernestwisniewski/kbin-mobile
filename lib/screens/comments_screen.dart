@@ -70,13 +70,16 @@ class _CommentsScreenState extends State<CommentsScreen> {
             return CupertinoScrollbar(
               controller: _controller,
               isAlwaysShown: false,
-              child: ListView.builder(
-                  controller: _controller,
-                  itemCount: state.comments.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    CommentCollectionItem comment = state.comments[index];
-                    return buildItem(context, comment, index);
-                  }),
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView.builder(
+                    controller: _controller,
+                    itemCount: state.comments.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      CommentCollectionItem comment = state.comments[index];
+                      return buildItem(context, comment, index);
+                    }),
+              ),
             );
           } else {
             return Material(
@@ -92,5 +95,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
         return buildLoadingFull();
       },
     );
+  }
+
+  Future<List<CommentCollectionItem>> _refresh() async {
+    return _comments.fetch();
   }
 }

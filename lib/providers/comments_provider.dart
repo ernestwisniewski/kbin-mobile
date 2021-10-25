@@ -54,11 +54,14 @@ class CommentsProvider with ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<List<CommentCollectionItem>> fetch() async {
     _loading = true;
     _comments = await CommentsRepository()
         .fetchComments(_page, _sortOptions, _timeOptions, screenView);
     _loading = false;
+
     notifyListeners();
+
+    return _comments;
   }
 }

@@ -32,10 +32,13 @@ class RepliesProvider with ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<List<ReplyCollectionItem>> fetch() async {
     _loading = true;
     _replies = await RepliesRepository().fetchPostReplies(_postId);
     _loading = false;
+
     notifyListeners();
+
+    return _replies;
   }
 }

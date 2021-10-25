@@ -34,6 +34,8 @@ class EntryScreen extends StatefulWidget {
 
 class _EntryScreenState extends State<EntryScreen> {
   late SettingsProvider _settings;
+  late EntryCommentsProvider _comments;
+  late EntryProvider _entry;
   Future<void>? _launched;
 
   @override
@@ -43,11 +45,11 @@ class _EntryScreenState extends State<EntryScreen> {
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     _settings.fetch();
 
-    final entry = Provider.of<EntryProvider>(context, listen: false);
-    entry.fetch(widget.id);
+    _entry = Provider.of<EntryProvider>(context, listen: false);
+    _entry.fetch(widget.id);
 
-    final comments = Provider.of<EntryCommentsProvider>(context, listen: false);
-    comments.setEntryId(widget.id);
+    _comments = Provider.of<EntryCommentsProvider>(context, listen: false);
+    _comments.setEntryId(widget.id);
   }
 
   Future<void> _launchInBrowser(String url) async {
@@ -69,29 +71,24 @@ class _EntryScreenState extends State<EntryScreen> {
           middle: FittedBox(
               child: NavBarMiddle(
                   magazine: widget.magazine, route: const EntriesRoute())),
-          leading: Material(
-            type: MaterialType.transparency,
-            child: IconButton(
-              color: KbinColors().getAppBarTextColor(),
-              alignment: Alignment.centerLeft,
-              icon: const Icon(CupertinoIcons.back, size: 20),
-              tooltip: 'Wróć',
-              onPressed: () {
-                context.router.pop();
-              },
-            ),
+          leading: CupertinoButton(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
+            child: const Icon(CupertinoIcons.back,
+                size: 20, color: CupertinoColors.inactiveGray),
+            onPressed: () {
+              context.router.pop();
+            },
           ),
-          trailing: Material(
-            type: MaterialType.transparency,
-            child: IconButton(
-              color: KbinColors().getAppBarTextColor(),
-              icon: const Icon(CupertinoIcons.share, size: 20),
-              tooltip: 'Udostępnij',
-              onPressed: () {
-                Share.share(
-                    'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
-              },
-            ),
+          trailing: CupertinoButton(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerRight,
+            child: const Icon(CupertinoIcons.share,
+                size: 20, color: CupertinoColors.inactiveGray),
+            onPressed: () {
+              Share.share(
+                  'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+            },
           ),
         ),
         child: buildBody(context));
@@ -108,8 +105,11 @@ class _EntryScreenState extends State<EntryScreen> {
       builder: (context, state, child) {
         if (!state.loading) {
           return CupertinoScrollbar(
-            child: CustomScrollView(
-              slivers: buildSliverLists(context, state.entry),
+            child: RefreshIndicator(
+              onRefresh: _refresh,
+              child: CustomScrollView(
+                slivers: buildSliverLists(context, state.entry),
+              ),
             ),
           );
         }
@@ -226,13 +226,6 @@ class _EntryScreenState extends State<EntryScreen> {
                   entry.uv.toString(), () {}),
               buildActionButton(const Icon(CupertinoIcons.down_arrow),
                   entry.dv.toString(), () {}),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Row(
-            children: [
               buildActionButton(
                   const Icon(Icons.explore_outlined),
                   null,
@@ -241,15 +234,11 @@ class _EntryScreenState extends State<EntryScreen> {
                           _launched = _launchInBrowser(entry.url!);
                         }
                       : null),
-              buildActionButton(const Icon(CupertinoIcons.share), null, () {
-                Share.share(
-                    'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
-              }),
               buildActionButton(
                   const Icon(CupertinoIcons.xmark_octagon), null, () {}),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -264,37 +253,34 @@ class _EntryScreenState extends State<EntryScreen> {
         child: Row(
           children: [
             Consumer<SettingsProvider>(builder: (context, settings, child) {
-              return Expanded(
-                  child: Padding(
+              return Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: entry.user.avatar != null
-                    ? Image.network(
+                    ? Media().getImage(
                         Media().getThumbUrl(
                             entry.user.avatar!.filePath, settings.instance!),
-                        fit: BoxFit.cover,
-                      )
+                        BoxFit.cover,
+                        100)
                     : const Icon(Icons.person),
-              ));
+              );
             }),
-            Expanded(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(entry.user.username,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18)),
-                    Wrap(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: Text(entry.comments.toString(),
-                            style: const TextStyle(color: Colors.grey)),
-                      ),
-                      const Text('obserwujących',
-                          style: TextStyle(color: Colors.grey)),
-                    ])
-                  ],
-                ))
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(entry.user.username,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18)),
+                Wrap(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: Text(entry.comments.toString(),
+                        style: const TextStyle(color: Colors.grey)),
+                  ),
+                  const Text('obserwujących',
+                      style: TextStyle(color: Colors.grey)),
+                ])
+              ],
+            )
           ],
         ),
       ),
@@ -312,7 +298,7 @@ class _EntryScreenState extends State<EntryScreen> {
             children: [
               entry.domain != null
                   ? buildActionButton(const Icon(CupertinoIcons.globe),
-                      entry.domain!.name, () {})
+                      entry.domain!.name, null)
                   : Container(),
               buildActionButton(
                   const Icon(CupertinoIcons.eye), entry.views.toString()),
@@ -328,23 +314,22 @@ class _EntryScreenState extends State<EntryScreen> {
   Widget buildActionButton(
       [Icon? icon, String? label, GestureTapCallback? fn]) {
     return Expanded(
-        child: InkWell(
-      onTap: fn,
-      child: Container(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          child: TextButton(
-            onPressed: null,
-            child: Column(children: [
-              icon ?? Container(),
-              label != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: FittedBox(child:Text(label, textAlign: TextAlign.center)),
-                    )
-                  : Container()
-            ]),
-          )),
-    ));
+        child: Container(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: CupertinoButton(
+              onPressed: fn,
+              child: Column(children: [
+                icon ?? Container(),
+                label != null
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(label,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 13)),
+                      )
+                    : Container()
+              ]),
+            )));
   }
 
   Widget buildEntryCommentList(BuildContext context) {
@@ -390,11 +375,11 @@ class _EntryScreenState extends State<EntryScreen> {
                   child: Padding(
                 padding: const EdgeInsets.only(right: 15),
                 child: comment.user.avatar != null
-                    ? Image.network(
+                    ? Media().getImage(
                         Media().getThumbUrl(
                             comment.user.avatar!.filePath, settings.instance!),
-                        fit: BoxFit.cover,
-                      )
+                        BoxFit.cover,
+                        null)
                     : const Icon(Icons.person),
               ));
             }),
@@ -424,5 +409,10 @@ class _EntryScreenState extends State<EntryScreen> {
         ],
       ),
     );
+  }
+
+  Future<List<EntryCommentsItem>> _refresh() async {
+    _entry.fetch(widget.id);
+    return _comments.fetch();
   }
 }

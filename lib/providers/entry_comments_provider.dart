@@ -33,10 +33,13 @@ class EntryCommentsProvider with ChangeNotifier {
     fetch();
   }
 
-  void fetch() async {
+  Future<List<EntryCommentsItem>> fetch() async {
     _loading = true;
     _comments = await CommentsRepository().fetchEntryComments(_entryId);
     _loading = false;
+
     notifyListeners();
+
+    return _comments;
   }
 }

@@ -41,71 +41,65 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
   @override
   Widget build(BuildContext context) {
     return Consumer<FiltersProvider>(builder: (context, filters, child) {
-      if (widget.route != null) {
-        return GestureDetector(
-          onTap: () => showCupertinoModalPopup(
-            context: context,
-            builder: (BuildContext context) => CupertinoActionSheet(
-              cancelButton: CupertinoActionSheetAction(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Anuluj'),
-              ),
-              title: const Text('Jakie magazyny wyświetlić?'),
-              actions: <CupertinoActionSheetAction>[
-                CupertinoActionSheetAction(
-                  child: Text(
-                      filters.screenView ?? widget.magazine ?? 'Losowy magazyn',
-                      style: TextStyle(
-                          fontWeight: filters.screenView != null
-                              ? FontWeight.bold
-                              : FontWeight.normal)),
-                  onPressed: () {
-                    if (widget.magazine != null) {
-                      filters.setScreenView(widget.magazine!);
-                    }
-
-                    context.router.popUntilRoot();
-                    context.router.push(SceneRoute(route: widget.route!));
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: Text('Wszystkie',
-                      style: TextStyle(
-                          fontWeight: filters.screenView == null
-                              ? FontWeight.bold
-                              : FontWeight.normal)),
-                  onPressed: () {
-                    filters.clearScreenView();
-
-                    context.router.popUntilRoot();
-                    context.router.push(SceneRoute(route: widget.route!));
-                  },
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Subskrybowane'),
-                  onPressed: () {},
-                ),
-                CupertinoActionSheetAction(
-                  child: const Text('Moderowane'),
-                  onPressed: () {},
-                ),
-              ],
+      return CupertinoButton(
+        onPressed: () => showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext context) => CupertinoActionSheet(
+            cancelButton: CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Anuluj'),
             ),
-          ),
-          child: Text(
-            filters.screenView ?? widget.magazine ?? _settings.instance ?? '',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: widget.fontSize),
-          ),
-        );
-      }
+            title: const Text('Jakie magazyny wyświetlić?'),
+            actions: <CupertinoActionSheetAction>[
+              CupertinoActionSheetAction(
+                child: Text(
+                    filters.screenView ?? widget.magazine ?? 'Losowy magazyn',
+                    style: TextStyle(
+                        fontWeight: filters.screenView != null
+                            ? FontWeight.bold
+                            : FontWeight.normal)),
+                onPressed: () {
+                  if (widget.magazine != null) {
+                    filters.setScreenView(widget.magazine!);
+                  }
 
-      return Text(
-        widget.title ?? _settings.instance ?? '',
-        style:
-            TextStyle(fontWeight: FontWeight.bold, fontSize: widget.fontSize),
+                  context.router.popUntilRoot();
+                  context.router.push(SceneRoute(route: widget.route ?? const EntriesRoute()));
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: Text('Wszystkie',
+                    style: TextStyle(
+                        fontWeight: filters.screenView == null
+                            ? FontWeight.bold
+                            : FontWeight.normal)),
+                onPressed: () {
+                  filters.clearScreenView();
+
+                  context.router.popUntilRoot();
+                  context.router.push(SceneRoute(route: widget.route ?? const EntriesRoute()));
+                },
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Subskrybowane'),
+                onPressed: () {},
+              ),
+              CupertinoActionSheetAction(
+                child: const Text('Moderowane'),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+        child: Text(
+          widget.title ?? filters.screenView ?? widget.magazine ?? _settings.instance ?? '',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: widget.fontSize ?? 25,
+              color: Colors.black),
+        ),
       );
     });
   }
