@@ -2,8 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kbin_mobile/models/magazine_collection_model.dart';
+import 'package:kbin_mobile/providers/entries_provider.dart';
 import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
+import 'package:kbin_mobile/repositories/magazines_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
 
@@ -30,14 +33,16 @@ class NavBarMiddle extends StatefulWidget {
 class _NavBarMiddleState extends State<NavBarMiddle> {
   late SettingsProvider _settings;
   late FiltersProvider _filters;
+  late EntriesProvider _entries;
 
   @override
   void initState() {
     super.initState();
 
-
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     _settings.fetch();
+
+    _entries = Provider.of<EntriesProvider>(context, listen: false);
 
     _filters = Provider.of<FiltersProvider>(context, listen: false);
   }
@@ -64,17 +69,22 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                         fontWeight: filters.screenView != null
                             ? FontWeight.bold
                             : FontWeight.normal)),
-                onPressed: () {
+                onPressed: () async {
                   if (widget.magazine != null) {
                     filters.setScreenView(widget.magazine!);
                   }
 
-                  if(filters.screenView == null && widget.magazine == null) {
-                    _filters.setRandomMagazine();
+                  if (filters.screenView == null && widget.magazine == null) {
+                    MagazineCollectionItem? magazine =
+                        await MagazinesRepository().fetchRandom();
+                    if (magazine != null) {
+                      _filters.setScreenView(magazine.name);
+                    }
                   }
 
                   context.router.popUntilRoot();
-                  context.router.push(SceneRoute(route: widget.route ?? const EntriesRoute()));
+                  context.router.push(
+                      SceneRoute(route: widget.route ?? const EntriesRoute()));
                 },
               ),
               CupertinoActionSheetAction(
@@ -87,7 +97,8 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                   filters.clearScreenView();
 
                   context.router.popUntilRoot();
-                  context.router.push(SceneRoute(route: widget.route ?? const EntriesRoute()));
+                  context.router.push(
+                      SceneRoute(route: widget.route ?? const EntriesRoute()));
                 },
               ),
               CupertinoActionSheetAction(
@@ -102,7 +113,11 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
           ),
         ),
         child: Text(
-          widget.title ?? filters.screenView ?? widget.magazine ?? _settings.instance ?? '',
+          widget.title ??
+              filters.screenView ??
+              widget.magazine ??
+              _settings.instance ??
+              '',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: widget.fontSize ?? 25,

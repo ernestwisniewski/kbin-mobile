@@ -20,11 +20,4 @@ class FiltersProvider with ChangeNotifier {
 
     notifyListeners();
   }
-
-  void setRandomMagazine() async {
-    MagazineCollectionItem? magazine =
-        await MagazinesRepository().fetchRandom();
-
-    _screenView = magazine?.name;
-  }
 }

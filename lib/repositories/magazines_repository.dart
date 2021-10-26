@@ -41,7 +41,6 @@ class MagazinesRepository {
           .map((json) => MagazineCollectionItem.fromJson(json))
           .toList();
 
-      print(magazines);
       // @todo MagazineItem
       return magazines.isNotEmpty
           ? magazines.first
