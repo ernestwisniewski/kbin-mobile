@@ -38,6 +38,10 @@ $ flutter packages get
 $ flutter run
 ```
 
+## Documentation
+
+https://docs.kbin.info - Kbin API Reference
+
 ## Contributing
 
 ## License
