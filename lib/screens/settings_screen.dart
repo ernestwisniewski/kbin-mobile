@@ -35,8 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
-            child: const Icon(CupertinoIcons.back,
-                size: 20),
+            child: const Icon(CupertinoIcons.back, size: 20),
             onPressed: () {
               context.router.pop();
             },
@@ -50,30 +49,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
       return SettingsList(
         sections: [
           SettingsSection(
-            title: 'Ogólne',
+            title: const Text('Ogólne'),
             tiles: [
               SettingsTile(
-                title: 'Język',
-                subtitle: settings.lang == 'pl' ? 'Polski' : 'English',
+                title: const Text('Język'),
+                value: settings.lang == 'pl'
+                    ? const Material(
+                        type: MaterialType.transparency, child: Text('polski'))
+                    : const Material(
+                        type: MaterialType.transparency,
+                        child: Text('english')),
                 leading: const Icon(Icons.language),
                 onPressed: (context) {
                   context.router.push(const LanguageRoute());
                 },
               ),
               SettingsTile(
-                title: 'Instancja',
-                subtitle: settings.instance,
+                title: const Text('Instancja'),
+                value: Material(
+                    type: MaterialType.transparency,
+                    child: Text(settings.instance)),
                 leading: const Icon(Icons.cloud_queue),
                 onPressed: (context) {
                   context.router.push(const InstanceRoute());
                 },
               ),
               SettingsTile(
-                title: 'Wygląd',
-                subtitle:
+                title: const Text('Wygląd'),
+                value:
                     ThemeProvider.controllerOf(context).theme.id == 'dark_theme'
-                        ? 'Ciemny'
-                        : 'Jasny',
+                        ? const Material(
+                            type: MaterialType.transparency,
+                            child: Text('ciemny'))
+                        : const Material(
+                            type: MaterialType.transparency,
+                            child: Text('jasny')),
                 leading: const Icon(Icons.lightbulb),
                 onPressed: (context) {
                   ThemeProvider.controllerOf(context).nextTheme();
@@ -82,70 +92,74 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: 'Konto',
-            tiles: const [
-              SettingsTile(title: 'Zaloguj się', leading: null),
-              SettingsTile(title: 'Zarejestruj się', leading: null),
+            title: const Text('Konto'),
+            tiles: [
+              SettingsTile(title: const Text('Zaloguj się'), leading: null),
+              SettingsTile(title: const Text('Zarejestruj się'), leading: null),
             ],
           ),
           SettingsSection(
-            title: 'Bezpieczeństwo',
+            title: Text('Bezpieczeństwo'),
             tiles: [
               SettingsTile.switchTile(
-                title: 'Pozwól aplikacji działać w tle',
+                title: const Text('Pozwól aplikacji działać w tle'),
                 leading: const Icon(Icons.phonelink_lock),
-                switchValue: _lockInBackground,
                 onToggle: (bool value) {
                   setState(() {
                     _lockInBackground = value;
                     _notificationsEnabled = value;
                   });
                 },
+                initialValue: null,
               ),
               SettingsTile.switchTile(
-                title: 'Użyj odcisku palca',
-                subtitle:
-                    'Pozwól odblokowywać aplikację za pomocą odcisku palca.',
+                title: const Text('Użyj odcisku palca'),
+                // subtitle:
+                //     'Pozwól odblokowywać aplikację za pomocą odcisku palca.',
                 leading: const Icon(Icons.fingerprint),
                 onToggle: (bool value) {},
-                switchValue: false,
+                // switchValue: false,
+                initialValue: null,
               ),
               SettingsTile.switchTile(
-                title: 'Włącz powiadomienia',
+                title: const Text('Włącz powiadomienia'),
                 enabled: _notificationsEnabled,
                 leading: const Icon(Icons.notifications_active),
-                switchValue: true,
+                // switchValue: true,
                 onToggle: (value) {},
+                initialValue: null,
               ),
             ],
           ),
           SettingsSection(
-            title: 'Inne',
-            tiles: const [
+            title: const Text('Inne'),
+            tiles: [
               SettingsTile(
-                  title: 'Regulamin', leading: Icon(Icons.description)),
+                  title: const Text('Regulamin'),
+                  leading: const Icon(Icons.description)),
               SettingsTile(
-                  title: 'Github', leading: Icon(Icons.collections_bookmark)),
+                  title: Text('Github'),
+                  leading: const Icon(Icons.collections_bookmark)),
             ],
           ),
-          CustomSection(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: Container(),
-                ),
-                Text(
-                  settings.version ?? '',
-                  style: const TextStyle(color: Color(0xFF777777)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25),
-                  child: Container(),
-                ),
-              ],
-            ),
-          ),
+          // CustomSection(
+          //   child: Column(
+          //     children: [
+          //       Padding(
+          //         padding: const EdgeInsets.only(top: 25),
+          //         child: Container(),
+          //       ),
+          //       Text(
+          //         settings.version ?? '',
+          //         style: const TextStyle(color: Color(0xFF777777)),
+          //       ),
+          //       Padding(
+          //         padding: const EdgeInsets.only(top: 25),
+          //         child: Container(),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       );
     });

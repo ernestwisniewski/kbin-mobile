@@ -85,7 +85,7 @@ class _MyAppState extends State<MyApp> {
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate: _appRouter.delegate(),
                 routeInformationParser: _appRouter.defaultRouteParser(),
-                title: _settings.instance ?? '',
+                title: _settings.instance,
                 themeMode: ThemeMode.light,
                 theme: ThemeProvider.themeOf(themeContext).data),
           ),

@@ -116,8 +116,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
           widget.title ??
               filters.screenView ??
               widget.magazine ??
-              _settings.instance ??
-              '',
+              _settings.instance,
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: widget.fontSize ?? 25,

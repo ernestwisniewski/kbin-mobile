@@ -1,13 +1,14 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class LanguageScreen extends StatefulWidget {
+  const LanguageScreen({Key? key}) : super(key: key);
+
   @override
   _LanguageScreenState createState() => _LanguageScreenState();
 }
@@ -31,8 +32,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             leading: CupertinoButton(
               padding: EdgeInsets.zero,
               alignment: Alignment.centerLeft,
-              child: const Icon(CupertinoIcons.back,
-                  size: 20),
+              child: const Icon(CupertinoIcons.back, size: 20),
               onPressed: () {
                 context.router.pop();
               },
@@ -42,20 +42,22 @@ class _LanguageScreenState extends State<LanguageScreen> {
               type: MaterialType.transparency,
               child: Consumer<SettingsProvider>(
                   builder: (context, settings, child) {
-                return SettingsSection(tiles: [
-                  SettingsTile(
-                    title: "English",
-                    trailing: trailingWidget('en'),
-                    onPressed: (BuildContext context) {
-                      changeLanguage('en');
-                    },
-                  ),
-                  SettingsTile(
-                      title: "Polski",
-                      trailing: trailingWidget('pl'),
+                return SettingsList(sections: [
+                  SettingsSection(tiles: [
+                    SettingsTile(
+                      title: const Text("English"),
+                      trailing: trailingWidget('en'),
                       onPressed: (BuildContext context) {
-                        changeLanguage('pl');
-                      }),
+                        changeLanguage('en');
+                      },
+                    ),
+                    SettingsTile(
+                        title: const Text("Polski"),
+                        trailing: trailingWidget('pl'),
+                        onPressed: (BuildContext context) {
+                          changeLanguage('pl');
+                        }),
+                  ])
                 ]);
               })),
         ));

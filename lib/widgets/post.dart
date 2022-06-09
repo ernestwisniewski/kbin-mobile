@@ -39,7 +39,7 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
                                   ? Media().getImage(
                                       Media().getThumbUrl(
                                           post.user.avatar!.filePath,
-                                          settings.instance!),
+                                          settings.instance),
                                       BoxFit.cover,
                                       null)
                                   : const Icon(CupertinoIcons.person_alt)));
@@ -85,7 +85,7 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
           ),
         ),
         const Divider(height: 0),
-        for (replies.ReplyCollectionItem item in post.bestReplies!)
+        for (replies.ReplyCollectionItem item in post.bestReplies)
           reply.buildItem(context, item, i++),
       ],
     ),

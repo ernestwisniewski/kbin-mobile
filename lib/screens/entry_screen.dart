@@ -87,7 +87,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 size: 20),
             onPressed: () {
               Share.share(
-                  'https://${_settings.instance!}/m/${widget.magazine}/t/${widget.id}');
+                  'https://${_settings.instance}/m/${widget.magazine}/t/${widget.id}');
             },
           ),
         ),
@@ -142,7 +142,7 @@ class _EntryScreenState extends State<EntryScreen> {
               placeholder: kTransparentImage,
               fit: BoxFit.fitWidth,
               image: Media()
-                  .getThumbUrl(entry.image!.filePath, settings.instance!)),
+                  .getThumbUrl(entry.image!.filePath, settings.instance)),
         ),
       );
     });
@@ -258,7 +258,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 child: entry.user.avatar != null
                     ? Media().getImage(
                         Media().getThumbUrl(
-                            entry.user.avatar!.filePath, settings.instance!),
+                            entry.user.avatar!.filePath, settings.instance),
                         null,
                         100)
                     : const Icon(Icons.person),
@@ -381,7 +381,7 @@ class _EntryScreenState extends State<EntryScreen> {
                 child: comment.user.avatar != null
                     ? Media().getImage(
                         Media().getThumbUrl(
-                            comment.user.avatar!.filePath, settings.instance!),
+                            comment.user.avatar!.filePath, settings.instance),
                         null,
                         null)
                     : const Icon(Icons.person),

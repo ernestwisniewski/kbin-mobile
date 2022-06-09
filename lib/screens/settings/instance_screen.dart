@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 class InstanceScreen extends StatefulWidget {
+  const InstanceScreen({Key? key}) : super(key: key);
+
   @override
   _InstanceScreenState createState() => _InstanceScreenState();
 }
@@ -34,8 +36,7 @@ class _InstanceScreenState extends State<InstanceScreen> {
             leading: CupertinoButton(
               padding: EdgeInsets.zero,
               alignment: Alignment.centerLeft,
-              child: const Icon(CupertinoIcons.back,
-                  size: 20),
+              child: const Icon(CupertinoIcons.back, size: 20),
               onPressed: () {
                 context.router.pop();
               },
@@ -45,32 +46,34 @@ class _InstanceScreenState extends State<InstanceScreen> {
           type: MaterialType.transparency,
           child: Consumer<SettingsProvider>(
             builder: (context, settings, child) {
-              return SettingsSection(tiles: [
-                SettingsTile(
-                  title: "karab.in",
-                  trailing: trailingWidget('karab.in'),
-                  onPressed: (BuildContext context) {
-                    changeInstance('karab.in');
-                  },
-                ),
-                SettingsTile(
-                    title: "dev.karab.in",
-                    trailing: trailingWidget('dev.karab.in'),
+              return SettingsList(sections: [
+                SettingsSection(tiles: <SettingsTile>[
+                  SettingsTile(
+                    title: const Text("karab.in"),
+                    trailing: trailingWidget('karab.in'),
                     onPressed: (BuildContext context) {
-                      changeInstance('dev.karab.in');
-                    }),
-                SettingsTile(
-                    title: "kbin.pub",
-                    trailing: trailingWidget('kbin.pub'),
-                    onPressed: (BuildContext context) {
-                      changeInstance('kbin.pub');
-                    }),
-                SettingsTile(
-                    title: "kbin.test",
-                    trailing: trailingWidget('kbin.test'),
-                    onPressed: (BuildContext context) {
-                      changeInstance('kbin.test');
-                    }),
+                      changeInstance('karab.in');
+                    },
+                  ),
+                  SettingsTile(
+                      title: const Text("dev.karab.in"),
+                      trailing: trailingWidget('dev.karab.in'),
+                      onPressed: (BuildContext context) {
+                        changeInstance('dev.karab.in');
+                      }),
+                  SettingsTile(
+                      title: const Text("kbin.pub"),
+                      trailing: trailingWidget('kbin.pub'),
+                      onPressed: (BuildContext context) {
+                        changeInstance('kbin.pub');
+                      }),
+                  SettingsTile(
+                      title: const Text("kbin.test"),
+                      trailing: trailingWidget('kbin.test'),
+                      onPressed: (BuildContext context) {
+                        changeInstance('kbin.test');
+                      }),
+                ])
               ]);
             },
           ),

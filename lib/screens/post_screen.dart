@@ -73,7 +73,7 @@ class _PostScreenState extends State<PostScreen> {
                 size: 20),
             onPressed: () {
               Share.share(
-                  'https://${_settings.instance!}/m/${widget.magazine}/w/${widget.id}');
+                  'https://${_settings.instance}/m/${widget.magazine}/w/${widget.id}');
             },
           )),
       child: buildBody(context),
@@ -134,7 +134,7 @@ class _PostScreenState extends State<PostScreen> {
                         child: post.user.avatar != null
                             ? Media().getImage(
                                 Media().getThumbUrl(post.user.avatar!.filePath,
-                                    settings.instance!),
+                                    settings.instance),
                                 null,
                                 null)
                             : const Icon(CupertinoIcons.person_alt)));

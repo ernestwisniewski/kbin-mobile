@@ -12,7 +12,7 @@ class PostCollectionItem {
   final PostCollectionItemUser user;
   final PostCollectionItemImage? image;
   @JsonKey(name: 'bestComments')
-  final List<ReplyCollectionItem>? bestReplies;
+  final List<ReplyCollectionItem> bestReplies;
   final String body;
   @JsonKey(name: 'comments')
   final int replies;
@@ -29,7 +29,7 @@ class PostCollectionItem {
       required this.user,
       required this.body,
       this.image,
-      this.bestReplies,
+      required this.bestReplies,
       required this.replies,
       required this.uv,
       required this.dv,

@@ -3,15 +3,15 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvider with ChangeNotifier {
-  String? _instance;
-  String? _lang;
-  String? _version;
+  String _instance = 'karab.in';
+  String _lang = 'pl';
+  String _version = '0.01';
 
-  String? get instance => _instance;
+  String get instance => _instance;
 
-  String? get lang => _lang;
+  String get lang => _lang;
 
-  String? get version => _version;
+  String get version => _version;
 
   void fetch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

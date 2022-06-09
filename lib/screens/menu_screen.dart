@@ -6,6 +6,8 @@ import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 
 class MenuScreen extends StatefulWidget {
+  const MenuScreen({Key? key}) : super(key: key);
+
   @override
   _MenuScreenState createState() => _MenuScreenState();
 }

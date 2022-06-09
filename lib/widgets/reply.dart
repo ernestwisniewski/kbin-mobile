@@ -36,7 +36,7 @@ Widget buildItem(BuildContext context, ReplyCollectionItem reply, int index) {
                         child: reply.user.avatar != null
                             ? Media().getImage(
                                 Media().getThumbUrl(reply.user.avatar!.filePath,
-                                    settings.instance!),
+                                    settings.instance),
                                 BoxFit.cover,
                                 null)
                             : const Icon(CupertinoIcons.person_alt)));

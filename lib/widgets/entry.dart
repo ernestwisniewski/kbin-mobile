@@ -65,7 +65,7 @@ Widget buildMain(BuildContext context, EntryCollectionItem entry) {
             child: entry.image != null
                 ? Media().getImage(
                     Media().getEntryThumbUrl(
-                        entry.image!.filePath, settings.instance!),
+                        entry.image!.filePath, settings.instance),
                     null,
                     90)
                 : null

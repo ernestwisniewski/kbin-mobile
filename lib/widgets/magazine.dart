@@ -83,7 +83,7 @@ Widget buildTitle(BuildContext context, MagazineCollectionItem magazine) {
                     padding: const EdgeInsets.only(right: 15),
                     child: Media().getImage(
                         Media().getMagazineThumbUrl(
-                            magazine.image!.filePath, settings.instance!),
+                            magazine.image!.filePath, settings.instance),
                         null,
                         120),
                   )
@@ -94,7 +94,7 @@ Widget buildTitle(BuildContext context, MagazineCollectionItem magazine) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(magazine.title, style: Theme.of(context).textTheme.headline6),
-            Text('/m/' + magazine.name,
+            Text('/m/${magazine.name}',
                 style: const TextStyle(color: Colors.grey)),
           ],
         ),

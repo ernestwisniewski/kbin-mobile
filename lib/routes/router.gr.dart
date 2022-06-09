@@ -1,11 +1,16 @@
+// **************************************************************************
+// AutoRouteGenerator
+// **************************************************************************
+
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
 // AutoRouteGenerator
 // **************************************************************************
+//
+// ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:flutter/cupertino.dart' as _i15;
 import 'package:flutter/material.dart' as _i14;
 
 import '../screens/comments_screen.dart' as _i9;
@@ -29,7 +34,7 @@ class AppRouter extends _i13.RootStackRouter {
   final Map<String, _i13.PageFactory> pagesMap = {
     MenuRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i1.MenuScreen());
+          routeData: routeData, child: const _i1.MenuScreen());
     },
     SettingsRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
@@ -37,11 +42,11 @@ class AppRouter extends _i13.RootStackRouter {
     },
     LanguageRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i3.LanguageScreen());
+          routeData: routeData, child: const _i3.LanguageScreen());
     },
     InstanceRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i4.InstanceScreen());
+          routeData: routeData, child: const _i4.InstanceScreen());
     },
     SceneRoute.name: (routeData) {
       final args = routeData.argsAs<SceneRouteArgs>(
@@ -60,7 +65,7 @@ class AppRouter extends _i13.RootStackRouter {
           routeData: routeData, child: const _i7.EntriesScreen());
     },
     EntryRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<EntryRouteArgs>(
           orElse: () => EntryRouteArgs(
               magazine: pathParams.getString('magazine'),
@@ -79,7 +84,7 @@ class AppRouter extends _i13.RootStackRouter {
           routeData: routeData, child: const _i10.PostsScreen());
     },
     PostRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<PostRouteArgs>(
           orElse: () => PostRouteArgs(
               magazine: pathParams.getString('magazine'),
@@ -112,38 +117,43 @@ class AppRouter extends _i13.RootStackRouter {
       ];
 }
 
-/// generated route for [_i1.MenuScreen]
+/// generated route for
+/// [_i1.MenuScreen]
 class MenuRoute extends _i13.PageRouteInfo<void> {
-  const MenuRoute() : super(name, path: '/');
+  const MenuRoute() : super(MenuRoute.name, path: '/');
 
   static const String name = 'MenuRoute';
 }
 
-/// generated route for [_i2.SettingsScreen]
+/// generated route for
+/// [_i2.SettingsScreen]
 class SettingsRoute extends _i13.PageRouteInfo<void> {
-  const SettingsRoute() : super(name, path: '/settings');
+  const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
 
   static const String name = 'SettingsRoute';
 }
 
-/// generated route for [_i3.LanguageScreen]
+/// generated route for
+/// [_i3.LanguageScreen]
 class LanguageRoute extends _i13.PageRouteInfo<void> {
-  const LanguageRoute() : super(name, path: '/settings/language');
+  const LanguageRoute() : super(LanguageRoute.name, path: '/settings/language');
 
   static const String name = 'LanguageRoute';
 }
 
-/// generated route for [_i4.InstanceScreen]
+/// generated route for
+/// [_i4.InstanceScreen]
 class InstanceRoute extends _i13.PageRouteInfo<void> {
-  const InstanceRoute() : super(name, path: '/settings/instance');
+  const InstanceRoute() : super(InstanceRoute.name, path: '/settings/instance');
 
   static const String name = 'InstanceRoute';
 }
 
-/// generated route for [_i5.SceneScreen]
+/// generated route for
+/// [_i5.SceneScreen]
 class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
-  SceneRoute({_i15.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
-      : super(name,
+  SceneRoute({_i14.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
+      : super(SceneRoute.name,
             path: '/scene',
             args: SceneRouteArgs(key: key, route: route, index: index));
 
@@ -153,31 +163,39 @@ class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
 class SceneRouteArgs {
   const SceneRouteArgs({this.key, this.route, this.index});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final _i13.PageRouteInfo<dynamic>? route;
 
   final int? index;
+
+  @override
+  String toString() {
+    return 'SceneRouteArgs{key: $key, route: $route, index: $index}';
+  }
 }
 
-/// generated route for [_i6.MagazinesScreen]
+/// generated route for
+/// [_i6.MagazinesScreen]
 class MagazinesRoute extends _i13.PageRouteInfo<void> {
-  const MagazinesRoute() : super(name, path: '/magazines');
+  const MagazinesRoute() : super(MagazinesRoute.name, path: '/magazines');
 
   static const String name = 'MagazinesRoute';
 }
 
-/// generated route for [_i7.EntriesScreen]
+/// generated route for
+/// [_i7.EntriesScreen]
 class EntriesRoute extends _i13.PageRouteInfo<void> {
-  const EntriesRoute() : super(name, path: '/t');
+  const EntriesRoute() : super(EntriesRoute.name, path: '/t');
 
   static const String name = 'EntriesRoute';
 }
 
-/// generated route for [_i8.EntryScreen]
+/// generated route for
+/// [_i8.EntryScreen]
 class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
-  EntryRoute({_i15.Key? key, required String magazine, required int id})
-      : super(name,
+  EntryRoute({_i14.Key? key, required String magazine, required int id})
+      : super(EntryRoute.name,
             path: '/m/:magazine/t/:id',
             args: EntryRouteArgs(key: key, magazine: magazine, id: id),
             rawPathParams: {'magazine': magazine, 'id': id});
@@ -188,31 +206,39 @@ class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
 class EntryRouteArgs {
   const EntryRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final String magazine;
 
   final int id;
+
+  @override
+  String toString() {
+    return 'EntryRouteArgs{key: $key, magazine: $magazine, id: $id}';
+  }
 }
 
-/// generated route for [_i9.CommentsScreen]
+/// generated route for
+/// [_i9.CommentsScreen]
 class CommentsRoute extends _i13.PageRouteInfo<void> {
-  const CommentsRoute() : super(name, path: '/c');
+  const CommentsRoute() : super(CommentsRoute.name, path: '/c');
 
   static const String name = 'CommentsRoute';
 }
 
-/// generated route for [_i10.PostsScreen]
+/// generated route for
+/// [_i10.PostsScreen]
 class PostsRoute extends _i13.PageRouteInfo<void> {
-  const PostsRoute() : super(name, path: '/p');
+  const PostsRoute() : super(PostsRoute.name, path: '/p');
 
   static const String name = 'PostsRoute';
 }
 
-/// generated route for [_i11.PostScreen]
+/// generated route for
+/// [_i11.PostScreen]
 class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i15.Key? key, required String magazine, required int id})
-      : super(name,
+  PostRoute({_i14.Key? key, required String magazine, required int id})
+      : super(PostRoute.name,
             path: '/p/:magazine/t/:id',
             args: PostRouteArgs(key: key, magazine: magazine, id: id),
             rawPathParams: {'magazine': magazine, 'id': id});
@@ -223,16 +249,22 @@ class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
 class PostRouteArgs {
   const PostRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final String magazine;
 
   final int id;
+
+  @override
+  String toString() {
+    return 'PostRouteArgs{key: $key, magazine: $magazine, id: $id}';
+  }
 }
 
-/// generated route for [_i12.SearchScreen]
+/// generated route for
+/// [_i12.SearchScreen]
 class SearchRoute extends _i13.PageRouteInfo<void> {
-  const SearchRoute() : super(name, path: '/search');
+  const SearchRoute() : super(SearchRoute.name, path: '/search');
 
   static const String name = 'SearchRoute';
 }
