@@ -24,7 +24,7 @@ class CommentsRepository {
       filters['magazine'] = screenView;
     }
 
-    Uri url = Uri.https(domain, 'api/entry_comments.jsonld', filters);
+    Uri url = Uri.https(domain, 'api/entry_comments', filters);
 
     var response = await http.get(url);
 
@@ -43,7 +43,7 @@ class CommentsRepository {
 
   Future<List<EntryCommentsItem>> fetchEntryComments(int entryId) async {
     String domain = await ApiProvider().getDomain();
-    Uri url = Uri.https(domain, 'api/entries/$entryId/comments.jsonld');
+    Uri url = Uri.https(domain, 'api/entries/$entryId/comments');
 
     var response = await http.get(url);
 

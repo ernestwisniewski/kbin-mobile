@@ -11,6 +11,7 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/cupertino.dart' as _i15;
 import 'package:flutter/material.dart' as _i14;
 
 import '../screens/comments_screen.dart' as _i9;
@@ -152,7 +153,7 @@ class InstanceRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.SceneScreen]
 class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
-  SceneRoute({_i14.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
+  SceneRoute({_i15.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
       : super(SceneRoute.name,
             path: '/scene',
             args: SceneRouteArgs(key: key, route: route, index: index));
@@ -163,7 +164,7 @@ class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
 class SceneRouteArgs {
   const SceneRouteArgs({this.key, this.route, this.index});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final _i13.PageRouteInfo<dynamic>? route;
 
@@ -194,7 +195,7 @@ class EntriesRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.EntryScreen]
 class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
-  EntryRoute({_i14.Key? key, required String magazine, required int id})
+  EntryRoute({_i15.Key? key, required String magazine, required int id})
       : super(EntryRoute.name,
             path: '/m/:magazine/t/:id',
             args: EntryRouteArgs(key: key, magazine: magazine, id: id),
@@ -206,7 +207,7 @@ class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
 class EntryRouteArgs {
   const EntryRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String magazine;
 
@@ -237,7 +238,7 @@ class PostsRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.PostScreen]
 class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i14.Key? key, required String magazine, required int id})
+  PostRoute({_i15.Key? key, required String magazine, required int id})
       : super(PostRoute.name,
             path: '/p/:magazine/t/:id',
             args: PostRouteArgs(key: key, magazine: magazine, id: id),
@@ -249,7 +250,7 @@ class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
 class PostRouteArgs {
   const PostRouteArgs({this.key, required this.magazine, required this.id});
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   final String magazine;
 

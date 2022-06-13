@@ -24,7 +24,7 @@ class EntriesRepository {
       filters['magazine'] = screenView;
     }
 
-    Uri url = Uri.https(domain, 'api/entries.jsonld', filters);
+    Uri url = Uri.https(domain, 'api/entries', filters);
 
     var response = await http.get(url);
 
@@ -42,7 +42,7 @@ class EntriesRepository {
   Future<EntryItem> fetchEntry(int id) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.https(domain, 'api/entries/$id.jsonld');
+    Uri url = Uri.https(domain, 'api/entries/$id');
 
     var response = await http.get(url);
 

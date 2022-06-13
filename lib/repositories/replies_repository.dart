@@ -8,7 +8,7 @@ class RepliesRepository {
   Future<List<ReplyCollectionItem>> fetchPostReplies(int postId) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.https(domain, 'api/posts/$postId/comments.jsonld');
+    Uri url = Uri.https(domain, 'api/posts/$postId/comments');
 
     var response = await http.get(url);
 

@@ -8,7 +8,7 @@ class MagazinesRepository {
   Future<List<MagazineCollectionItem>> fetchMagazines() async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.https(domain, 'api/magazines.jsonld');
+    Uri url = Uri.https(domain, 'api/magazines');
 
     var response = await http.get(url);
 
@@ -28,7 +28,7 @@ class MagazinesRepository {
   Future<MagazineCollectionItem?> fetchRandom() async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.https(domain, 'api/random_magazines.jsonld');
+    Uri url = Uri.https(domain, 'api/random_magazines');
 
     var response = await http.get(url);
 

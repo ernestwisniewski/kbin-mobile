@@ -14,14 +14,15 @@ class PostsRepository {
 
     Map<String, dynamic>? filters = {
       'sort': sortOptions.toParam(),
-      'time': timeOptions.toParam()
+      'time': timeOptions.toParam(),
+      'page': '2'
     };
 
     if (screenView != null) {
       filters['magazine'] = screenView;
     }
 
-    Uri url = Uri.https(domain, 'api/posts.jsonld', filters);
+    Uri url = Uri.https(domain, 'api/posts', filters);
 
     var response = await http.get(url);
 
@@ -39,7 +40,7 @@ class PostsRepository {
   Future<PostItem> fetchPost(int id) async {
     String domain = await ApiProvider().getDomain();
 
-    Uri url = Uri.https(domain, 'api/posts/$id.jsonld');
+    Uri url = Uri.https(domain, 'api/posts/$id');
 
     var response = await http.get(url);
 

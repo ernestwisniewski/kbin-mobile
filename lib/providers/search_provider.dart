@@ -3,7 +3,7 @@ import 'package:kbin_mobile/repositories/search_repository.dart';
 
 class SearchProvider with ChangeNotifier {
   bool _loading = false;
-  int _page = 1;
+  final int _page = 1;
   List<dynamic> _results = [];
   late String _query;
 
