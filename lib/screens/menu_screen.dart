@@ -126,7 +126,7 @@ class Menu {
     MenuItem(
         title: 'Treści',
         subtitle: 'Strona główna',
-        route:  SceneRoute(),
+        route: SceneRoute(),
         routeType: 'tab',
         icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),

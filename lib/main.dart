@@ -33,13 +33,12 @@ void main() {
             CommentsProvider(filters)),
     ChangeNotifierProxyProvider<FiltersProvider, PostsProvider>(
         create: (context) => PostsProvider(null),
-        update: (context, filters, previousMessages) =>
-            PostsProvider(filters)),
+        update: (context, filters, previousMessages) => PostsProvider(filters)),
     ChangeNotifierProvider(create: (context) => PostProvider()),
     ChangeNotifierProvider(create: (context) => RepliesProvider()),
     ChangeNotifierProvider(create: (context) => SearchProvider()),
     ChangeNotifierProvider(create: (context) => SettingsProvider()),
-  ], child: MyApp()));
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -60,11 +59,11 @@ class _MyAppState extends State<MyApp> {
     _settings = Provider.of<SettingsProvider>(context, listen: false);
     _settings.fetch();
 
-    if(_settings.instance == null) {
+    if (_settings.instance == null) {
       _settings.setInstance('karab.in');
     }
 
-    if(_settings.lang == null) {
+    if (_settings.lang == null) {
       _settings.setLang('pl');
     }
   }
