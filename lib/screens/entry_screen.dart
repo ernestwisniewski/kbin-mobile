@@ -74,8 +74,7 @@ class _EntryScreenState extends State<EntryScreen> {
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
-            child: const Icon(CupertinoIcons.back,
-                size: 20),
+            child: const Icon(CupertinoIcons.back, size: 20),
             onPressed: () {
               context.router.pop();
             },
@@ -83,8 +82,7 @@ class _EntryScreenState extends State<EntryScreen> {
           trailing: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerRight,
-            child: const Icon(CupertinoIcons.share,
-                size: 20),
+            child: const Icon(CupertinoIcons.share, size: 20),
             onPressed: () {
               Share.share(
                   'https://${_settings.instance}/m/${widget.magazine}/t/${widget.id}');
@@ -323,13 +321,15 @@ class _EntryScreenState extends State<EntryScreen> {
                 label != null
                     ? Padding(
                         padding: const EdgeInsets.only(top: 5),
-                        child: fitted ?? false ? FittedBox(
-                          child: Text(label,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 13)),
-                        ) : Text(label,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 13)),
+                        child: fitted ?? false
+                            ? FittedBox(
+                                child: Text(label,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 13)),
+                              )
+                            : Text(label,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 13)),
                       )
                     : Container()
               ]),

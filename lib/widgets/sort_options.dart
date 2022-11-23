@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:kbin_mobile/filters/stort_options_filters.dart';
 
 Widget sortOptions(BuildContext context, dynamic provider) {
   return CupertinoButton(
     padding: EdgeInsets.zero,
     alignment: Alignment.centerRight,
-    child: const Icon(CupertinoIcons.ellipsis_vertical,
-        size: 20),
+    child: const Icon(CupertinoIcons.ellipsis_vertical, size: 20),
     onPressed: () => showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(

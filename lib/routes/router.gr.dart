@@ -10,6 +10,7 @@
 //
 // ignore_for_file: type=lint
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/cupertino.dart' as _i15;
 import 'package:flutter/material.dart' as _i14;
@@ -35,93 +36,165 @@ class AppRouter extends _i13.RootStackRouter {
   final Map<String, _i13.PageFactory> pagesMap = {
     MenuRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.MenuScreen());
+        routeData: routeData,
+        child: const _i1.MenuScreen(),
+      );
     },
     SettingsRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.SettingsScreen());
+        routeData: routeData,
+        child: const _i2.SettingsScreen(),
+      );
     },
     LanguageRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.LanguageScreen());
+        routeData: routeData,
+        child: const _i3.LanguageScreen(),
+      );
     },
     InstanceRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.InstanceScreen());
+        routeData: routeData,
+        child: const _i4.InstanceScreen(),
+      );
     },
     SceneRoute.name: (routeData) {
       final args = routeData.argsAs<SceneRouteArgs>(
           orElse: () => const SceneRouteArgs());
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: _i5.SceneScreen(
-              key: args.key, route: args.route, index: args.index));
+        routeData: routeData,
+        child: _i5.SceneScreen(
+          key: args.key,
+          route: args.route,
+          index: args.index,
+        ),
+      );
     },
     MagazinesRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.MagazinesScreen());
+        routeData: routeData,
+        child: const _i6.MagazinesScreen(),
+      );
     },
     EntriesRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i7.EntriesScreen());
+        routeData: routeData,
+        child: const _i7.EntriesScreen(),
+      );
     },
     EntryRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<EntryRouteArgs>(
           orElse: () => EntryRouteArgs(
-              magazine: pathParams.getString('magazine'),
-              id: pathParams.getInt('id')));
+                magazine: pathParams.getString('magazine'),
+                id: pathParams.getInt('id'),
+              ));
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: _i8.EntryScreen(
-              key: args.key, magazine: args.magazine, id: args.id));
+        routeData: routeData,
+        child: _i8.EntryScreen(
+          key: args.key,
+          magazine: args.magazine,
+          id: args.id,
+        ),
+      );
     },
     CommentsRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i9.CommentsScreen());
+        routeData: routeData,
+        child: const _i9.CommentsScreen(),
+      );
     },
     PostsRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i10.PostsScreen());
+        routeData: routeData,
+        child: const _i10.PostsScreen(),
+      );
     },
     PostRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<PostRouteArgs>(
           orElse: () => PostRouteArgs(
-              magazine: pathParams.getString('magazine'),
-              id: pathParams.getInt('id')));
+                magazine: pathParams.getString('magazine'),
+                id: pathParams.getInt('id'),
+              ));
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData,
-          child: _i11.PostScreen(
-              key: args.key, magazine: args.magazine, id: args.id));
+        routeData: routeData,
+        child: _i11.PostScreen(
+          key: args.key,
+          magazine: args.magazine,
+          id: args.id,
+        ),
+      );
     },
     SearchRoute.name: (routeData) {
       return _i13.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i12.SearchScreen());
-    }
+        routeData: routeData,
+        child: const _i12.SearchScreen(),
+      );
+    },
   };
 
   @override
   List<_i13.RouteConfig> get routes => [
-        _i13.RouteConfig(MenuRoute.name, path: '/'),
-        _i13.RouteConfig(SettingsRoute.name, path: '/settings'),
-        _i13.RouteConfig(LanguageRoute.name, path: '/settings/language'),
-        _i13.RouteConfig(InstanceRoute.name, path: '/settings/instance'),
-        _i13.RouteConfig(SceneRoute.name, path: '/scene'),
-        _i13.RouteConfig(MagazinesRoute.name, path: '/magazines'),
-        _i13.RouteConfig(EntriesRoute.name, path: '/t'),
-        _i13.RouteConfig(EntryRoute.name, path: '/m/:magazine/t/:id'),
-        _i13.RouteConfig(CommentsRoute.name, path: '/c'),
-        _i13.RouteConfig(PostsRoute.name, path: '/p'),
-        _i13.RouteConfig(PostRoute.name, path: '/p/:magazine/t/:id'),
-        _i13.RouteConfig(SearchRoute.name, path: '/search')
+        _i13.RouteConfig(
+          MenuRoute.name,
+          path: '/',
+        ),
+        _i13.RouteConfig(
+          SettingsRoute.name,
+          path: '/settings',
+        ),
+        _i13.RouteConfig(
+          LanguageRoute.name,
+          path: '/settings/language',
+        ),
+        _i13.RouteConfig(
+          InstanceRoute.name,
+          path: '/settings/instance',
+        ),
+        _i13.RouteConfig(
+          SceneRoute.name,
+          path: '/scene',
+        ),
+        _i13.RouteConfig(
+          MagazinesRoute.name,
+          path: '/magazines',
+        ),
+        _i13.RouteConfig(
+          EntriesRoute.name,
+          path: '/t',
+        ),
+        _i13.RouteConfig(
+          EntryRoute.name,
+          path: '/m/:magazine/t/:id',
+        ),
+        _i13.RouteConfig(
+          CommentsRoute.name,
+          path: '/c',
+        ),
+        _i13.RouteConfig(
+          PostsRoute.name,
+          path: '/p',
+        ),
+        _i13.RouteConfig(
+          PostRoute.name,
+          path: '/p/:magazine/t/:id',
+        ),
+        _i13.RouteConfig(
+          SearchRoute.name,
+          path: '/search',
+        ),
       ];
 }
 
 /// generated route for
 /// [_i1.MenuScreen]
 class MenuRoute extends _i13.PageRouteInfo<void> {
-  const MenuRoute() : super(MenuRoute.name, path: '/');
+  const MenuRoute()
+      : super(
+          MenuRoute.name,
+          path: '/',
+        );
 
   static const String name = 'MenuRoute';
 }
@@ -129,7 +202,11 @@ class MenuRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i2.SettingsScreen]
 class SettingsRoute extends _i13.PageRouteInfo<void> {
-  const SettingsRoute() : super(SettingsRoute.name, path: '/settings');
+  const SettingsRoute()
+      : super(
+          SettingsRoute.name,
+          path: '/settings',
+        );
 
   static const String name = 'SettingsRoute';
 }
@@ -137,7 +214,11 @@ class SettingsRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i3.LanguageScreen]
 class LanguageRoute extends _i13.PageRouteInfo<void> {
-  const LanguageRoute() : super(LanguageRoute.name, path: '/settings/language');
+  const LanguageRoute()
+      : super(
+          LanguageRoute.name,
+          path: '/settings/language',
+        );
 
   static const String name = 'LanguageRoute';
 }
@@ -145,7 +226,11 @@ class LanguageRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i4.InstanceScreen]
 class InstanceRoute extends _i13.PageRouteInfo<void> {
-  const InstanceRoute() : super(InstanceRoute.name, path: '/settings/instance');
+  const InstanceRoute()
+      : super(
+          InstanceRoute.name,
+          path: '/settings/instance',
+        );
 
   static const String name = 'InstanceRoute';
 }
@@ -153,16 +238,29 @@ class InstanceRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.SceneScreen]
 class SceneRoute extends _i13.PageRouteInfo<SceneRouteArgs> {
-  SceneRoute({_i15.Key? key, _i13.PageRouteInfo<dynamic>? route, int? index})
-      : super(SceneRoute.name,
-            path: '/scene',
-            args: SceneRouteArgs(key: key, route: route, index: index));
+  SceneRoute({
+    _i15.Key? key,
+    _i13.PageRouteInfo<dynamic>? route,
+    int? index,
+  }) : super(
+          SceneRoute.name,
+          path: '/scene',
+          args: SceneRouteArgs(
+            key: key,
+            route: route,
+            index: index,
+          ),
+        );
 
   static const String name = 'SceneRoute';
 }
 
 class SceneRouteArgs {
-  const SceneRouteArgs({this.key, this.route, this.index});
+  const SceneRouteArgs({
+    this.key,
+    this.route,
+    this.index,
+  });
 
   final _i15.Key? key;
 
@@ -179,7 +277,11 @@ class SceneRouteArgs {
 /// generated route for
 /// [_i6.MagazinesScreen]
 class MagazinesRoute extends _i13.PageRouteInfo<void> {
-  const MagazinesRoute() : super(MagazinesRoute.name, path: '/magazines');
+  const MagazinesRoute()
+      : super(
+          MagazinesRoute.name,
+          path: '/magazines',
+        );
 
   static const String name = 'MagazinesRoute';
 }
@@ -187,7 +289,11 @@ class MagazinesRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i7.EntriesScreen]
 class EntriesRoute extends _i13.PageRouteInfo<void> {
-  const EntriesRoute() : super(EntriesRoute.name, path: '/t');
+  const EntriesRoute()
+      : super(
+          EntriesRoute.name,
+          path: '/t',
+        );
 
   static const String name = 'EntriesRoute';
 }
@@ -195,17 +301,33 @@ class EntriesRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.EntryScreen]
 class EntryRoute extends _i13.PageRouteInfo<EntryRouteArgs> {
-  EntryRoute({_i15.Key? key, required String magazine, required int id})
-      : super(EntryRoute.name,
-            path: '/m/:magazine/t/:id',
-            args: EntryRouteArgs(key: key, magazine: magazine, id: id),
-            rawPathParams: {'magazine': magazine, 'id': id});
+  EntryRoute({
+    _i15.Key? key,
+    required String magazine,
+    required int id,
+  }) : super(
+          EntryRoute.name,
+          path: '/m/:magazine/t/:id',
+          args: EntryRouteArgs(
+            key: key,
+            magazine: magazine,
+            id: id,
+          ),
+          rawPathParams: {
+            'magazine': magazine,
+            'id': id,
+          },
+        );
 
   static const String name = 'EntryRoute';
 }
 
 class EntryRouteArgs {
-  const EntryRouteArgs({this.key, required this.magazine, required this.id});
+  const EntryRouteArgs({
+    this.key,
+    required this.magazine,
+    required this.id,
+  });
 
   final _i15.Key? key;
 
@@ -222,7 +344,11 @@ class EntryRouteArgs {
 /// generated route for
 /// [_i9.CommentsScreen]
 class CommentsRoute extends _i13.PageRouteInfo<void> {
-  const CommentsRoute() : super(CommentsRoute.name, path: '/c');
+  const CommentsRoute()
+      : super(
+          CommentsRoute.name,
+          path: '/c',
+        );
 
   static const String name = 'CommentsRoute';
 }
@@ -230,7 +356,11 @@ class CommentsRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.PostsScreen]
 class PostsRoute extends _i13.PageRouteInfo<void> {
-  const PostsRoute() : super(PostsRoute.name, path: '/p');
+  const PostsRoute()
+      : super(
+          PostsRoute.name,
+          path: '/p',
+        );
 
   static const String name = 'PostsRoute';
 }
@@ -238,17 +368,33 @@ class PostsRoute extends _i13.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.PostScreen]
 class PostRoute extends _i13.PageRouteInfo<PostRouteArgs> {
-  PostRoute({_i15.Key? key, required String magazine, required int id})
-      : super(PostRoute.name,
-            path: '/p/:magazine/t/:id',
-            args: PostRouteArgs(key: key, magazine: magazine, id: id),
-            rawPathParams: {'magazine': magazine, 'id': id});
+  PostRoute({
+    _i15.Key? key,
+    required String magazine,
+    required int id,
+  }) : super(
+          PostRoute.name,
+          path: '/p/:magazine/t/:id',
+          args: PostRouteArgs(
+            key: key,
+            magazine: magazine,
+            id: id,
+          ),
+          rawPathParams: {
+            'magazine': magazine,
+            'id': id,
+          },
+        );
 
   static const String name = 'PostRoute';
 }
 
 class PostRouteArgs {
-  const PostRouteArgs({this.key, required this.magazine, required this.id});
+  const PostRouteArgs({
+    this.key,
+    required this.magazine,
+    required this.id,
+  });
 
   final _i15.Key? key;
 
@@ -265,7 +411,11 @@ class PostRouteArgs {
 /// generated route for
 /// [_i12.SearchScreen]
 class SearchRoute extends _i13.PageRouteInfo<void> {
-  const SearchRoute() : super(SearchRoute.name, path: '/search');
+  const SearchRoute()
+      : super(
+          SearchRoute.name,
+          path: '/search',
+        );
 
   static const String name = 'SearchRoute';
 }
