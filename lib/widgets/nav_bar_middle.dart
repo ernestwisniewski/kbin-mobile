@@ -82,8 +82,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                     }
                   }
 
-                  context.router.popUntilRoot();
-                  context.router.push(
+                  context.router.navigate(
                       SceneRoute(route: widget.route ?? const EntriesRoute()));
                 },
               ),
@@ -96,8 +95,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                 onPressed: () {
                   filters.clearScreenView();
 
-                  context.router.popUntilRoot();
-                  context.router.push(
+                  context.router.navigate(
                       SceneRoute(route: widget.route ?? const EntriesRoute()));
                 },
               ),

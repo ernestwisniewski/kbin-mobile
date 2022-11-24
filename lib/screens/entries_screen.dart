@@ -27,7 +27,7 @@ class _EntriesScreenState extends State<EntriesScreen> {
   @override
   void initState() {
     super.initState();
-
+print('@@@@@');
     _controller = ScrollController();
 
     _settings = Provider.of<SettingsProvider>(context, listen: false);

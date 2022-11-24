@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/theme.dart';
@@ -11,6 +12,7 @@ import 'package:kbin_mobile/providers/replies_provider.dart';
 import 'package:kbin_mobile/providers/search_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
+import 'package:kbin_mobile/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -75,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           child: Builder(
             builder: (themeContext) => MaterialApp.router(
                 routerDelegate:
-                    _appRouter.delegate(initialRoutes: [SceneRoute()]),
+                    _appRouter.delegate(initialRoutes: [const HomeRoute()]),
                 routeInformationParser: _appRouter.defaultRouteParser(),
                 title: _settings.instance,
                 themeMode: ThemeMode.light,

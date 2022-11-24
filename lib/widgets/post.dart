@@ -21,7 +21,7 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
         InkWell(
           onTap: () {
             context.router
-                .push(PostRoute(id: post.id, magazine: post.magazine.name));
+                .navigate(PostRoute(id: post.id, magazine: post.magazine.name));
           },
           child: Container(
             padding:

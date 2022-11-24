@@ -17,7 +17,7 @@ Widget buildItem(
     type: MaterialType.transparency,
     child: InkWell(
       onTap: () {
-        context.router.push(
+        context.router.navigate(
             EntryRoute(id: comment.entry.id, magazine: comment.magazine.name));
       },
       child: Container(

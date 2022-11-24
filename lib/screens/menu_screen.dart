@@ -61,9 +61,10 @@ class _MenuScreenState extends State<MenuScreen> {
                       ),
                       // subtitle: Text(main[index].subtitle ?? ''),
                       onTap: () {
-                        main[index].routeType == 'replace'
-                            ? context.router.replace(main[index].route)
-                            : context.router.push(main[index].route);
+                        context.router.replace(main[index].route);
+                        // main[index].routeType == 'replace'
+                        //     ? context.router.replace(main[index].route)
+                        //     : context.router.navigate(main[index].route);
                       },
                     ),
                   );
@@ -126,7 +127,7 @@ class Menu {
     MenuItem(
         title: 'Treści',
         subtitle: 'Strona główna',
-        route: SceneRoute(),
+        route: SceneRoute(index: 0),
         routeType: 'tab',
         icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
         iconContainerColor: KbinColors().fromHex('556880')),

@@ -114,7 +114,7 @@ Widget _listTile(BuildContext context, String magazine, String title,
         FiltersProvider filters =
             Provider.of<FiltersProvider>(context, listen: false);
         filters.setScreenView(magazine);
-        context.router.push(SceneRoute(route: route));
+        context.router.navigate(SceneRoute(route: route));
       },
       dense: true,
       title: Text(title),

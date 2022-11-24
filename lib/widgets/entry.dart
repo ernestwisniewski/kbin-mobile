@@ -19,7 +19,7 @@ Widget buildItem(BuildContext context, EntryCollectionItem entry,
         Expanded(
           child: InkWell(
             onTap: () {
-              context.router.push(
+              context.router.navigate(
                   EntryRoute(id: entry.id, magazine: entry.magazine.name));
             },
             child: Container(
