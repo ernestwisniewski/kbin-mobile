@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
@@ -123,11 +123,13 @@ Widget _listTile(BuildContext context, String magazine, String title,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Badge(
-              badgeColor: Theme.of(context).primaryColor,
-              elevation: 0,
-              shape: BadgeShape.circle,
-              padding: const EdgeInsets.all(10),
+            badges.Badge(
+              badgeStyle: badges.BadgeStyle(
+                badgeColor: Theme.of(context).primaryColor,
+                elevation: 0,
+                shape: badges.BadgeShape.circle,
+                padding: const EdgeInsets.all(10),
+              ),
               badgeContent: Text(value,
                   style: const TextStyle(
                       color: Colors.white,
