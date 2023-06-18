@@ -91,6 +91,7 @@ class _MyAppState extends State<MyApp> {
                 GlobalCupertinoLocalizations.delegate,
               ],
               supportedLocales: AppLocalizations.supportedLocales,
+              locale: Locale(_settings.lang),
             ),
           ),
         ));

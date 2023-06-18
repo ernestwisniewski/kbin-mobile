@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
@@ -44,7 +45,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const FittedBox(child: NavBarMiddle(title: 'Wyszukaj')),
+          middle: FittedBox(
+              child: NavBarMiddle(title: AppLocalizations.of(context)!.search)),
           leading: buildNavBarLeading(context)),
       child: buildBody(context),
     );
@@ -87,9 +89,10 @@ class _SearchScreenState extends State<SearchScreen> {
           return Material(
             type: MaterialType.transparency,
             child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(50),
-                child: const Text('brak wyników')),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(50),
+              child: Text(AppLocalizations.of(context)!.search_no_results),
+            ),
           );
         }
 
