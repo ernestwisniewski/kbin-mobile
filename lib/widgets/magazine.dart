@@ -9,6 +9,7 @@ import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget buildItem(
     BuildContext context, MagazineCollectionItem magazine, int index) {
@@ -38,7 +39,7 @@ Widget buildItem(
                   _listTile(
                       context,
                       magazine.name,
-                      'Subskrypcje',
+                      AppLocalizations.of(context)!.subscriptions,
                       magazine.subscriptionsCount.toString(),
                       const EntriesRoute(),
                       1),
@@ -47,14 +48,14 @@ Widget buildItem(
                   _listTile(
                       context,
                       magazine.name,
-                      'Komentarze',
+                      AppLocalizations.of(context)!.comments,
                       magazine.entryCommentCount.toString(),
                       const CommentsRoute(),
                       3),
                   _listTile(
                       context,
                       magazine.name,
-                      'Mikroblog',
+                      AppLocalizations.of(context)!.microblog,
                       (magazine.postCount + magazine.postCommentCount)
                           .toString(),
                       const PostsRoute(),

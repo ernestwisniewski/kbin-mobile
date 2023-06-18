@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EntryScreen extends StatefulWidget {
@@ -355,7 +356,7 @@ class _EntryScreenState extends State<EntryScreen> {
           return Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(50),
-              child: const Text('brak komentarzy'));
+              child: Text(AppLocalizations.of(context)!.comments_none));
         }
 
         return buildLoadingFull();

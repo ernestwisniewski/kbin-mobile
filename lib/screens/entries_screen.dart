@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/entry_collection_model.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
@@ -27,7 +28,6 @@ class _EntriesScreenState extends State<EntriesScreen> {
   @override
   void initState() {
     super.initState();
-print('@@@@@');
     _controller = ScrollController();
 
     _settings = Provider.of<SettingsProvider>(context, listen: false);
@@ -85,7 +85,7 @@ print('@@@@@');
             child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(50),
-                child: const Text('brak treści')),
+                child: Text(AppLocalizations.of(context)!.posts_none)),
           );
         }
 

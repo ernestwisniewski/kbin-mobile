@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/filters/time_options_filters.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget timeOptions(BuildContext context, dynamic provider) {
   return CupertinoButton(
     padding: EdgeInsets.zero,
     alignment: Alignment.centerRight,
-    child: const Icon(CupertinoIcons.stopwatch,
-        size: 20),
+    child: const Icon(CupertinoIcons.stopwatch, size: 20),
     onPressed: () => showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
@@ -15,12 +15,12 @@ Widget timeOptions(BuildContext context, dynamic provider) {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Anuluj'),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
-        title: const Text('Z jakiego zakresu czasowego treści wyświetlić?'),
+        title: Text(AppLocalizations.of(context)!.content_time_sort),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            child: Text('Wszystko',
+            child: Text(AppLocalizations.of(context)!.content_time_all,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.fromall
                         ? FontWeight.bold
@@ -31,7 +31,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('6 godzin',
+            child: Text(AppLocalizations.of(context)!.content_time_6h,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from6h
                         ? FontWeight.bold
@@ -42,7 +42,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('12 godzin',
+            child: Text(AppLocalizations.of(context)!.content_time_12h,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from12h
                         ? FontWeight.bold
@@ -53,7 +53,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('dzień',
+            child: Text(AppLocalizations.of(context)!.content_time_day,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from1d
                         ? FontWeight.bold
@@ -64,7 +64,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('tydzień',
+            child: Text(AppLocalizations.of(context)!.content_time_week,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from1w
                         ? FontWeight.bold
@@ -75,7 +75,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('miesiąc',
+            child: Text(AppLocalizations.of(context)!.content_time_month,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from1m
                         ? FontWeight.bold
@@ -86,7 +86,7 @@ Widget timeOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('rok',
+            child: Text(AppLocalizations.of(context)!.content_time_year,
                 style: TextStyle(
                     fontWeight: provider.timeOptions == TimeOptions.from1y
                         ? FontWeight.bold

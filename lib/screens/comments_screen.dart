@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/models/comment_collection_model.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
@@ -89,7 +90,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
             child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(50),
-                child: const Text('brak komentarzy')),
+                child: Text(AppLocalizations.of(context)!.comments_none)),
           );
         }
 

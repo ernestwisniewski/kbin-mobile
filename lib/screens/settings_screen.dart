@@ -115,7 +115,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             tiles: [
               SettingsTile.switchTile(
-                title: const Text('Pozwól aplikacji działać w tle'),
+                title: Text(
+                    AppLocalizations.of(context)!.settings_security_background),
                 leading: const Icon(Icons.phonelink_lock),
                 onToggle: (bool value) {
                   setState(() {

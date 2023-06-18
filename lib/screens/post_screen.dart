@@ -16,6 +16,7 @@ import 'package:kbin_mobile/widgets/reply.dart' as reply;
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostScreen extends StatefulWidget {
   final String magazine;
@@ -60,8 +61,7 @@ class _PostScreenState extends State<PostScreen> {
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
-            child: const Icon(CupertinoIcons.back,
-                size: 20),
+            child: const Icon(CupertinoIcons.back, size: 20),
             onPressed: () {
               context.router.pop();
             },
@@ -69,8 +69,7 @@ class _PostScreenState extends State<PostScreen> {
           trailing: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerRight,
-            child: const Icon(CupertinoIcons.share,
-                size: 20),
+            child: const Icon(CupertinoIcons.share, size: 20),
             onPressed: () {
               Share.share(
                   'https://${_settings.instance}/m/${widget.magazine}/w/${widget.id}');
@@ -198,7 +197,7 @@ class _PostScreenState extends State<PostScreen> {
             child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(50),
-                child: const Text('brak odpowiedzi')),
+                child: Text(AppLocalizations.of(context)!.comments_none)),
           );
         }
 
