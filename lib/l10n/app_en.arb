@@ -15,5 +15,10 @@
     "settings_security_background": "Allow background processing",
     "settings_security_fingerprint": "Enable fingerprint",
     "settings_security_notifications": "Enable notifications",
-    "settings_other": "Other"
+    "settings_other": "Other",
+    "search": "Search",
+    "magazines": "Magazines",
+    "posts": "Posts",
+    "comments": "Comments",
+    "home": "Home"
 }

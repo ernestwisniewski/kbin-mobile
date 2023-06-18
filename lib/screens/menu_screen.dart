@@ -21,8 +21,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<MenuItem> main = Menu().getMainEntries();
-    List<MenuItem> profile = Menu().getProfileEntries();
+    List<MenuItem> main = Menu().getMainEntries(context);
+    List<MenuItem> profile = Menu().getProfileEntries(context);
 
     return CupertinoPageScaffold(
         navigationBar: const CupertinoNavigationBar(
@@ -47,12 +47,13 @@ class _MenuScreenState extends State<MenuScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                    height: 35.0,
-                                    width: 35.0,
-                                    decoration: BoxDecoration(
-                                        color: main[index].iconContainerColor,
-                                        shape: BoxShape.circle),
-                                    child: main[index].icon),
+                                  height: 35.0,
+                                  width: 35.0,
+                                  decoration: BoxDecoration(
+                                      color: main[index].iconContainerColor,
+                                      shape: BoxShape.circle),
+                                  child: main[index].icon,
+                                ),
                               ]),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
@@ -77,9 +78,10 @@ class _MenuScreenState extends State<MenuScreen> {
                 type: MaterialType.transparency,
                 child: Container(
                     color: Colors.black12,
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Profil'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                          Text(AppLocalizations.of(context)!.settings_account),
                     )),
               ),
               ListView.separated(
@@ -114,74 +116,71 @@ class MenuItem {
   final Icon? icon;
   final Color? iconContainerColor;
 
-  MenuItem(
-      {required this.title,
-      this.subtitle,
-      required this.route,
-      this.routeType,
-      this.icon,
-      this.iconContainerColor});
+  MenuItem({
+    required this.title,
+    this.subtitle,
+    required this.route,
+    this.routeType,
+    this.icon,
+    this.iconContainerColor,
+  });
 }
 
 class Menu {
-  static List<MenuItem> main = <MenuItem>[
-    MenuItem(
-        title: 'Treści',
-        subtitle: 'Strona główna',
-        route: SceneRoute(index: 0),
-        routeType: 'tab',
-        icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Komentarze',
-        subtitle: 'O tym sie dyskutuje',
-        route: SceneRoute(index: 1),
-        routeType: 'tab',
-        icon: const Icon(CupertinoIcons.chat_bubble_2, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Wpisy',
-        subtitle: 'Krótka forma mikroblogowa',
-        route: SceneRoute(index: 2),
-        routeType: 'tab',
-        icon: const Icon(CupertinoIcons.text_badge_plus, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Magazyny',
-        subtitle: 'Magazyny tematyczne',
-        route: const MagazinesRoute(),
-        icon: const Icon(CupertinoIcons.tray_2, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Instancja',
-        subtitle: 'Informacje o tej instancji',
-        route: const MenuRoute(),
-        icon: const Icon(CupertinoIcons.circle_grid_hex, color: Colors.white),
-        iconContainerColor: KbinColors().fromHex('556880')),
-    MenuItem(
-        title: 'Wyszukaj',
-        subtitle: 'Znajdź w serwisie',
-        route: SceneRoute(index: 3),
-        icon: const Icon(CupertinoIcons.search, color: Colors.white),
-        iconContainerColor: Colors.red),
-    MenuItem(
-        title: 'Ustawienia',
-        subtitle: 'Ustawienia aplikacji',
+  List<MenuItem> getMainEntries(BuildContext context) {
+    return <MenuItem>[
+      MenuItem(
+          title: AppLocalizations.of(context)!.home,
+          route: SceneRoute(index: 0),
+          routeType: 'tab',
+          icon: const Icon(CupertinoIcons.square_list, color: Colors.white),
+          iconContainerColor: KbinColors().fromHex('556880')),
+      MenuItem(
+          title: AppLocalizations.of(context)!.comments,
+          route: SceneRoute(index: 1),
+          routeType: 'tab',
+          icon: const Icon(CupertinoIcons.chat_bubble_2, color: Colors.white),
+          iconContainerColor: KbinColors().fromHex('556880')),
+      MenuItem(
+          title: AppLocalizations.of(context)!.posts,
+          route: SceneRoute(index: 2),
+          routeType: 'tab',
+          icon: const Icon(CupertinoIcons.text_badge_plus, color: Colors.white),
+          iconContainerColor: KbinColors().fromHex('556880')),
+      MenuItem(
+          title: AppLocalizations.of(context)!.magazines,
+          route: const MagazinesRoute(),
+          icon: const Icon(CupertinoIcons.tray_2, color: Colors.white),
+          iconContainerColor: KbinColors().fromHex('556880')),
+      MenuItem(
+          title: AppLocalizations.of(context)!.settings_instances,
+          route: const MenuRoute(),
+          icon: const Icon(CupertinoIcons.circle_grid_hex, color: Colors.white),
+          iconContainerColor: KbinColors().fromHex('556880')),
+      MenuItem(
+          title: AppLocalizations.of(context)!.search,
+          route: SceneRoute(index: 3),
+          icon: const Icon(CupertinoIcons.search, color: Colors.white),
+          iconContainerColor: Colors.red),
+      MenuItem(
+        title: AppLocalizations.of(context)!.settings,
         route: const SettingsRoute(),
         icon: const Icon(CupertinoIcons.settings, color: Colors.white),
-        iconContainerColor: Colors.grey),
-  ];
-
-  static List<MenuItem> profile = <MenuItem>[
-    MenuItem(title: 'Zaloguj się', route: const MenuRoute()),
-    MenuItem(title: 'Zarejestruj się', route: const MenuRoute())
-  ];
-
-  List<MenuItem> getMainEntries() {
-    return main;
+        iconContainerColor: Colors.grey,
+      ),
+    ];
   }
 
-  List<MenuItem> getProfileEntries() {
-    return profile;
+  List<MenuItem> getProfileEntries(BuildContext context) {
+    return <MenuItem>[
+      MenuItem(
+        title: AppLocalizations.of(context)!.settings_account_login,
+        route: const MenuRoute(),
+      ),
+      MenuItem(
+        title: AppLocalizations.of(context)!.settings_account_register,
+        route: const MenuRoute(),
+      )
+    ];
   }
 }

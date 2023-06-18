@@ -15,5 +15,10 @@
     "settings_security_background": "Pozwól aplikacji działać w tle",
     "settings_security_fingerprint": "Użyj odcisku palca",
     "settings_security_notifications": "Włącz powiadomienia",
-    "settings_other": "Inne"
+    "settings_other": "Inne",
+    "search": "Wyszukaj",
+    "magazines": "Magazyny",
+    "posts": "Wpisy",
+    "comments": "Komentarze",
+    "home": "Treści"
 }
