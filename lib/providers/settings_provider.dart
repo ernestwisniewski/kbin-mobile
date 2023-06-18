@@ -18,8 +18,8 @@ class SettingsProvider with ChangeNotifier {
     PackageInfo package = await PackageInfo.fromPlatform();
 
     _version = 'Version ${package.version}, #${package.buildNumber}';
-    _lang = prefs.getString('lang') ?? 'pl';
-    _instance = prefs.getString('instance') ?? 'karab.in';
+    _lang = prefs.getString('lang') ?? 'en';
+    _instance = prefs.getString('instance') ?? 'kbin.social';
 
     notifyListeners();
   }

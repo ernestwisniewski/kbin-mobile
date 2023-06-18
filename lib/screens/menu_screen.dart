@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);

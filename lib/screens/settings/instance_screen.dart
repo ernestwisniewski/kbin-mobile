@@ -1,5 +1,6 @@
 import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
@@ -32,7 +33,10 @@ class _InstanceScreenState extends State<InstanceScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-            middle: const FittedBox(child: NavBarMiddle(title: 'Instancja')),
+            middle: FittedBox(
+              child: NavBarMiddle(
+                  title: AppLocalizations.of(context)!.settings_instances),
+            ),
             leading: CupertinoButton(
               padding: EdgeInsets.zero,
               alignment: Alignment.centerLeft,

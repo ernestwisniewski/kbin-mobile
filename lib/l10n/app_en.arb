@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+    "settings": "Settings",
+    "language_name": "English",
+    "settings_instances": "Instances",
+    "settings_general": "General",
+    "settings_language": "Language",
+    "settings_theme": "Theme",
+    "settings_theme_dark": "Dark",
+    "settings_theme_light": "Light",
+    "settings_account": "Account",
+    "settings_account_login": "Login",
+    "settings_account_register": "Register",
+    "settings_security": "Security",
+    "settings_security_background": "Allow background processing",
+    "settings_security_fingerprint": "Enable fingerprint",
+    "settings_security_notifications": "Enable notifications",
+    "settings_other": "Other"
+}

@@ -1,0 +1,19 @@
+{
+    "@@locale": "pl",
+    "language_name": "Polski",
+    "settings": "Ustawienia",
+    "settings_instances": "Instancja",
+    "settings_general": "Ogólne",
+    "settings_language": "Język",
+    "settings_theme": "Wygląd",
+    "settings_theme_dark": "Ciemny",
+    "settings_theme_light": "Jasny",
+    "settings_account": "Konto",
+    "settings_account_login": "Zaloguj się",
+    "settings_account_register": "Zarejestruj się",
+    "settings_security": "Bezpieczeństwo",
+    "settings_security_background": "Pozwól aplikacji działać w tle",
+    "settings_security_fingerprint": "Użyj odcisku palca",
+    "settings_security_notifications": "Włącz powiadomienia",
+    "settings_other": "Inne"
+}
