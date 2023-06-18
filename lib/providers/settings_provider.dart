@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvider with ChangeNotifier {
   String _instance = 'karab.in';
-  String _lang = 'pl';
+  String _lang = 'en';
   String _version = '0.01';
 
   String get instance => _instance;
@@ -18,8 +18,8 @@ class SettingsProvider with ChangeNotifier {
     PackageInfo package = await PackageInfo.fromPlatform();
 
     _version = 'Version ${package.version}, #${package.buildNumber}';
-    _lang = prefs.getString('lang') ?? 'pl';
-    _instance = prefs.getString('instance') ?? 'karab.in';
+    _lang = prefs.getString('lang') ?? 'en';
+    _instance = prefs.getString('instance') ?? 'kbin.social';
 
     notifyListeners();
   }

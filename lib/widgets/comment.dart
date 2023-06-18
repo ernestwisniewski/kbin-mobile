@@ -35,8 +35,11 @@ Widget buildItem(
                     child: Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: comment.user.avatar != null
-                      ? Media().getImage(Media().getThumbUrl(
-                          comment.user.avatar!.filePath, settings.instance), BoxFit.cover, null)
+                      ? Media().getImage(
+                          Media().getThumbUrl(
+                              comment.user.avatar!.filePath, settings.instance),
+                          BoxFit.cover,
+                          null)
                       : const Icon(CupertinoIcons.person_alt),
                 ));
               }),
@@ -47,7 +50,7 @@ Widget buildItem(
                     children: [
                       Text(comment.user.username,
                           style: const TextStyle(fontWeight: FontWeight.w600)),
-                      Text(timeago.format(comment.createdAt, locale: 'pl'),
+                      Text(timeago.format(comment.createdAt, locale: 'en'),
                           style: const TextStyle(color: Colors.grey)),
                     ],
                   ))

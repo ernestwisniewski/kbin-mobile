@@ -8,6 +8,7 @@ import 'package:kbin_mobile/widgets/magazine.dart';
 import 'package:kbin_mobile/widgets/nav_bar_leading.dart';
 import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MagazinesScreen extends StatefulWidget {
   const MagazinesScreen({Key? key}) : super(key: key);
@@ -31,7 +32,9 @@ class _MagazinesScreenState extends State<MagazinesScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const FittedBox(child: NavBarMiddle(title: 'Magazyny')),
+          middle: FittedBox(
+              child:
+                  NavBarMiddle(title: AppLocalizations.of(context)!.magazines)),
           leading: buildNavBarLeading(context)),
       child: buildBody(context),
     );

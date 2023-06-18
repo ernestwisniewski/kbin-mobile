@@ -7,6 +7,7 @@ import 'package:kbin_mobile/widgets/nav_bar_middle.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -31,7 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const FittedBox(child: NavBarMiddle(title: 'Ustawienia')),
+          middle: FittedBox(
+            child: NavBarMiddle(title: AppLocalizations.of(context)!.settings),
+          ),
           leading: CupertinoButton(
             padding: EdgeInsets.zero,
             alignment: Alignment.centerLeft,
@@ -49,23 +52,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       return SettingsList(
         sections: [
           SettingsSection(
-            title: const Text('Ogólne'),
+            title: Text(AppLocalizations.of(context)!.settings_general),
             tiles: [
               SettingsTile(
-                title: const Text('Język'),
-                value: settings.lang == 'pl'
-                    ? const Material(
-                        type: MaterialType.transparency, child: Text('polski'))
-                    : const Material(
-                        type: MaterialType.transparency,
-                        child: Text('english')),
+                title: Text(AppLocalizations.of(context)!.settings_language),
+                value: Material(
+                  type: MaterialType.transparency,
+                  child: Text(AppLocalizations.of(context)!.language_name),
+                ),
                 leading: const Icon(Icons.language),
                 onPressed: (context) {
                   context.router.push(const LanguageRoute());
                 },
               ),
               SettingsTile(
-                title: const Text('Instancja'),
+                title: Text(AppLocalizations.of(context)!.settings_instances),
                 value: Material(
                     type: MaterialType.transparency,
                     child: Text(settings.instance)),
@@ -75,15 +76,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile(
-                title: const Text('Wygląd'),
-                value:
-                    ThemeProvider.controllerOf(context).theme.id == 'dark_theme'
-                        ? const Material(
-                            type: MaterialType.transparency,
-                            child: Text('ciemny'))
-                        : const Material(
-                            type: MaterialType.transparency,
-                            child: Text('jasny')),
+                title: Text(AppLocalizations.of(context)!.settings_theme),
+                value: ThemeProvider.controllerOf(context).theme.id ==
+                        'dark_theme'
+                    ? Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                            AppLocalizations.of(context)!.settings_theme_dark))
+                    : Material(
+                        type: MaterialType.transparency,
+                        child: Text(AppLocalizations.of(context)!
+                            .settings_theme_light)),
                 leading: const Icon(Icons.lightbulb),
                 onPressed: (context) {
                   ThemeProvider.controllerOf(context).nextTheme();
@@ -92,17 +95,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: const Text('Konto'),
+            title: Text(AppLocalizations.of(context)!.settings_account),
             tiles: [
-              SettingsTile(title: const Text('Zaloguj się'), leading: null),
-              SettingsTile(title: const Text('Zarejestruj się'), leading: null),
+              SettingsTile(
+                title:
+                    Text(AppLocalizations.of(context)!.settings_account_login),
+                leading: null,
+              ),
+              SettingsTile(
+                title: Text(
+                    AppLocalizations.of(context)!.settings_account_register),
+                leading: null,
+              ),
             ],
           ),
           SettingsSection(
-            title: Text('Bezpieczeństwo'),
+            title: Text(
+              AppLocalizations.of(context)!.settings_security,
+            ),
             tiles: [
               SettingsTile.switchTile(
-                title: const Text('Pozwól aplikacji działać w tle'),
+                title: Text(
+                    AppLocalizations.of(context)!.settings_security_background),
                 leading: const Icon(Icons.phonelink_lock),
                 onToggle: (bool value) {
                   setState(() {
@@ -113,7 +127,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 initialValue: null,
               ),
               SettingsTile.switchTile(
-                title: const Text('Użyj odcisku palca'),
+                title: Text(
+                  AppLocalizations.of(context)!.settings_security_fingerprint,
+                ),
                 // subtitle:
                 //     'Pozwól odblokowywać aplikację za pomocą odcisku palca.',
                 leading: const Icon(Icons.fingerprint),
@@ -122,7 +138,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 initialValue: null,
               ),
               SettingsTile.switchTile(
-                title: const Text('Włącz powiadomienia'),
+                title: Text(
+                  AppLocalizations.of(context)!.settings_security_notifications,
+                ),
                 enabled: _notificationsEnabled,
                 leading: const Icon(Icons.notifications_active),
                 // switchValue: true,
@@ -132,34 +150,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           SettingsSection(
-            title: const Text('Inne'),
+            title: Text(AppLocalizations.of(context)!.settings_other),
             tiles: [
               SettingsTile(
-                  title: const Text('Regulamin'),
-                  leading: const Icon(Icons.description)),
-              SettingsTile(
-                  title: Text('Github'),
+                  title: const Text('Github'),
                   leading: const Icon(Icons.collections_bookmark)),
             ],
           ),
-          // CustomSection(
-          //   child: Column(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 25),
-          //         child: Container(),
-          //       ),
-          //       Text(
-          //         settings.version ?? '',
-          //         style: const TextStyle(color: Color(0xFF777777)),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 25),
-          //         child: Container(),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       );
     });

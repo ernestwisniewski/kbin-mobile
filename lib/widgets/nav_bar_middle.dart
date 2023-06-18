@@ -9,6 +9,7 @@ import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/repositories/magazines_repository.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavBarMiddle extends StatefulWidget {
   final String? title;
@@ -64,7 +65,9 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
             actions: <CupertinoActionSheetAction>[
               CupertinoActionSheetAction(
                 child: Text(
-                    filters.screenView ?? widget.magazine ?? 'Losowy magazyn',
+                    filters.screenView ??
+                        widget.magazine ??
+                        AppLocalizations.of(context)!.magazines_random,
                     style: TextStyle(
                         fontWeight: filters.screenView != null
                             ? FontWeight.bold
@@ -87,7 +90,7 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                 },
               ),
               CupertinoActionSheetAction(
-                child: Text('Wszystkie',
+                child: Text(AppLocalizations.of(context)!.all,
                     style: TextStyle(
                         fontWeight: filters.screenView == null
                             ? FontWeight.bold
@@ -100,11 +103,11 @@ class _NavBarMiddleState extends State<NavBarMiddle> {
                 },
               ),
               CupertinoActionSheetAction(
-                child: const Text('Subskrybowane'),
+                child: Text(AppLocalizations.of(context)!.subscribed),
                 onPressed: () {},
               ),
               CupertinoActionSheetAction(
-                child: const Text('Moderowane'),
+                child: Text(AppLocalizations.of(context)!.moderated),
                 onPressed: () {},
               ),
             ],

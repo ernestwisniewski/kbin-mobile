@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kbin_mobile/helpers/theme.dart';
 import 'package:kbin_mobile/providers/comments_provider.dart';
 import 'package:kbin_mobile/providers/entries_provider.dart';
@@ -76,12 +78,21 @@ class _MyAppState extends State<MyApp> {
         child: ThemeConsumer(
           child: Builder(
             builder: (themeContext) => MaterialApp.router(
-                routerDelegate:
-                    _appRouter.delegate(initialRoutes: [const HomeRoute()]),
-                routeInformationParser: _appRouter.defaultRouteParser(),
-                title: _settings.instance,
-                themeMode: ThemeMode.light,
-                theme: ThemeProvider.themeOf(themeContext).data),
+              routerDelegate:
+                  _appRouter.delegate(initialRoutes: [const HomeRoute()]),
+              routeInformationParser: _appRouter.defaultRouteParser(),
+              title: _settings.instance,
+              themeMode: ThemeMode.light,
+              theme: ThemeProvider.themeOf(themeContext).data,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              locale: Locale(_settings.lang),
+            ),
           ),
         ));
   }

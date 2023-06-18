@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbin_mobile/helpers/colors.dart';
@@ -9,6 +9,7 @@ import 'package:kbin_mobile/providers/filters_provider.dart';
 import 'package:kbin_mobile/providers/settings_provider.dart';
 import 'package:kbin_mobile/routes/router.gr.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget buildItem(
     BuildContext context, MagazineCollectionItem magazine, int index) {
@@ -38,7 +39,7 @@ Widget buildItem(
                   _listTile(
                       context,
                       magazine.name,
-                      'Subskrypcje',
+                      AppLocalizations.of(context)!.subscriptions,
                       magazine.subscriptionsCount.toString(),
                       const EntriesRoute(),
                       1),
@@ -47,14 +48,14 @@ Widget buildItem(
                   _listTile(
                       context,
                       magazine.name,
-                      'Komentarze',
+                      AppLocalizations.of(context)!.comments,
                       magazine.entryCommentCount.toString(),
                       const CommentsRoute(),
                       3),
                   _listTile(
                       context,
                       magazine.name,
-                      'Mikroblog',
+                      AppLocalizations.of(context)!.microblog,
                       (magazine.postCount + magazine.postCommentCount)
                           .toString(),
                       const PostsRoute(),
@@ -123,11 +124,13 @@ Widget _listTile(BuildContext context, String magazine, String title,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Badge(
-              badgeColor: Theme.of(context).primaryColor,
-              elevation: 0,
-              shape: BadgeShape.circle,
-              padding: const EdgeInsets.all(10),
+            badges.Badge(
+              badgeStyle: badges.BadgeStyle(
+                badgeColor: Theme.of(context).primaryColor,
+                elevation: 0,
+                shape: badges.BadgeShape.circle,
+                padding: const EdgeInsets.all(10),
+              ),
               badgeContent: Text(value,
                   style: const TextStyle(
                       color: Colors.white,

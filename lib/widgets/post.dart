@@ -63,7 +63,7 @@ Widget buildItem(BuildContext context, PostCollectionItem post, int index) {
                                       CupertinoIcons.up_arrow)),
                             ],
                           ),
-                          Text(timeago.format(post.createdAt, locale: 'pl'),
+                          Text(timeago.format(post.createdAt, locale: 'en'),
                               style: const TextStyle(color: Colors.grey))
                         ],
                       )),

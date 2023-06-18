@@ -11,6 +11,7 @@ import 'package:kbin_mobile/widgets/post.dart';
 import 'package:kbin_mobile/widgets/sort_options.dart';
 import 'package:kbin_mobile/widgets/time_options.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PostsScreen extends StatefulWidget {
   const PostsScreen({Key? key}) : super(key: key);
@@ -86,7 +87,7 @@ class _PostsScreenState extends State<PostsScreen> {
             child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(50),
-                child: const Text('brak wpisów')),
+                child: Text(AppLocalizations.of(context)!.posts_none)),
           );
         }
 

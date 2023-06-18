@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kbin_mobile/filters/stort_options_filters.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget sortOptions(BuildContext context, dynamic provider) {
   return CupertinoButton(
@@ -13,12 +14,12 @@ Widget sortOptions(BuildContext context, dynamic provider) {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text('Anuluj'),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
-        title: const Text('Jakie treści wyświetlić'),
+        title: Text(AppLocalizations.of(context)!.content_filter),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
-            child: Text('Ważne',
+            child: Text(AppLocalizations.of(context)!.content_top,
                 style: TextStyle(
                     fontWeight: provider.sortOptions == SortOptions.top
                         ? FontWeight.bold
@@ -29,7 +30,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Wschodzące',
+            child: Text(AppLocalizations.of(context)!.content_hot,
                 style: TextStyle(
                     fontWeight: provider.sortOptions == SortOptions.hot
                         ? FontWeight.bold
@@ -40,7 +41,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Aktywne',
+            child: Text(AppLocalizations.of(context)!.content_active,
                 style: TextStyle(
                     fontWeight: provider.sortOptions == SortOptions.active
                         ? FontWeight.bold
@@ -51,7 +52,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Najnowsze',
+            child: Text(AppLocalizations.of(context)!.content_new,
                 style: TextStyle(
                     fontWeight: provider.sortOptions == SortOptions.newest
                         ? FontWeight.bold
@@ -62,7 +63,7 @@ Widget sortOptions(BuildContext context, dynamic provider) {
             },
           ),
           CupertinoActionSheetAction(
-            child: Text('Komentowane',
+            child: Text(AppLocalizations.of(context)!.content_commented,
                 style: TextStyle(
                     fontWeight: provider.sortOptions == SortOptions.commented
                         ? FontWeight.bold
