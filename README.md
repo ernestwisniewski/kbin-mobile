@@ -10,10 +10,10 @@ This is a very early beta version, and a lot of features are currently broken or
 | --- | --- | --- | --- | --- |
 ![](assets/screenshots/s1.png)  |  ![](assets/screenshots/s2.png)  |  ![](assets/screenshots/s3.png)  |  ![](assets/screenshots/s4.png)  |  ![](assets/screenshots/s5.png)
 
-* https://kbin.info - project website
+* https://kbin.pub - project website
 * **https://dev.karab.in - instance for testing purposes only**
 * https://karab.in - polish-lang instance
-* https://kbin.pub - english-lang instance
+* https://kbin.social - english-lang instance
 
 ---
 
@@ -40,7 +40,7 @@ $ flutter run
 
 ## Documentation
 
-https://docs.kbin.info - Kbin API Reference
+https://docs.kbin.pub - Kbin API Reference
 
 ## Contributing
 
